@@ -9,16 +9,31 @@
             --primary: #ff3385;
             --accent: #00cca3;
             --border: #e6c280;
-            --bg: #fffdf9;
             --dark: #2d2527;
             --pink-light: #ffe6f0;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--dark); padding: 12px; max-width: 480px; margin: 0 auto; padding-bottom: 220px; }
+        
+        /* FONDO CON MANCHAS ROSA Y CELESTE CLARO */
+        body { 
+            background-color: #fffdf9;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 182, 193, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, rgba(173, 216, 230, 0.45) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(255, 218, 224, 0.35) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(176, 224, 230, 0.4) 0%, transparent 45%),
+                radial-gradient(circle at 15% 85%, rgba(255, 192, 203, 0.4) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--dark); 
+            padding: 12px; 
+            max-width: 480px; 
+            margin: 0 auto; 
+            padding-bottom: 220px; 
+        }
 
         /* ENCABEZADO */
-        header { text-align: center; padding: 16px; background: #fff; border-radius: 20px; border: 2px solid var(--border); margin-bottom: 15px; }
+        header { text-align: center; padding: 16px; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(5px); border-radius: 20px; border: 2px solid var(--border); margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .logo { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; }
         h1 { color: var(--primary); font-size: 1.5rem; margin-top: 8px; }
         header p { color: var(--accent); font-weight: bold; font-size: 0.85rem; margin-bottom: 12px; }
@@ -29,18 +44,18 @@
         .btn-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
         .btn-wsp-head { background: #25d366; }
 
-        .info-card { background: var(--pink-light); border: 1px solid var(--primary); border-radius: 12px; padding: 10px; font-size: 0.8rem; margin-bottom: 15px; }
+        .info-card { background: rgba(255, 230, 240, 0.9); border: 1px solid var(--primary); border-radius: 12px; padding: 10px; font-size: 0.8rem; margin-bottom: 15px; }
         
         /* CATEGORÍAS */
         .nav-cat { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; scrollbar-width: none; }
         .nav-cat::-webkit-scrollbar { display: none; }
-        .tab-btn { background: #fff; border: 2px solid var(--accent); padding: 8px 14px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; white-space: nowrap; cursor: pointer; }
+        .tab-btn { background: rgba(255, 255, 255, 0.9); border: 2px solid var(--accent); padding: 8px 14px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; white-space: nowrap; cursor: pointer; }
         .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
         .sec-cat { display: none; }
         .sec-cat.active { display: block; }
 
-        .card { background: #fff; border-radius: 16px; border: 1px solid var(--border); padding: 15px; margin-bottom: 15px; }
+        .card { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(5px); border-radius: 16px; border: 1px solid var(--border); padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
         .card h2 { color: var(--primary); font-size: 1.1rem; border-bottom: 1px dashed var(--border); padding-bottom: 6px; margin-bottom: 10px; }
 
         .item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
@@ -52,10 +67,10 @@
         .btn-add { background: var(--pink-light); color: var(--primary); border: 1px solid var(--primary); padding: 8px 12px; border-radius: 8px; font-weight: bold; font-size: 0.8rem; cursor: pointer; }
 
         label { display: block; font-weight: bold; font-size: 0.8rem; margin: 10px 0 4px; }
-        select, input, textarea { width: 100%; padding: 10px; border: 1.5px solid var(--accent); border-radius: 10px; font-size: 0.9rem; }
+        select, input, textarea { width: 100%; padding: 10px; border: 1.5px solid var(--accent); border-radius: 10px; font-size: 0.9rem; background: #fff; }
 
         /* CARRITO FLOTANTE */
-        .cart-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: #2d2527; color: #fff; padding: 14px; border-radius: 20px 20px 0 0; z-index: 1000; }
+        .cart-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: #2d2527; color: #fff; padding: 14px; border-radius: 20px 20px 0 0; z-index: 1000; box-shadow: 0 -4px 15px rgba(0,0,0,0.15); }
         .cart-list { max-height: 80px; overflow-y: auto; font-size: 0.8rem; border-bottom: 1px solid #444; padding-bottom: 6px; margin-bottom: 8px; }
         .cart-item { display: flex; justify-content: space-between; margin-bottom: 4px; }
         .cart-del { color: #ff6b6b; font-weight: bold; padding: 0 6px; cursor: pointer; }

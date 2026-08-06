@@ -355,34 +355,4 @@
             }
 
             var dep = total * 0.2;
-            document.getElementById('total').innerText = '$' + total.toLocaleString('es-AR');
-            document.getElementById('deposit').innerText = '$' + dep.toLocaleString('es-AR');
-            btn.className = "btn-wsp";
-            btn.innerText = "📲 Confirmar Pedido por WhatsApp";
-        }
-
-        function sendWsp() {
-            if (items.length === 0) return;
-            var tot = 0;
-            var txt = "¡Hola Delicias Australes! 🍰 Quisiera pedir:\n\n";
-            for(var i=0; i<items.length; i++) {
-                tot += items[i].price;
-                txt += "• " + items[i].name + " - $" + items[i].price.toLocaleString('es-AR') + "\n";
-            }
-            txt += "\n📅 Fecha: " + document.getElementById('date').value;
-            txt += "\n🚚 Entrega: " + document.getElementById('delivery').value;
-            if(document.getElementById('notes').value) txt += "\n📝 Notas: " + document.getElementById('notes').value;
-            txt += "\n\n💵 Total: $" + tot.toLocaleString('es-AR');
-            txt += "\n📌 Seña (20%): $" + (tot * 0.2).toLocaleString('es-AR');
-
-            window.location.href = "https://wa.me/5492974219406?text=" + encodeURIComponent(txt);
-        }
-
-        window.onload = function() {
-            var d = new Date();
-            d.setDate(d.getDate() + 2);
-            document.getElementById('date').value = d.toISOString().split('T')[0];
-        };
-    </script>
-</body>
-</html>
+            document.getElementById('total').innerTe

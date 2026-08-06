@@ -331,17 +331,87 @@
 
     <!-- NAVEGACIÓN POR CATEGORÍAS -->
     <div class="categories-nav">
-        <button class="cat-btn active" id="btn-desayunos" onclick="showCategory('desayunos')">☀️ Desayunos</button>
+        <button class="cat-btn active" id="btn-docenas" onclick="showCategory('docenas')">🍩 Docenas & Donitas</button>
+        <button class="cat-btn" id="btn-desayunos" onclick="showCategory('desayunos')">☀️ Desayunos</button>
         <button class="cat-btn" id="btn-tartas" onclick="showCategory('tartas')">🥧 Tartas</button>
-        <button class="cat-btn" id="btn-docenas" onclick="showCategory('docenas')">🍩 Docenas & Bocado</button>
         <button class="cat-btn" id="btn-brownies-cheesecakes" onclick="showCategory('brownies-cheesecakes')">🍫 Brownies & Cheesecakes</button>
         <button class="cat-btn" id="btn-combos-dulces" onclick="showCategory('combos-dulces')">🍰 Combos Dulces</button>
         <button class="cat-btn" id="btn-combos-salados" onclick="showCategory('combos-salados')">🥐 Combos Salados</button>
         <button class="cat-btn" id="btn-individuales" onclick="showCategory('individuales')">🧁 Individuales & Varios</button>
     </div>
 
+    <!-- DOCENAS Y BOCADOS (DONITAS) -->
+    <div id="cat-docenas" class="category-section active">
+        <div class="card">
+            <h2>Especialidades por Docena</h2>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Donitas (Docena / 12 Unidades)</h4>
+                    <div class="item-price">$8.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Donitas (Docena x12)', 8000)">+ Agregar 1 Docena</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Cupcakes (Docena / 12 Unidades)</h4>
+                    <div class="item-price">$27.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Cupcakes (Docena x12)', 27000)">+ Agregar 1 Docena</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Cookies (Docena / 12 Unidades)</h4>
+                    <div class="item-price">$25.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Cookies (Docena x12)', 25000)">+ Agregar 1 Docena</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Cake Pops (Docena / 12 Unidades)</h4>
+                    <div class="item-price">$22.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Cake Pops (Docena x12)', 22000)">+ Agregar 1 Docena</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Ice Pops (Docena / 12 Unidades)</h4>
+                    <div class="item-price">$26.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Ice Pops (Docena x12)', 26000)">+ Agregar 1 Docena</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Oreos Bañadas (Docena / 12 Unidades)</h4>
+                    <div class="item-price">$21.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Oreos Bañadas (Docena x12)', 21000)">+ Agregar 1 Docena</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Shot de Postres (Docena / 12 Unidades)</h4>
+                    <div class="item-price">$38.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Shot de Postres (Docena x12)', 38000)">+ Agregar 1 Docena</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Mini Tartas (Docena / 12 Unidades)</h4>
+                    <div class="item-price">$20.500</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Mini Tartas (Docena x12)', 20500)">+ Agregar 1 Docena</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Petit Fours (Docena / 12 Unidades)</h4>
+                    <div class="item-price">$42.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Petit Fours (Docena x12)', 42000)">+ Agregar 1 Docena</button>
+            </div>
+        </div>
+    </div>
+
     <!-- DESAYUNOS -->
-    <div id="cat-desayunos" class="category-section active">
+    <div id="cat-desayunos" class="category-section">
         <div class="card">
             <h2>Desayunos Especiales</h2>
             <div class="item-row">
@@ -411,76 +481,6 @@
                 <option value="32000" data-name="Crema Tipo Galesa (28cm)">Crema Tipo Galesa (28cm) - $32.000</option>
             </select>
             <button class="btn-add" style="width:100%; padding:14px; margin-top:12px; font-size:0.95rem;" onclick="addSelectedTarta()">➕ Agregar Tarta Seleccionada</button>
-        </div>
-    </div>
-
-    <!-- DOCENAS Y BOCADOS -->
-    <div id="cat-docenas" class="category-section">
-        <div class="card">
-            <h2>Especialidades por Docena</h2>
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Donitas (Docena)</h4>
-                    <div class="item-price">$8.000</div>
-                </div>
-                <button class="btn-add" onclick="addItem('Donitas (Docena)', 8000)">+ Agregar</button>
-            </div>
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Cupcakes (Docena)</h4>
-                    <div class="item-price">$27.000</div>
-                </div>
-                <button class="btn-add" onclick="addItem('Cupcakes (Docena)', 27000)">+ Agregar</button>
-            </div>
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Cookies (Docena)</h4>
-                    <div class="item-price">$25.000</div>
-                </div>
-                <button class="btn-add" onclick="addItem('Cookies (Docena)', 25000)">+ Agregar</button>
-            </div>
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Cake Pops (Docena)</h4>
-                    <div class="item-price">$22.000</div>
-                </div>
-                <button class="btn-add" onclick="addItem('Cake Pops (Docena)', 22000)">+ Agregar</button>
-            </div>
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Ice Pops (Docena)</h4>
-                    <div class="item-price">$26.000</div>
-                </div>
-                <button class="btn-add" onclick="addItem('Ice Pops (Docena)', 26000)">+ Agregar</button>
-            </div>
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Oreos Bañadas (Docena)</h4>
-                    <div class="item-price">$21.000</div>
-                </div>
-                <button class="btn-add" onclick="addItem('Oreos Bañadas (Docena)', 21000)">+ Agregar</button>
-            </div>
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Shot de Postres (Docena)</h4>
-                    <div class="item-price">$38.000</div>
-                </div>
-                <button class="btn-add" onclick="addItem('Shot de Postres (Docena)', 38000)">+ Agregar</button>
-            </div>
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Mini Tartas (Docena)</h4>
-                    <div class="item-price">$20.500</div>
-                </div>
-                <button class="btn-add" onclick="addItem('Mini Tartas (Docena)', 20500)">+ Agregar</button>
-            </div>
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Petit Fours (Docena)</h4>
-                    <div class="item-price">$42.000</div>
-                </div>
-                <button class="btn-add" onclick="addItem('Petit Fours (Docena)', 42000)">+ Agregar</button>
-            </div>
         </div>
     </div>
 
@@ -625,7 +625,7 @@
                     <h4>Alfajores de Maicena (Docena)</h4>
                     <div class="item-price">$20.000</div>
                 </div>
-                <button class="btn-add" onclick="addItem('Docena Alfajores Maicena', 20000)">+ Agregar</button>
+                <button class="btn-add" onclick="addItem('Docena Alfajores Maicena', 20000)">+ Agregar 1 Docena</button>
             </div>
             <div class="item-row">
                 <div class="item-info">
@@ -641,7 +641,7 @@
                     <p>Blanco o Negro</p>
                     <div class="item-price">$25.000</div>
                 </div>
-                <button class="btn-add" onclick="addItem('Docena Alfajores Marplatenses', 25000)">+ Agregar</button>
+                <button class="btn-add" onclick="addItem('Docena Alfajores Marplatenses', 25000)">+ Agregar 1 Docena</button>
             </div>
             <div class="item-row">
                 <div class="item-info">

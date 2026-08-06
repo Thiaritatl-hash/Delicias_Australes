@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Delicias Australes - Pastelería Artesanal</title>
     <style>
         :root {
@@ -21,6 +21,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -29,7 +30,7 @@
             padding: 12px;
             max-width: 480px;
             margin: 0 auto;
-            padding-bottom: 210px;
+            padding-bottom: 220px;
         }
 
         /* ENCABEZADO */
@@ -50,11 +51,6 @@
             object-fit: cover;
             margin-bottom: 10px;
             border: 3px solid var(--primary-pink);
-            transition: transform 0.3s ease;
-        }
-
-        .logo-img:hover {
-            transform: scale(1.05);
         }
 
         header h1 {
@@ -86,11 +82,6 @@
             padding: 8px 14px;
             border-radius: 20px;
             text-decoration: none;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        .btn-social:active {
-            transform: scale(0.95);
         }
 
         .btn-ig {
@@ -147,7 +138,6 @@
             font-weight: 700;
             white-space: nowrap;
             cursor: pointer;
-            transition: all 0.25s ease;
         }
 
         .cat-btn.active {
@@ -155,7 +145,6 @@
             color: #ffffff;
             border-color: var(--primary-pink);
             box-shadow: 0 4px 10px rgba(255, 51, 133, 0.3);
-            transform: translateY(-2px);
         }
 
         .category-section { display: none; }
@@ -196,7 +185,6 @@
             align-items: center;
             padding: 12px 0;
             border-bottom: 1px solid var(--pink-soft);
-            transition: background-color 0.2s ease;
         }
 
         .item-row:last-child { border-bottom: none; }
@@ -214,17 +202,16 @@
             background: var(--pink-soft);
             color: var(--primary-pink);
             border: 1.5px solid var(--primary-pink);
-            padding: 8px 14px;
+            padding: 10px 16px;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.2s ease;
             white-space: nowrap;
+            touch-action: manipulation;
         }
 
         .btn-add:active {
-            transform: scale(0.92);
             background: var(--primary-pink);
             color: white;
         }
@@ -232,11 +219,11 @@
         label { display: block; margin: 12px 0 5px; font-weight: 700; font-size: 0.85rem; }
         select, input[type="date"], textarea {
             width: 100%;
-            padding: 11px;
+            padding: 12px;
             border: 2px solid var(--accent-teal);
             border-radius: 12px;
             background: #fff;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             outline: none;
         }
 
@@ -283,8 +270,8 @@
             color: #ff6b6b;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1rem;
-            padding: 0 6px;
+            font-size: 1.1rem;
+            padding: 4px 8px;
         }
 
         .cart-summary {
@@ -311,15 +298,16 @@
             font-size: 1rem;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-            transition: transform 0.2s ease;
             display: block;
             text-align: center;
             text-decoration: none;
+            touch-action: manipulation;
         }
 
-        .btn-whatsapp:active {
-            transform: scale(0.98);
+        .btn-disabled {
+            background: #555555 !important;
+            opacity: 0.6;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -333,7 +321,7 @@
         
         <div class="social-buttons">
             <a href="https://www.instagram.com/deliciasaustrales01" target="_blank" class="btn-social btn-ig">
-                📸 Instagram @deliciasaustrales01
+                📸 Instagram
             </a>
             <a href="https://wa.me/5492974219406" target="_blank" class="btn-social btn-wsp">
                 📲 WhatsApp Sol
@@ -354,7 +342,7 @@
         <button class="cat-btn" id="btn-tartas" onclick="showCategory('tartas')">🥧 Tartas</button>
         <button class="cat-btn" id="btn-combos-dulces" onclick="showCategory('combos-dulces')">🍰 Combos Dulces</button>
         <button class="cat-btn" id="btn-combos-salados" onclick="showCategory('combos-salados')">🥐 Combos Salados</button>
-        <button class="cat-btn" id="btn-individuales" onclick="showCategory('individuales')">🧁 Individuales / Kilo</button>
+        <button class="cat-btn" id="btn-individuales" onclick="showCategory('individuales')">🧁 Individuales</button>
     </div>
 
     <!-- DESAYUNOS -->
@@ -364,7 +352,7 @@
             <div class="item-row">
                 <div class="item-info">
                     <h4>Desayuno Infantil</h4>
-                    <p>• 1 Mini torta brownie • 6 Donitas • 1 Porción pasta frola • 2 Alfajores maicena • 1 Cupcake • 1 Postre a elección • 1 Pebete J&Q • Jugo, Chocolatada, Gomitas + Tita e infusiones</p>
+                    <p>• Mini torta brownie, 6 Donitas, pasta frola, alfajores, cupcake, postre, pebete, jugo, chocolatada.</p>
                     <div class="item-price">$32.000</div>
                 </div>
                 <button class="btn-add" onclick="addItem('Desayuno Infantil', 32000)">+ Agregar</button>
@@ -372,7 +360,7 @@
             <div class="item-row">
                 <div class="item-info">
                     <h4>Desayuno Standard</h4>
-                    <p>• 1 Mini torta brownie • 1 Mini tarta • 3 Alfajores maicena • 1 Cupcake • 4 Panes caseros • 1 Pebete J&Q • Jugo, Yogurt, Bon o Bon e infusiones</p>
+                    <p>• Mini torta brownie, mini tarta, alfajores, cupcake, pan casero, pebete, jugo, yogurt, infusión.</p>
                     <div class="item-price">$32.000</div>
                 </div>
                 <button class="btn-add" onclick="addItem('Desayuno Standard', 32000)">+ Agregar</button>
@@ -380,7 +368,7 @@
             <div class="item-row">
                 <div class="item-info">
                     <h4>Desayuno Medium</h4>
-                    <p>• 1 Mini torta • 1 Mini tarta • 1 Cupcake • 4 Alfajores maicena • 3 Cookies limón • 1 Postre • 1 Pebete J&Q • 4 Scons queso • 4 Pancitos • Jugo, Yogurt, Turrón, Cereal, Bon o Bon e infusiones</p>
+                    <p>• Súper completo con mini tortas, tartas, alfajores, cookies, postre, pebete, scons y más.</p>
                     <div class="item-price">$44.000</div>
                 </div>
                 <button class="btn-add" onclick="addItem('Desayuno Medium', 44000)">+ Agregar</button>
@@ -393,7 +381,7 @@
         <div class="card">
             <h2>Tartas Artesanales</h2>
             <div class="notice-banner">
-                🍓 <strong>Nota:</strong> Tartas con frutilla o frutas frescas de estación sujetas a disponibilidad y variación de precio según la época.
+                🍓 Tartas con frutilla o frutas frescas sujetas a disponibilidad según estación.
             </div>
             <label for="tarta-select">Seleccioná la Tarta y Tamaño:</label>
             <select id="tarta-select">
@@ -420,7 +408,7 @@
                 <option value="27000" data-name="Crema Tipo Galesa (22cm)">Crema Tipo Galesa (22cm) - $27.000</option>
                 <option value="32000" data-name="Crema Tipo Galesa (28cm)">Crema Tipo Galesa (28cm) - $32.000</option>
             </select>
-            <button class="btn-add" style="width:100%; padding:12px; margin-top:12px; font-size:0.9rem;" onclick="addSelectedTarta()">➕ Agregar Tarta Al Carrito</button>
+            <button class="btn-add" style="width:100%; padding:14px; margin-top:12px; font-size:0.95rem;" onclick="addSelectedTarta()">➕ Agregar Tarta Seleccionada</button>
         </div>
     </div>
 
@@ -439,7 +427,7 @@
             <div class="item-row">
                 <div class="item-info">
                     <h4>Combo Dulce 2</h4>
-                    <p>• Torta 2kg • 1 Tarta a elección (24cm) • 1 Docena Alfajores de maicena</p>
+                    <p>• Torta 2kg • 1 Tarta a elección (24cm) • 1 Docena Alfajores</p>
                     <div class="item-price">$92.700</div>
                 </div>
                 <button class="btn-add" onclick="addItem('Combo Dulce 2', 92700)">+ Agregar</button>
@@ -455,7 +443,7 @@
             <div class="item-row">
                 <div class="item-info">
                     <h4>Combo Dulce 4</h4>
-                    <p>• 2 Tartas a elección (24cm) • 1 Docena Cookies • 1 Docena Oreos bañadas</p>
+                    <p>• 2 Tartas a elección (24cm) • 1 Docena Cookies • 1 Docena Oreos</p>
                     <div class="item-price">$91.800</div>
                 </div>
                 <button class="btn-add" onclick="addItem('Combo Dulce 4', 91800)">+ Agregar</button>
@@ -470,7 +458,7 @@
             <div class="item-row">
                 <div class="item-info">
                     <h4>Combo Salado 1</h4>
-                    <p>• 1 Docena Chips J&Q • 1 Docena Empanadas • 1 Docena Panes árabes de pollo</p>
+                    <p>• 1 Docena Chips J&Q • 1 Docena Empanadas • 1 Docena Panes árabes</p>
                     <div class="item-price">$58.000</div>
                 </div>
                 <button class="btn-add" onclick="addItem('Combo Salado 1', 58000)">+ Agregar</button>
@@ -486,7 +474,7 @@
             <div class="item-row">
                 <div class="item-info">
                     <h4>Combo Salado 3</h4>
-                    <p>• 2 Docenas Chips J&Q • 1 Docena Chips Salame y Queso • 1 Docena Panes árabes • 2 Docenas Pizzetas</p>
+                    <p>• 2 Docenas Chips J&Q • 1 Docena Salame y Queso • Panes y Pizzetas</p>
                     <div class="item-price">$112.000</div>
                 </div>
                 <button class="btn-add" onclick="addItem('Combo Salado 3', 112000)">+ Agregar</button>
@@ -501,7 +489,6 @@
             <div class="item-row">
                 <div class="item-info">
                     <h4>Alfajores de Maicena (Docena)</h4>
-                    <p>Alfajores medianos artesanales</p>
                     <div class="item-price">$20.000</div>
                 </div>
                 <button class="btn-add" onclick="addItem('Docena Alfajores de Maicena', 20000)">+ Agregar</button>
@@ -509,9 +496,185 @@
             <div class="item-row">
                 <div class="item-info">
                     <h4>Alfajores Marplatenses (Docena)</h4>
-                    <p>Cobertura chocolate blanco o negro</p>
                     <div class="item-price">$25.000</div>
                 </div>
                 <button class="btn-add" onclick="addItem('Docena Alfajores Marplatenses', 25000)">+ Agregar</button>
             </div>
-            <div cl
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Budín Casero (1 Kg)</h4>
+                    <div class="item-price">$15.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Budín Casero (1kg)', 15000)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Torta Personalizada (por Kg)</h4>
+                    <div class="item-price">$28.000 / kg</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Torta por Kilo (1kg base)', 28000)">+ Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ENTREGA, FECHA Y NOTAS -->
+    <div class="card">
+        <h2>Detalles de la Entrega & Aclaraciones</h2>
+        <label for="date">Fecha Requerida:</label>
+        <input type="date" id="date" onchange="updateCart()">
+
+        <label for="delivery">Modalidad de Entrega:</label>
+        <select id="delivery" onchange="updateCart()">
+            <option value="Retiro en Taller">Retiro en Taller (Gratis)</option>
+            <option value="Envío Zona Sur">Envío Zona Sur</option>
+            <option value="Envío Zona Norte">Envío Zona Norte</option>
+        </select>
+
+        <label for="notes">Aclaraciones (Temáticas, rellenos, etc.):</label>
+        <textarea id="notes" placeholder="Ej: Torta temática de Dinobots..." oninput="updateCart()"></textarea>
+    </div>
+
+    <!-- CARRITO FLOTANTE -->
+    <div class="cart-bar">
+        <div class="cart-items-list" id="cart-list">
+            <i style="color:#aaa;">Tu carrito está vacío. Agregá productos arriba.</i>
+        </div>
+        <div class="cart-summary">
+            <div>
+                <span style="font-size:0.8rem; color:#bbb;">Total:</span>
+                <strong id="total-price" style="display:block; font-size:1.1rem; color:#fff;">$0</strong>
+            </div>
+            <div style="text-align: right;">
+                <span style="font-size:0.8rem; color:var(--accent-teal);">Seña 20%:</span>
+                <strong id="deposit-price" style="display:block; font-size:1.1rem; color:var(--primary-pink);">$0</strong>
+            </div>
+        </div>
+
+        <a id="whatsapp-btn" href="#" class="btn-whatsapp btn-disabled" onclick="return checkCartEmpty(event)">
+            🛒 Agregá productos para pedir
+        </a>
+    </div>
+
+    <script>
+        const dateInput = document.getElementById('date');
+        if (dateInput) {
+            const minDate = new Date();
+            minDate.setDate(minDate.getDate() + 2);
+            dateInput.min = minDate.toISOString().split('T')[0];
+            dateInput.value = minDate.toISOString().split('T')[0];
+        }
+
+        let cart = [];
+
+        function showCategory(catName) {
+            const sections = document.querySelectorAll('.category-section');
+            sections.forEach(s => {
+                s.classList.remove('active');
+                s.style.display = 'none';
+            });
+
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+
+            const targetSection = document.getElementById('cat-' + catName);
+            const targetBtn = document.getElementById('btn-' + catName);
+
+            if (targetSection) {
+                targetSection.classList.add('active');
+                targetSection.style.display = 'block';
+            }
+            if (targetBtn) {
+                targetBtn.classList.add('active');
+            }
+        }
+
+        function addItem(name, price) {
+            cart.push({ name, price });
+            updateCart();
+        }
+
+        function addSelectedTarta() {
+            const select = document.getElementById('tarta-select');
+            if (!select) return;
+            const selectedOption = select.options[select.selectedIndex];
+            const name = selectedOption.getAttribute('data-name');
+            const price = parseInt(select.value);
+            cart.push({ name, price });
+            updateCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function checkCartEmpty(e) {
+            if (cart.length === 0) {
+                e.preventDefault();
+                alert("Por favor agregá al menos un producto al carrito antes de enviar.");
+                return false;
+            }
+            return true;
+        }
+
+        function updateCart() {
+            const cartList = document.getElementById('cart-list');
+            const wspButton = document.getElementById('whatsapp-btn');
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<i style="color:#aaa;">Tu carrito está vacío. Agregá productos arriba.</i>';
+                document.getElementById('total-price').innerText = '$0';
+                document.getElementById('deposit-price').innerText = '$0';
+                wspButton.classList.add('btn-disabled');
+                wspButton.innerText = "🛒 Agregá productos para pedir";
+                wspButton.href = "#";
+                return;
+            }
+
+            cartList.innerHTML = '';
+            let itemsText = "";
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                itemsText += `• ${item.name} - $${item.price.toLocaleString('es-AR')}\n`;
+                cartList.innerHTML += `
+                    <div class="cart-item-single">
+                        <span>• ${item.name} ($${item.price.toLocaleString('es-AR')})</span>
+                        <span class="remove-btn" onclick="removeItem(${index})">✕</span>
+                    </div>
+                `;
+            });
+
+            const deposit = total * 0.20;
+            document.getElementById('total-price').innerText = `$${total.toLocaleString('es-AR')}`;
+            document.getElementById('deposit-price').innerText = `$${deposit.toLocaleString('es-AR')}`;
+
+            wspButton.classList.remove('btn-disabled');
+            wspButton.innerText = "📲 Confirmar Pedido con Sol por WhatsApp";
+
+            const phoneNumber = "5492974219406";
+            const dateVal = document.getElementById('date').value;
+            const deliveryVal = document.getElementById('delivery').value;
+            const notesVal = document.getElementById('notes').value.trim();
+
+            let textMessage = `¡Hola Delicias Australes! 👋 Quisiera hacer el siguiente pedido:\n\n` +
+                                `📋 DETALLE DEL PEDIDO:\n${itemsText}\n` +
+                                `📅 Fecha requerida: ${dateVal}\n` +
+                                `🚚 Modalidad: ${deliveryVal}\n`;
+
+            if (notesVal !== "") {
+                textMessage += `📝 Aclaraciones: ${notesVal}\n`;
+            }
+
+            textMessage += `\n💵 Total: $${total.toLocaleString('es-AR')}\n` +
+                           `📌 Seña (20%): $${deposit.toLocaleString('es-AR')}\n\n` +
+                           `¿Me confirmás disponibilidad? ¡Gracias!`;
+
+            wspButton.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(textMessage)}`;
+        }
+
+        updateCart();
+    </script>
+</body>
+</html>

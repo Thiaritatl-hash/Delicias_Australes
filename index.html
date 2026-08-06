@@ -281,13 +281,6 @@
             margin-bottom: 8px;
         }
 
-        .cart-notice {
-            font-size: 0.72rem;
-            color: #ccc;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
         .btn-whatsapp {
             width: 100%;
             background: #25d366;
@@ -550,9 +543,9 @@
             </div>
         </div>
 
-        <a id="whatsapp-btn" href="#" class="btn-whatsapp btn-disabled" onclick="return checkCartEmpty(event)">
+        <button id="whatsapp-btn" class="btn-whatsapp btn-disabled" onclick="sendWhatsAppOrder()">
             🛒 Agregá productos para pedir
-        </a>
+        </button>
     </div>
 
     <script>
@@ -608,15 +601,6 @@
             updateCart();
         }
 
-        function checkCartEmpty(e) {
-            if (cart.length === 0) {
-                e.preventDefault();
-                alert("Por favor agregá al menos un producto al carrito antes de enviar.");
-                return false;
-            }
-            return true;
-        }
-
         function updateCart() {
             const cartList = document.getElementById('cart-list');
             const wspButton = document.getElementById('whatsapp-btn');
@@ -628,16 +612,13 @@
                 document.getElementById('deposit-price').innerText = '$0';
                 wspButton.classList.add('btn-disabled');
                 wspButton.innerText = "🛒 Agregá productos para pedir";
-                wspButton.href = "#";
                 return;
             }
 
             cartList.innerHTML = '';
-            let itemsText = "";
 
             cart.forEach((item, index) => {
                 total += item.price;
-                itemsText += `• ${item.name} - $${item.price.toLocaleString('es-AR')}\n`;
                 cartList.innerHTML += `
                     <div class="cart-item-single">
                         <span>• ${item.name} ($${item.price.toLocaleString('es-AR')})</span>
@@ -652,7 +633,23 @@
 
             wspButton.classList.remove('btn-disabled');
             wspButton.innerText = "📲 Confirmar Pedido con Sol por WhatsApp";
+        }
 
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                alert("Por favor agregá al menos un producto al carrito antes de enviar.");
+                return;
+            }
+
+            let total = 0;
+            let itemsText = "";
+
+            cart.forEach(item => {
+                total += item.price;
+                itemsText += `• ${item.name} - $${item.price.toLocaleString('es-AR')}\n`;
+            });
+
+            const deposit = total * 0.20;
             const phoneNumber = "5492974219406";
             const dateVal = document.getElementById('date').value;
             const deliveryVal = document.getElementById('delivery').value;
@@ -671,7 +668,11 @@
                            `📌 Seña (20%): $${deposit.toLocaleString('es-AR')}\n\n` +
                            `¿Me confirmás disponibilidad? ¡Gracias!`;
 
-            wspButton.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(textMessage)}`;
+            // Forzamos un número aleatorio al final para evitar que el navegador guarde en caché el mensaje anterior
+            const cacheBuster = `&_t=` + new Date().getTime();
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(textMessage)}${cacheBuster}`;
+            
+            window.location.href = whatsappUrl;
         }
 
         updateCart();

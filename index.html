@@ -333,6 +333,8 @@
     <div class="categories-nav">
         <button class="cat-btn active" id="btn-desayunos" onclick="showCategory('desayunos')">☀️ Desayunos</button>
         <button class="cat-btn" id="btn-tartas" onclick="showCategory('tartas')">🥧 Tartas</button>
+        <button class="cat-btn" id="btn-docenas" onclick="showCategory('docenas')">🍩 Docenas & Bocado</button>
+        <button class="cat-btn" id="btn-brownies-cheesecakes" onclick="showCategory('brownies-cheesecakes')">🍫 Brownies & Cheesecakes</button>
         <button class="cat-btn" id="btn-combos-dulces" onclick="showCategory('combos-dulces')">🍰 Combos Dulces</button>
         <button class="cat-btn" id="btn-combos-salados" onclick="showCategory('combos-salados')">🥐 Combos Salados</button>
         <button class="cat-btn" id="btn-individuales" onclick="showCategory('individuales')">🧁 Individuales</button>
@@ -378,30 +380,156 @@
             </div>
             <label for="tarta-select">Seleccioná la Tarta y Tamaño:</label>
             <select id="tarta-select">
-                <option value="24000" data-name="Gelatina sin Frutas (22cm)">Gelatina sin Frutas (22cm) - $24.000</option>
-                <option value="29000" data-name="Gelatina sin Frutas (28cm)">Gelatina sin Frutas (28cm) - $29.000</option>
-                <option value="24000" data-name="Yogurt con Frutilla (22cm)">Yogurt con Frutilla (22cm) - $24.000</option>
-                <option value="29000" data-name="Yogurt con Frutilla (28cm)">Yogurt con Frutilla (28cm) - $29.000</option>
-                <option value="24000" data-name="Chocolate y Crema (22cm)">Chocolate y Crema (22cm) - $24.000</option>
-                <option value="29000" data-name="Chocolate y Crema (28cm)">Chocolate y Crema (28cm) - $29.000</option>
-                <option value="27000" data-name="Tarta Toffi (22cm)">Tarta Toffi (22cm) - $27.000</option>
+                <option value="27000" data-name="Gelatina sin Frutas (24cm)">Gelatina sin Frutas (24cm) - $27.000</option>
+                <option value="32000" data-name="Gelatina sin Frutas (28cm)">Gelatina sin Frutas (28cm) - $32.000</option>
+                <option value="27000" data-name="Yogurt con Frutilla (24cm)">Yogurt con Frutilla (24cm) - $27.000</option>
+                <option value="32000" data-name="Yogurt con Frutilla (28cm)">Yogurt con Frutilla (28cm) - $32.000</option>
+                <option value="27000" data-name="Chocolate y Crema (24cm)">Chocolate y Crema (24cm) - $27.000</option>
+                <option value="32000" data-name="Chocolate y Crema (28cm)">Chocolate y Crema (28cm) - $32.000</option>
+                <option value="27000" data-name="Tarta Toffi (24cm)">Tarta Toffi (24cm) - $27.000</option>
                 <option value="32000" data-name="Tarta Toffi (28cm)">Tarta Toffi (28cm) - $32.000</option>
-                <option value="27000" data-name="Lemon Pie / Orange Pie (22cm)">Lemon Pie / Orange Pie (22cm) - $27.000</option>
+                <option value="27000" data-name="Lemon Pie / Orange Pie (24cm)">Lemon Pie / Orange Pie (24cm) - $27.000</option>
                 <option value="32000" data-name="Lemon Pie / Orange Pie (28cm)">Lemon Pie / Orange Pie (28cm) - $32.000</option>
-                <option value="27000" data-name="Crumble de Manzana (22cm)">Crumble de Manzana (22cm) - $27.000</option>
+                <option value="27000" data-name="Crumble de Manzana (24cm)">Crumble de Manzana (24cm) - $27.000</option>
                 <option value="32000" data-name="Crumble de Manzana (28cm)">Crumble de Manzana (28cm) - $32.000</option>
-                <option value="27000" data-name="Coco y Dulce de Leche (22cm)">Coco y Dulce de Leche (22cm) - $27.000</option>
+                <option value="27000" data-name="Coco y Dulce de Leche (24cm)">Coco y Dulce de Leche (24cm) - $27.000</option>
                 <option value="32000" data-name="Coco y Dulce de Leche (28cm)">Coco y Dulce de Leche (28cm) - $32.000</option>
-                <option value="27000" data-name="Pasta Frola (22cm)">Pasta Frola (22cm) - $27.000</option>
+                <option value="27000" data-name="Pasta Frola (24cm)">Pasta Frola (24cm) - $27.000</option>
                 <option value="32000" data-name="Pasta Frola (28cm)">Pasta Frola (28cm) - $32.000</option>
-                <option value="27000" data-name="Tarta de Ricota (22cm)">Tarta de Ricota (22cm) - $27.000</option>
+                <option value="27000" data-name="Tarta de Ricota (24cm)">Tarta de Ricota (24cm) - $27.000</option>
                 <option value="32000" data-name="Tarta de Ricota (28cm)">Tarta de Ricota (28cm) - $32.000</option>
-                <option value="27000" data-name="Ricota Especial (22cm)">Ricota Especial (22cm) - $27.000</option>
+                <option value="27000" data-name="Ricota Especial (24cm)">Ricota Especial (24cm) - $27.000</option>
                 <option value="32000" data-name="Ricota Especial (28cm)">Ricota Especial (28cm) - $32.000</option>
-                <option value="27000" data-name="Crema Tipo Galesa (22cm)">Crema Tipo Galesa (22cm) - $27.000</option>
+                <option value="27000" data-name="Crema Tipo Galesa (24cm)">Crema Tipo Galesa (24cm) - $27.000</option>
                 <option value="32000" data-name="Crema Tipo Galesa (28cm)">Crema Tipo Galesa (28cm) - $32.000</option>
             </select>
             <button class="btn-add" style="width:100%; padding:14px; margin-top:12px; font-size:0.95rem;" onclick="addSelectedTarta()">➕ Agregar Tarta Seleccionada</button>
+        </div>
+    </div>
+
+    <!-- DOCENAS Y BOCADOS -->
+    <div id="cat-docenas" class="category-section">
+        <div class="card">
+            <h2>Especialidades por Docena</h2>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Donitas (Docena)</h4>
+                    <div class="item-price">$8.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Donitas (Docena)', 8000)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Cupcakes (Docena)</h4>
+                    <div class="item-price">$27.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Cupcakes (Docena)', 27000)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Cookies (Docena)</h4>
+                    <div class="item-price">$25.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Cookies (Docena)', 25000)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Cake Pops (Docena)</h4>
+                    <div class="item-price">$22.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Cake Pops (Docena)', 22000)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Ice Pops (Docena)</h4>
+                    <div class="item-price">$26.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Ice Pops (Docena)', 26000)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Oreos Bañadas (Docena)</h4>
+                    <div class="item-price">$21.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Oreos Bañadas (Docena)', 21000)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Shot de Postres (Docena)</h4>
+                    <div class="item-price">$38.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Shot de Postres (Docena)', 38000)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Mini Tartas (Docena)</h4>
+                    <div class="item-price">$20.500</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Mini Tartas (Docena)', 20500)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Petit Fours (Docena)</h4>
+                    <div class="item-price">$42.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Petit Fours (Docena)', 42000)">+ Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BROWNIES Y CHEESECAKES -->
+    <div id="cat-brownies-cheesecakes" class="category-section">
+        <div class="card">
+            <h2>Brownies de Corte</h2>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Brownie Dulce de Leche y Crema</h4>
+                    <p>Elegí tamaño:</p>
+                </div>
+            </div>
+            <button class="btn-add" style="width:100%; margin-bottom:8px;" onclick="addItem('Brownie DDL y Crema (20cm)', 40000)">+ Brownie DDL y Crema (20cm) - $40.000</button>
+            <button class="btn-add" style="width:100%; margin-bottom:15px;" onclick="addItem('Brownie DDL y Crema (26cm)', 48000)">+ Brownie DDL y Crema (26cm) - $48.000</button>
+
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Brownie DDL, Crema y Frutos Rojos</h4>
+                </div>
+            </div>
+            <button class="btn-add" style="width:100%; margin-bottom:8px;" onclick="addItem('Brownie DDL, Crema y Frutos Rojos (20cm)', 46000)">+ Brownie Frutos Rojos (20cm) - $46.000</button>
+            <button class="btn-add" style="width:100%; margin-bottom:15px;" onclick="addItem('Brownie DDL, Crema y Frutos Rojos (26cm)', 52000)">+ Brownie Frutos Rojos (26cm) - $52.000</button>
+
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Brownie Crema, Frutilla/Frambuesa y Merengue Italiano</h4>
+                </div>
+            </div>
+            <button class="btn-add" style="width:100%; margin-bottom:8px;" onclick="addItem('Brownie Crema/Frutilla/Merengue (20cm)', 38000)">+ Brownie Merengue (20cm) - $38.000</button>
+            <button class="btn-add" style="width:100%; margin-bottom:15px;" onclick="addItem('Brownie Crema/Frutilla/Merengue (26cm)', 44000)">+ Brownie Merengue (26cm) - $44.000</button>
+        </div>
+
+        <div class="card">
+            <h2>Cheesecakes</h2>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Cheesecake (20cm)</h4>
+                    <div class="item-price">$28.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Cheesecake (20cm)', 28000)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Cheesecake (24cm)</h4>
+                    <div class="item-price">$34.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Cheesecake (24cm)', 34000)">+ Agregar</button>
+            </div>
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>Cheesecake (28cm)</h4>
+                    <div class="item-price">$44.000</div>
+                </div>
+                <button class="btn-add" onclick="addItem('Cheesecake (28cm)', 44000)">+ Agregar</button>
+            </div>
         </div>
     </div>
 
@@ -668,7 +796,6 @@
                            `📌 Seña (20%): $${deposit.toLocaleString('es-AR')}\n\n` +
                            `¿Me confirmás disponibilidad? ¡Gracias!`;
 
-            // Forzamos un número aleatorio al final para evitar que el navegador guarde en caché el mensaje anterior
             const cacheBuster = `&_t=` + new Date().getTime();
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(textMessage)}${cacheBuster}`;
             

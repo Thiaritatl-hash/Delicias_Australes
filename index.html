@@ -1,470 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Delicias Australes - Pastelería Artesanal</title>
-  <style>
-    :root {
-      --rosa-pastel: #ffd1dc;
-      --celeste-pastel: #d4f0f7;
-      --rosa-oscuro: #d47a96;
-      --texto: #4a4a4a;
-      --blanco: #ffffff;
-      --verde-wa: #25d366;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: #fffafb;
-      background-image: 
-        radial-gradient(circle at 10% 20%, var(--rosa-pastel) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, var(--celeste-pastel) 0%, transparent 40%);
-      background-attachment: fixed;
-      color: var(--texto);
-      padding-bottom: 240px; /* Espacio extra para que la barra no tape el contenido */
-    }
-
-    header {
-      text-align: center;
-      padding: 15px;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      width: 75px;
-      height: 75px;
-      border-radius: 50%;
-      border: 3px solid var(--rosa-oscuro);
-      object-fit: cover;
-      margin-bottom: 6px;
-    }
-
-    h1 {
-      font-size: 1.4rem;
-      color: var(--rosa-oscuro);
-      margin-bottom: 2px;
-    }
-
-    .subtitle {
-      font-size: 0.85rem;
-      color: #777;
-      margin-bottom: 8px;
-    }
-
-    .social-btns {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .btn-social {
-      padding: 5px 10px;
-      border-radius: 20px;
-      text-decoration: none;
-      color: white;
-      font-size: 0.75rem;
-      font-weight: bold;
-    }
-
-    .btn-ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-    .btn-wa { background-color: var(--verde-wa); }
-
-    .container {
-      max-width: 600px;
-      margin: 15px auto;
-      padding: 0 15px;
-    }
-
-    .info-card {
-      background: white;
-      padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-      border-left: 4px solid var(--rosa-oscuro);
-      font-size: 0.8rem;
-    }
-
-    .tabs-container {
-      display: flex;
-      overflow-x: auto;
-      gap: 8px;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-      scrollbar-width: none;
-    }
-
-    .tabs-container::-webkit-scrollbar { display: none; }
-
-    .tab-btn {
-      padding: 6px 14px;
-      background: white;
-      border: 1px solid var(--rosa-pastel);
-      border-radius: 20px;
-      white-space: nowrap;
-      font-size: 0.8rem;
-      color: var(--texto);
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .tab-btn.active {
-      background: var(--rosa-oscuro);
-      color: white;
-      border-color: var(--rosa-oscuro);
-    }
-
-    .category-section { display: none; }
-    .category-section.active { display: block; }
-
-    .product-card {
-      background: white;
-      border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .product-info h3 {
-      font-size: 0.9rem;
-      color: #333;
-      margin-bottom: 2px;
-    }
-
-    .product-info p {
-      font-size: 0.75rem;
-      color: #777;
-      margin-bottom: 4px;
-    }
-
-    .product-price {
-      font-weight: bold;
-      color: var(--rosa-oscuro);
-      font-size: 0.85rem;
-    }
-
-    .add-btn {
-      background: var(--celeste-pastel);
-      border: none;
-      color: #2b6c7a;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-
-    .cart-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: white;
-      box-shadow: 0 -3px 12px rgba(0,0,0,0.15);
-      padding: 12px;
-      z-index: 9999;
-      border-top-left-radius: 16px;
-      border-top-right-radius: 16px;
-    }
-
-    .cart-summary {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .cart-items {
-      max-height: 70px;
-      overflow-y: auto;
-      margin-bottom: 8px;
-      font-size: 0.75rem;
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 3px;
-    }
-
-    .remove-btn {
-      color: red;
-      cursor: pointer;
-      margin-left: 8px;
-      font-weight: bold;
-    }
-
-    .cart-totals {
-      display: flex;
-      justify-content: space-between;
-      font-weight: bold;
-      font-size: 0.85rem;
-      margin-bottom: 8px;
-      border-top: 1px solid #eee;
-      padding-top: 6px;
-    }
-
-    .form-group {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .form-group input, .form-group select {
-      flex: 1;
-      padding: 6px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      background: #fff;
-    }
-
-    .checkout-btn {
-      width: 100%;
-      background: var(--verde-wa);
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    .checkout-btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delicias Australes</title>
+    <style>
+        :root { --rosa-pastel: #ffd1dc; --celeste-pastel: #d4f0f7; --rosa-oscuro: #d47a96; --verde-wa: #25d366; --texto: #4a4a4a; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #fffafb; background-image: radial-gradient(circle at 10% 20%, var(--rosa-pastel) 0%, transparent 40%), radial-gradient(circle at 90% 80%, var(--celeste-pastel) 0%, transparent 40%); background-attachment: fixed; padding-bottom: 250px; color: var(--texto); }
+        header { text-align: center; padding: 25px; background: rgba(255,255,255,0.85); backdrop-filter: blur(5px); position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .container { max-width: 500px; margin: 20px auto; padding: 0 15px; }
+        .tabs { display: flex; overflow-x: auto; gap: 10px; margin-bottom: 20px; padding-bottom: 5px; }
+        .tab-btn { padding: 8px 16px; background: white; border: 1px solid var(--rosa-pastel); border-radius: 20px; white-space: nowrap; cursor: pointer; font-weight: bold; }
+        .tab-btn.active { background: var(--rosa-oscuro); color: white; border-color: var(--rosa-oscuro); }
+        .section { display: none; }
+        .section.active { display: block; }
+        .card { background: white; padding: 15px; margin-bottom: 12px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .card h3 { font-size: 1rem; color: var(--texto); }
+        .card p { font-size: 0.85rem; color: #777; }
+        .price { font-weight: bold; color: var(--rosa-oscuro); display: block; margin-top: 4px; }
+        .btn-add { background: var(--celeste-pastel); border: none; padding: 8px 15px; border-radius: 8px; color: #2b6c7a; font-weight: bold; cursor: pointer; }
+        .cart-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 15px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); border-top-left-radius: 20px; border-top-right-radius: 20px; z-index: 100; }
+        .cart-list { max-height: 100px; overflow-y: auto; margin-bottom: 10px; font-size: 0.85rem; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid #eee; padding-bottom: 2px; }
+        .total-area { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px; border-top: 2px solid #eee; padding-top: 8px; font-size: 1.1rem; }
+        .btn-confirm { width: 100%; padding: 15px; background: var(--verde-wa); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+    </style>
 </head>
 <body>
 
-  <header>
-    <img src="logo.png" alt="Delicias Australes" class="logo" onerror="this.style.display='none'">
-    <h1>Delicias Australes</h1>
-    <div class="subtitle">Pastelería Artesanal</div>
-    <div class="social-btns">
-      <a href="https://instagram.com/deliciasaustrales01" target="_blank" class="btn-social btn-ig">📸 Instagram</a>
-      <a href="https://wa.me/5491112345678" target="_blank" class="btn-social btn-wa">📲 WhatsApp Sol</a>
-    </div>
-  </header>
+<header><h1>Delicias Australes</h1></header>
 
-  <div class="container">
-    <div class="info-card">
-      📌 <b>Información Importante:</b><br>
-      • Pedidos con mínimo 48 hs de anticipación.<br>
-      • Reserva confirmada únicamente con el 20% de seña.
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="show('docenas')">🍩 Docenas</button>
+        <button class="tab-btn" onclick="show('tartas')">🥧 Tartas</button>
     </div>
 
-    <!-- Categorías -->
-    <div class="tabs-container">
-      <button class="tab-btn active" onclick="showCategory('docenas')">🍩 Docenas</button>
-      <button class="tab-btn" onclick="showCategory('desayunos')">☀️ Desayunos</button>
-      <button class="tab-btn" onclick="showCategory('tartas')">🥧 Tartas</button>
-      <button class="tab-btn" onclick="showCategory('brownies')">🍫 Brownies & Cheesecakes</button>
-      <button class="tab-btn" onclick="showCategory('combos-dulces')">🍰 Combos Dulces</button>
-      <button class="tab-btn" onclick="showCategory('combos-salados')">🥐 Combos Salados</button>
-    </div>
-
-    <!-- Lista de Productos -->
-    <div id="docenas" class="category-section active">
-      <div class="product-card">
-        <div class="product-info">
-          <h3>Donitas Decoradas x12</h3>
-          <p>Docena de rosquitas decoradas</p>
-          <div class="product-price">$12.000</div>
+    <div id="docenas" class="section active">
+        <div class="card">
+            <div><h3>Donitas Decoradas</h3><p>x12 unidades</p><span class="price">$12.000</span></div>
+            <button class="btn-add" onclick="add('Donitas Decoradas', 12000)">+ Agregar</button>
         </div>
-        <button class="add-btn" onclick="addToCart('Donitas Decoradas x12', 12000)">+ Agregar</button>
-      </div>
-      <div class="product-card">
-        <div class="product-info">
-          <h3>Cupcakes Temáticos x12</h3>
-          <p>Con cobertura de buttercream</p>
-          <div class="product-price">$15.000</div>
+    </div>
+    
+    <div id="tartas" class="section">
+        <div class="card">
+            <div><h3>Lemon Pie</h3><p>22cm artesanal</p><span class="price">$14.000</span></div>
+            <button class="btn-add" onclick="add('Lemon Pie', 14000)">+ Agregar</button>
         </div>
-        <button class="add-btn" onclick="addToCart('Cupcakes x12', 15000)">+ Agregar</button>
-      </div>
     </div>
+</div>
 
-    <div id="desayunos" class="category-section">
-      <div class="product-card">
-        <div class="product-info">
-          <h3>Desayuno Standard</h3>
-          <p>Taza, infusiones, 1 mini tarta y masas</p>
-          <div class="product-price">$22.000</div>
-        </div>
-        <button class="add-btn" onclick="addToCart('Desayuno Standard', 22000)">+ Agregar</button>
-      </div>
+<div class="cart-bar">
+    <div class="cart-list" id="list">El carrito está vacío</div>
+    <div class="total-area">
+        <span>Total: $<span id="total">0</span></span>
+        <span style="color:var(--rosa-oscuro)">Seña: $<span id="seña">0</span></span>
     </div>
+    <button class="btn-confirm" onclick="send()">Confirmar Pedido vía WhatsApp</button>
+</div>
 
-    <div id="tartas" class="category-section">
-      <div class="product-card">
-        <div class="product-info">
-          <h3>Tarta Lemon Pie (22cm)</h3>
-          <p>Masa sablée, crema de limón y merengue</p>
-          <div class="product-price">$14.000</div>
-        </div>
-        <button class="add-btn" onclick="addToCart('Lemon Pie 22cm', 14000)">+ Agregar</button>
-      </div>
-    </div>
-
-    <div id="brownies" class="category-section">
-      <div class="product-card">
-        <div class="product-info">
-          <h3>Cheesecake de Frutos Rojos</h3>
-          <p>Molde de 20cm</p>
-          <div class="product-price">$18.000</div>
-        </div>
-        <button class="add-btn" onclick="addToCart('Cheesecake Frutos Rojos', 18000)">+ Agregar</button>
-      </div>
-    </div>
-
-    <div id="combos-dulces" class="category-section">
-      <div class="product-card">
-        <div class="product-info">
-          <h3>Combo Cumpleaños Dulce</h3>
-          <p>1 Tarta + 12 Cupcakes + 12 Cookies</p>
-          <div class="product-price">$35.000</div>
-        </div>
-        <button class="add-btn" onclick="addToCart('Combo Cumple Dulce', 35000)">+ Agregar</button>
-      </div>
-    </div>
-
-    <div id="combos-salados" class="category-section">
-      <div class="product-card">
-        <div class="product-info">
-          <h3>Combo Salado Eventos</h3>
-          <p>12 Chips + 12 Pizzetas + 12 Empanaditas</p>
-          <div class="product-price">$28.000</div>
-        </div>
-        <button class="add-btn" onclick="addToCart('Combo Salado Eventos', 28000)">+ Agregar</button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Carrito Flotante -->
-  <div class="cart-bar">
-    <div class="cart-summary">
-      <div class="cart-items" id="cartItems">
-        <p style="color: #888;">El carrito está vacío</p>
-      </div>
-      
-      <div class="cart-totals">
-        <span>Total: $<span id="cartTotal">0</span></span>
-        <span style="color: var(--rosa-oscuro);">Seña (20%): $<span id="cartDeposit">0</span></span>
-      </div>
-
-      <div class="form-group">
-        <input type="date" id="deliveryDate">
-        <select id="deliveryType">
-          <option value="Retiro en Taller">Retiro en Taller</option>
-          <option value="Envío Zona Sur">Envío Zona Sur</option>
-          <option value="Envío Zona Norte">Envío Zona Norte</option>
-        </select>
-      </div>
-
-      <button id="sendBtn" class="checkout-btn" onclick="sendOrder()" disabled>
-        📲 Confirmar Pedido por WhatsApp
-      </button>
-    </div>
-  </div>
-
-  <script>
+<script>
     let cart = [];
-
-    function showCategory(catId) {
-      document.querySelectorAll('.category-section').forEach(sec => sec.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      
-      document.getElementById(catId).classList.add('active');
-      event.target.classList.add('active');
+    function show(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.target.classList.add('active');
     }
-
-    function addToCart(name, price) {
-      cart.push({ name, price });
-      updateCartUI();
+    function add(name, price) { cart.push({name, price}); update(); }
+    function update() {
+        let list = document.getElementById('list');
+        let total = 0;
+        list.innerHTML = cart.length === 0 ? "El carrito está vacío" : 
+            cart.map((i, idx) => `<div class="cart-item">${i.name} - $${i.price.toLocaleString()} <span style="color:red; cursor:pointer" onclick="cart.splice(${idx},1); update()">✕</span></div>`).join('');
+        cart.forEach(i => total += i.price);
+        document.getElementById('total').innerText = total.toLocaleString();
+        document.getElementById('seña').innerText = (total * 0.2).toLocaleString();
     }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      updateCartUI();
+    function send() {
+        if(cart.length === 0) return alert("Agregá productos primero");
+        let msg = "Hola! Quiero realizar este pedido:\n" + cart.map(i => i.name + ": $" + i.price.toLocaleString()).join('\n') + "\n\nTotal: $" + document.getElementById('total').innerText + "\nSeña (20%): $" + document.getElementById('seña').innerText;
+        window.open('https://wa.me/5491112345678?text=' + encodeURIComponent(msg));
+        cart = []; update();
     }
-
-    function updateCartUI() {
-      const itemsContainer = document.getElementById('cartItems');
-      const totalEl = document.getElementById('cartTotal');
-      const depositEl = document.getElementById('cartDeposit');
-      const sendBtn = document.getElementById('sendBtn');
-
-      if (cart.length === 0) {
-        itemsContainer.innerHTML = '<p style="color: #888;">El carrito está vacío</p>';
-        totalEl.textContent = '0';
-        depositEl.textContent = '0';
-        sendBtn.disabled = true;
-        return;
-      }
-
-      itemsContainer.innerHTML = '';
-      let total = 0;
-
-      cart.forEach((item, index) => {
-        total += item.price;
-        itemsContainer.innerHTML += `
-          <div class="cart-item">
-            <span>${item.name} ($${item.price.toLocaleString('es-AR')})</span>
-            <span class="remove-btn" onclick="removeFromCart(${index})">✕</span>
-          </div>
-        `;
-      });
-
-      totalEl.textContent = total.toLocaleString('es-AR');
-      depositEl.textContent = (total * 0.20).toLocaleString('es-AR');
-      sendBtn.disabled = false;
-    }
-
-    function sendOrder() {
-      if (cart.length === 0) return;
-
-      const date = document.getElementById('deliveryDate').value || 'Sin definir';
-      const delivery = document.getElementById('deliveryType').value;
-      
-      let message = `*¡Hola Delicias Australes! Quiero realizar un pedido:*\n\n`;
-      let total = 0;
-
-      cart.forEach(item => {
-        message += `• ${item.name} - $${item.price.toLocaleString('es-AR')}\n`;
-        total += item.price;
-      });
-
-      const deposit = total * 0.20;
-
-      message += `\n*Total:* $${total.toLocaleString('es-AR')}`;
-      message += `\n*Seña 20%:* $${deposit.toLocaleString('es-AR')}`;
-      message += `\n*Fecha estimada:* ${date}`;
-      message += `\n*Modalidad:* ${delivery}`;
-
-      const phone = "5491112345678"; 
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
-      window.open(url, '_blank');
-
-      cart = [];
-      updateCartUI();
-    }
-  </script>
+</script>
 </body>
-  </html>
-  
+</html>

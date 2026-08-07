@@ -12,45 +12,215 @@
             --fondo: #fce7f3; 
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--fondo); padding-bottom: 150px; color: #334155; }
+        body { background-color: var(--fondo); padding-bottom: 180px; color: #334155; }
         
-        header { text-align: center; padding: 12px; background: white; border-bottom: 2px solid #bae6fd; }
-        header h1 { font-size: 1.3rem; color: #1e293b; }
-        .ig-btn { display: inline-block; margin-top: 5px; font-size: 0.8rem; color: var(--rosa-oscuro); text-decoration: none; font-weight: bold; border: 1px solid var(--rosa-oscuro); padding: 3px 10px; border-radius: 12px; }
+        /* CABECERA REDISEÑADA */
+        header { 
+            text-align: center; 
+            padding: 16px 10px; 
+            background: white; 
+            border-bottom: 2px solid #bae6fd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        header h1 { 
+            font-size: 1.4rem; 
+            color: #0f172a; 
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
         
-        /* Pestañas */
-        .tabs { display: flex; overflow-x: auto; gap: 6px; padding: 10px; background: white; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .tab-btn { padding: 8px 12px; border-radius: 20px; border: 1px solid #bae6fd; background: white; color: var(--celeste); font-weight: bold; font-size: 0.75rem; white-space: nowrap; cursor: pointer; }
-        .tab-btn.active { background: var(--rosa-oscuro); color: white; border-color: var(--rosa-oscuro); }
+        .contact-pills {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .phone-badge {
+            background: #e0f2fe;
+            color: var(--celeste);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid #bae6fd;
+        }
+
+        .ig-btn { 
+            display: inline-flex; 
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem; 
+            color: var(--rosa-oscuro); 
+            text-decoration: none; 
+            font-weight: 700; 
+            background: #fce7f3;
+            border: 1px solid #fbcfe8; 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+        }
+        
+        /* PESTAÑAS (BURBUJITAS) */
+        .tabs { 
+            display: flex; 
+            overflow-x: auto; 
+            gap: 6px; 
+            padding: 10px; 
+            background: white; 
+            position: sticky; 
+            top: 0; 
+            z-index: 10; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+            scrollbar-width: none;
+        }
+        .tab-btn { 
+            padding: 8px 14px; 
+            border-radius: 20px; 
+            border: 1px solid #bae6fd; 
+            background: white; 
+            color: var(--celeste); 
+            font-weight: 700; 
+            font-size: 0.75rem; 
+            white-space: nowrap; 
+            cursor: pointer; 
+        }
+        .tab-btn.active { 
+            background: var(--rosa-oscuro); 
+            color: white; 
+            border-color: var(--rosa-oscuro); 
+        }
         
         .section { display: none; padding: 10px; max-width: 500px; margin: 0 auto; }
         .section.active { display: block; }
         
-        .card { background: white; padding: 10px; margin-bottom: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--celeste); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        /* TARJETAS DE PRODUCTO */
+        .card { 
+            background: white; 
+            padding: 10px 12px; 
+            margin-bottom: 8px; 
+            border-radius: 8px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-left: 4px solid var(--celeste); 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+        }
         .card-info { flex: 1; padding-right: 8px; }
         .card-info h3 { font-size: 0.85rem; margin-bottom: 2px; }
         .card-info p { font-size: 0.7rem; color: #64748b; }
-        .price { font-weight: bold; color: var(--rosa-oscuro); font-size: 0.85rem; display: block; margin-top: 2px; }
+        .price { font-weight: 700; color: var(--rosa-oscuro); font-size: 0.85rem; display: block; margin-top: 2px; }
         
-        .btn-add { background: #bae6fd; border: none; padding: 6px 10px; border-radius: 5px; color: var(--celeste); font-weight: bold; font-size: 0.75rem; cursor: pointer; white-space: nowrap; }
-        .size-select { font-size: 0.75rem; padding: 2px 4px; margin-top: 4px; border: 1px solid #bae6fd; border-radius: 4px; background: #f8fafc; }
+        .btn-add { 
+            background: #bae6fd; 
+            border: none; 
+            padding: 6px 10px; 
+            border-radius: 6px; 
+            color: var(--celeste); 
+            font-weight: 700; 
+            font-size: 0.75rem; 
+            cursor: pointer; 
+            white-space: nowrap; 
+        }
+        .size-select { 
+            font-size: 0.75rem; 
+            padding: 2px 4px; 
+            margin-top: 4px; 
+            border: 1px solid #bae6fd; 
+            border-radius: 4px; 
+            background: #f8fafc; 
+        }
         
-        /* Info envíos */
-        .info-box { background: white; padding: 15px; border-radius: 8px; margin-top: 5px; font-size: 0.85rem; line-height: 1.6; border: 1px solid #fbcfe8; }
+        /* INFO ENVIOS */
+        .info-box { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-top: 5px; 
+            font-size: 0.85rem; 
+            line-height: 1.6; 
+            border: 1px solid #fbcfe8; 
+        }
         .info-box h3 { color: var(--rosa-oscuro); margin-bottom: 8px; }
 
-        /* Carrito fijo */
-        .cart-bar { position: fixed; bottom: 0; width: 100%; background: white; padding: 10px 15px; box-shadow: 0 -3px 10px rgba(0,0,0,0.1); border-top: 2px solid #bae6fd; z-index: 100; }
-        .cart-info { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; }
-        .btn-wa { display: block; width: 100%; padding: 10px; background: var(--verde-wa); color: white; text-align: center; font-weight: bold; border-radius: 6px; text-decoration: none; border: none; font-size: 0.85rem; cursor: pointer; }
+        /* BARRA DE CARRITO INFERIOR */
+        .cart-bar { 
+            position: fixed; 
+            bottom: 0; 
+            width: 100%; 
+            background: white; 
+            padding: 12px 15px; 
+            box-shadow: 0 -3px 10px rgba(0,0,0,0.1); 
+            border-top: 2px solid #bae6fd; 
+            z-index: 100; 
+        }
+        .date-picker-container {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .date-picker-container label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #475569;
+        }
+        .date-picker-container input {
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid #bae6fd;
+            background: #f8fafc;
+        }
+        
+        .cart-info { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            margin-bottom: 8px; 
+        }
+
+        .btn-clear {
+            background: #f1f5f9;
+            color: #64748b;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .btn-wa { 
+            display: block; 
+            width: 100%; 
+            padding: 10px; 
+            background: var(--verde-wa); 
+            color: white; 
+            text-align: center; 
+            font-weight: 700; 
+            border-radius: 6px; 
+            text-decoration: none; 
+            border: none; 
+            font-size: 0.85rem; 
+            cursor: pointer; 
+        }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Delicias Australes</h1>
-    <p style="font-size: 0.75rem; font-weight: bold; margin-top: 2px;">PEDIDOS: 2974219406 (SOL)</p>
-    <a href="https://instagram.com/TU_USUARIO" class="ig-btn" target="_blank">Instagram 📸</a>
+    <div class="contact-pills">
+        <span class="phone-badge">📞 2974219406 (Sol)</span>
+        <!-- REEMPLAZÁ 'TU_USUARIO' POR TU INSTAGRAM REAL -->
+        <a href="https://instagram.com/TU_USUARIO" class="ig-btn" target="_blank">📸 Instagram</a>
+    </div>
 </header>
 
 <div class="tabs">
@@ -63,7 +233,7 @@
     <button class="tab-btn" onclick="show('info', event)">🚚 Envíos / Info</button>
 </div>
 
-<!-- TARTAS DULCES (CADA UNA SINGULAR) -->
+<!-- TARTAS DULCES (CADA UNA INDIVIDUAL) -->
 <div id="tartas" class="section active">
     <div class="card">
         <div class="card-info"><h3>Gelatina sin Frutas</h3>
@@ -230,13 +400,20 @@
     </div>
 </div>
 
-<!-- BARRA DE CARRITO -->
+<!-- BARRA DE CARRITO (CON FECHA Y VACIAR) -->
 <div class="cart-bar">
+    <div class="date-picker-container">
+        <label for="fecha-entrega">📅 Fecha de entrega/retiro:</label>
+        <input type="date" id="fecha-entrega">
+    </div>
+
     <div class="cart-info">
         <span>Ítems: <strong id="cant">0</strong></span>
         <span>Total: $<strong id="total">0</strong></span>
         <span style="color:var(--rosa-oscuro)">Seña (20%): $<strong id="sena">0</strong></span>
+        <button class="btn-clear" onclick="vaciarCarrito()">🗑️ Vaciar</button>
     </div>
+    
     <button class="btn-wa" onclick="enviarWhatsApp()">Confirmar Pedido WhatsApp</button>
 </div>
 
@@ -264,6 +441,11 @@
         actualizar();
     }
 
+    function vaciarCarrito() {
+        cart = [];
+        actualizar();
+    }
+
     function actualizar() {
         let total = 0;
         cart.forEach(i => total += i.precio);
@@ -279,13 +461,16 @@
             return; 
         }
         
+        let fecha = document.getElementById('fecha-entrega').value;
+        let textoFecha = fecha ? "\n📅 *Fecha requerida:* " + fecha : "";
+
         let total = 0;
         cart.forEach(i => total += i.precio);
         let sena = total * 0.2;
 
         let lista = cart.map(i => "• " + i.nombre + " ($" + i.precio.toLocaleString('es-AR') + ")").join('\n');
         
-        let msg = "¡Hola Sol! Quiero realizar el siguiente pedido:\n\n" + lista + 
+        let msg = "¡Hola Sol! Quiero realizar el siguiente pedido:" + textoFecha + "\n\n" + lista + 
                   "\n\n*Total:* $" + total.toLocaleString('es-AR') + 
                   "\n*Seña (20%):* $" + sena.toLocaleString('es-AR');
 

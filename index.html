@@ -6,54 +6,57 @@
     <title>Delicias Australes</title>
     <style>
         :root { 
-            --rosa-pastel: #ffd1dc; 
-            --celeste-pastel: #d4f0f7; 
-            --rosa-oscuro: #d47a96; 
+            --rosa-pastel: #fbcfe8; 
+            --celeste-pastel: #bae6fd; 
+            --rosa-oscuro: #db2777; 
+            --celeste-oscuro: #0284c7;
             --verde-wa: #25d366; 
-            --texto: #4a4a4a; 
+            --texto: #334155; 
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { 
-            background-color: #fffafb; 
-            background-image: radial-gradient(circle at 10% 20%, var(--rosa-pastel) 0%, transparent 40%), radial-gradient(circle at 90% 80%, var(--celeste-pastel) 0%, transparent 40%); 
+            background-color: #f0f9ff; 
+            /* Fondo degrade bien marcado entre Rosa y Celeste */
+            background-image: linear-gradient(135deg, #fce7f3 0%, #e0f2fe 100%);
             background-attachment: fixed; 
-            padding-bottom: 280px; 
+            padding-bottom: 220px; 
             color: var(--texto); 
         }
         header { 
             text-align: center; 
-            padding: 20px; 
-            background: rgba(255,255,255,0.9); 
+            padding: 15px; 
+            background: rgba(255,255,255,0.95); 
             backdrop-filter: blur(5px); 
             position: sticky; 
             top: 0; 
             z-index: 50; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
+            border-bottom: 3px solid var(--celeste-pastel);
         }
         .logo-img { 
-            width: 85px; 
-            height: 85px; 
+            width: 75px; 
+            height: 75px; 
             border-radius: 50%; 
             border: 3px solid var(--rosa-oscuro); 
             object-fit: cover; 
-            margin-bottom: 8px; 
+            margin-bottom: 5px; 
             display: block;
             margin-left: auto;
             margin-right: auto;
         }
-        .container { max-width: 500px; margin: 20px auto; padding: 0 15px; }
+        .container { max-width: 500px; margin: 15px auto; padding: 0 15px; }
         .tabs { 
             display: flex; 
             overflow-x: auto; 
             gap: 8px; 
-            margin-bottom: 20px; 
+            margin-bottom: 15px; 
             padding-bottom: 5px; 
             scrollbar-width: none; 
         }
         .tab-btn { 
             padding: 8px 14px; 
             background: white; 
-            border: 1px solid var(--rosa-pastel); 
+            border: 2px solid var(--celeste-pastel); 
             border-radius: 20px; 
             white-space: nowrap; 
             cursor: pointer; 
@@ -69,23 +72,24 @@
             padding: 12px; 
             margin-bottom: 10px; 
             border-radius: 12px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+            box-shadow: 0 3px 8px rgba(0,0,0,0.06); 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
+            border-left: 4px solid var(--celeste-oscuro);
         }
         .card h3 { font-size: 0.9rem; }
-        .card p { font-size: 0.75rem; color: #777; }
+        .card p { font-size: 0.75rem; color: #64748b; }
         .price { font-weight: bold; color: var(--rosa-oscuro); display: block; margin-top: 3px; }
         .btn-add { 
             background: var(--celeste-pastel); 
             border: none; 
-            padding: 7px 10px; 
+            padding: 8px 12px; 
             border-radius: 6px; 
-            color: #2b6c7a; 
+            color: var(--celeste-oscuro); 
             font-weight: bold; 
             cursor: pointer; 
-            font-size: 0.75rem; 
+            font-size: 0.8rem; 
         }
         .cart-bar { 
             position: fixed; 
@@ -93,26 +97,27 @@
             left: 0; 
             width: 100%; 
             background: white; 
-            padding: 15px; 
+            padding: 12px 15px; 
             box-shadow: 0 -5px 15px rgba(0,0,0,0.1); 
             border-top-left-radius: 20px; 
             border-top-right-radius: 20px; 
             z-index: 100; 
+            border-top: 3px solid var(--celeste-pastel);
         }
-        .cart-list { max-height: 100px; overflow-y: auto; margin-bottom: 8px; font-size: 0.8rem; }
+        .cart-list { max-height: 80px; overflow-y: auto; margin-bottom: 6px; font-size: 0.8rem; }
         .cart-item { display: flex; justify-content: space-between; margin-bottom: 3px; border-bottom: 1px solid #eee; padding-bottom: 2px; }
-        .total-area { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px; border-top: 2px solid #eee; padding-top: 6px; font-size: 0.95rem; }
+        .total-area { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px; border-top: 2px solid #eee; padding-top: 4px; font-size: 0.9rem; }
         .btn-wa-link { 
             display: block; 
             width: 100%; 
-            padding: 12px; 
+            padding: 10px; 
             background: var(--verde-wa); 
             color: white; 
             text-align: center; 
             text-decoration: none; 
             border-radius: 8px; 
             font-weight: bold; 
-            font-size: 0.95rem; 
+            font-size: 0.9rem; 
             box-shadow: 0 3px 6px rgba(0,0,0,0.1);
         }
     </style>
@@ -120,7 +125,6 @@
 <body>
 
 <header>
-    <!-- Muestra el logo.png si existe en GitHub -->
     <img src="logo.png" alt="Delicias Australes Logo" class="logo-img" onerror="this.style.display='none'">
     <h1>Delicias Australes</h1>
 </header>
@@ -149,6 +153,10 @@
             <div><h3>Alfajorcitos de Maicena</h3><p>x12 unidades</p><span class="price">$8.500</span></div>
             <button class="btn-add" onclick="add('Alfajores Maicena x12', 8500)">+ Agregar</button>
         </div>
+        <div class="card">
+            <div><h3>Conitos de DDL</h3><p>x12 unidades con baño de chocolate</p><span class="price">$10.000</span></div>
+            <button class="btn-add" onclick="add('Conitos DDL x12', 10000)">+ Agregar</button>
+        </div>
     </div>
     
     <!-- Desayunos -->
@@ -160,6 +168,10 @@
         <div class="card">
             <div><h3>Desayuno Premium</h3><p>Taza, jugos, tarta chica, sándwiches y donas</p><span class="price">$28.000</span></div>
             <button class="btn-add" onclick="add('Desayuno Premium', 28000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Box Aniversario</h3><p>Completo + minitorta decorada + globo</p><span class="price">$32.000</span></div>
+            <button class="btn-add" onclick="add('Box Aniversario', 32000)">+ Agregar</button>
         </div>
     </div>
 
@@ -177,17 +189,37 @@
             <div><h3>Tarta Toffi</h3><p>Base sablée, DDL y cobertura ganache</p><span class="price">$14.500</span></div>
             <button class="btn-add" onclick="add('Tarta Toffi', 14500)">+ Agregar</button>
         </div>
+        <div class="card">
+            <div><h3>Tarta de Frutillas</h3><p>Crema chantilly y frutillas frescas</p><span class="price">$16.500</span></div>
+            <button class="btn-add" onclick="add('Tarta de Frutillas', 16500)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Pasta Frola</h3><p>Membrillo o Batata (22cm)</p><span class="price">$10.000</span></div>
+            <button class="btn-add" onclick="add('Pasta Frola', 10000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Tarta Chocotorta</h3><p>Galletitas chocolinas y crema chocotorta</p><span class="price">$15.000</span></div>
+            <button class="btn-add" onclick="add('Tarta Chocotorta', 15000)">+ Agregar</button>
+        </div>
     </div>
 
     <!-- Brownies & Cheesecakes -->
     <div id="brownies" class="section">
         <div class="card">
-            <div><h3>Cheesecake Frutos Rojos</h3><p>Molde 20cm</p><span class="price">$18.000</span></div>
+            <div><h3>Cheesecake Frutos Rojos</h3><p>Molde 20cm artesanal</p><span class="price">$18.000</span></div>
             <button class="btn-add" onclick="add('Cheesecake Frutos Rojos', 18000)">+ Agregar</button>
         </div>
         <div class="card">
             <div><h3>Brownie con DDL y Merengue</h3><p>Clásico bomba artesanal</p><span class="price">$16.000</span></div>
             <button class="btn-add" onclick="add('Brownie Especial', 16000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Mega Brownie Goloso</h3><p>Con DDL, Oreo, KitKat y Chocolinas</p><span class="price">$20.000</span></div>
+            <button class="btn-add" onclick="add('Mega Brownie Goloso', 20000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Marquise de Chocolate</h3><p>Sin harina, super húmedo</p><span class="price">$17.500</span></div>
+            <button class="btn-add" onclick="add('Marquise Chocolate', 17500)">+ Agregar</button>
         </div>
     </div>
 
@@ -197,6 +229,18 @@
             <div><h3>Combo Cumple Dulce</h3><p>1 Tarta + 12 Cupcakes + 12 Cookies</p><span class="price">$35.000</span></div>
             <button class="btn-add" onclick="add('Combo Cumple Dulce', 35000)">+ Agregar</button>
         </div>
+        <div class="card">
+            <div><h3>Combo Merienda</h3><p>1 Tarta chica + 6 Donitas + 6 Alfajores</p><span class="price">$21.000</span></div>
+            <button class="btn-add" onclick="add('Combo Merienda', 21000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Combo Mini Tartas</h3><p>4 Mini tartas a elección</p><span class="price">$19.000</span></div>
+            <button class="btn-add" onclick="add('Combo Mini Tartas x4', 19000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Combo Pop</h3><p>6 Cupcakes + 6 Donitas decoradas</p><span class="price">$14.500</span></div>
+            <button class="btn-add" onclick="add('Combo Pop', 14500)">+ Agregar</button>
+        </div>
     </div>
 
     <!-- Combos Salados -->
@@ -204,6 +248,10 @@
         <div class="card">
             <div><h3>Combo Salado Eventos</h3><p>12 Chips + 12 Pizzetas + 12 Empanaditas</p><span class="price">$28.000</span></div>
             <button class="btn-add" onclick="add('Combo Salado Eventos', 28000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Combo Miga y Saladitos</h3><p>12 Triángulos Miga + 12 Fosforitos D&Q</p><span class="price">$24.000</span></div>
+            <button class="btn-add" onclick="add('Combo Miga y Saladitos', 24000)">+ Agregar</button>
         </div>
     </div>
 </div>
@@ -268,7 +316,6 @@
                   "\n\nTotal: $" + total.toLocaleString('es-AR') + 
                   "\nSeña (20%): $" + seña.toLocaleString('es-AR');
 
-        // REEMPLAZA ESTE NÚMERO POR EL TUYO:
         let miNumero = "5491112345678"; 
 
         let waUrl = 'https://wa.me/' + miNumero + '?text=' + encodeURIComponent(msg);

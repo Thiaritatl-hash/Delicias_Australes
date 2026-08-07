@@ -13,49 +13,51 @@
         
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         
-        /* FONDO UNIFICADO CON DEGRADÉ */
+        /* FONDO UNIFICADO CON DEGRADÉ ROSA Y CELESTE */
         body { 
             background: linear-gradient(135deg, #ffffff 0%, #fce7f3 50%, #e0f2fe 100%); 
             background-attachment: fixed; 
-            padding-bottom: 100px; 
+            padding-bottom: 110px; 
             color: #334155; 
         }
         
         /* ENCABEZADO TRANSPARENTE */
         header { 
             text-align: center; 
-            padding: 20px 10px; 
+            padding: 15px 10px; 
             background: transparent;
         }
         
         .logo-img { 
-            max-width: 150px; 
+            max-width: 140px; 
             height: auto; 
-            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1)); 
             margin-bottom: 10px;
+            filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.12)); 
         }
 
+        /* Banner de Aviso */
         .info-banner { 
-            background: rgba(254, 243, 199, 0.8); 
+            background: rgba(254, 243, 199, 0.9); 
             color: #92400e; 
-            padding: 8px; 
+            padding: 10px; 
             font-size: 0.75rem; 
-            border-radius: 12px; 
-            margin: 5px auto; 
-            max-width: 400px; 
+            border-radius: 8px; 
+            margin: 10px auto; 
+            max-width: 500px; 
+            border: 1px solid #fde68a; 
+            text-align: center; 
             backdrop-filter: blur(4px);
         }
 
         .contact-pills { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
-        .wa-link, .ig-btn { padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .wa-link { background: var(--verde-wa); color: white; }
-        .ig-btn { background: white; color: var(--rosa-oscuro); }
+        .wa-link { background: var(--verde-wa); color: white; padding: 6px 15px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .ig-btn { background: #fce7f3; color: var(--rosa-oscuro); padding: 6px 15px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.8rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        /* PESTAÑAS TRANSPARENTES */
+        /* PESTAÑAS TRANSPARENTES SOBRE EL DEGRADÉ */
         .tabs { 
             display: flex; 
-            justify-content: center; 
-            gap: 8px; 
+            overflow-x: auto; 
+            gap: 6px; 
             padding: 10px; 
             background: transparent; 
             position: sticky; 
@@ -63,90 +65,244 @@
             z-index: 10; 
         }
         .tab-btn { 
-            padding: 8px 16px; 
+            padding: 8px 14px; 
             border-radius: 20px; 
-            border: 1px solid rgba(255,255,255,0.5); 
-            background: rgba(255, 255, 255, 0.6); 
+            border: 1px solid #bae6fd; 
+            background: rgba(255, 255, 255, 0.85); 
             color: var(--celeste); 
             font-weight: 700; 
+            font-size: 0.75rem; 
+            white-space: nowrap; 
             cursor: pointer; 
             backdrop-filter: blur(4px);
         }
         .tab-btn.active { background: var(--rosa-oscuro); color: white; border-color: var(--rosa-oscuro); }
         
-        /* SECCIONES Y PRODUCTOS */
         .section { display: none; padding: 10px; max-width: 500px; margin: 0 auto; }
         .section.active { display: block; }
         
-        .card { background: rgba(255, 255, 255, 0.85); padding: 15px; margin-bottom: 10px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--celeste); backdrop-filter: blur(4px); }
-        .price { font-weight: 800; color: var(--rosa-oscuro); display: block; }
-        .btn-add { background: var(--celeste); color: white; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+        .card { background: rgba(255, 255, 255, 0.9); padding: 12px; margin-bottom: 8px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--celeste); backdrop-filter: blur(4px); }
+        .card-info h3 { font-size: 0.9rem; }
+        .price { font-weight: 700; color: var(--rosa-oscuro); display: block; }
+        .btn-add { background: var(--celeste); color: white; border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
         
         /* BARRA INFERIOR */
-        .cart-bar { position: fixed; bottom: 0; width: 100%; background: rgba(255, 255, 255, 0.95); padding: 15px; border-top: 1px solid #bae6fd; display: flex; justify-content: space-between; align-items: center; z-index: 50; }
-        .btn-open-modal { background: var(--rosa-oscuro); color: white; border: none; padding: 10px 20px; border-radius: 25px; font-weight: bold; }
+        .cart-bar { position: fixed; bottom: 0; width: 100%; background: rgba(255, 255, 255, 0.95); padding: 12px 15px; box-shadow: 0 -3px 10px rgba(0,0,0,0.1); border-top: 2px solid #bae6fd; z-index: 90; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(6px); }
+        .cart-bar-info { font-size: 0.85rem; font-weight: 700; }
+        .btn-open-modal { background: var(--rosa-oscuro); color: white; border: none; padding: 10px 18px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
 
-        /* MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: white; width: 90%; max-width: 450px; padding: 20px; border-radius: 20px; }
-        .form-group { margin-bottom: 15px; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 10px; }
-        .btn-wa { background: var(--verde-wa); color: white; width: 100%; padding: 15px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; }
+        /* VENTANA EMERGENTE (MODAL) SUPERPUESTA */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; width: 90%; max-width: 450px; max-height: 90vh; overflow-y: auto; border-radius: 16px; padding: 20px; position: relative; }
+        .close-modal { position: absolute; top: 12px; right: 16px; font-size: 24px; font-weight: bold; color: #888; cursor: pointer; }
+
+        .modal-title { font-size: 1.1rem; color: var(--rosa-oscuro); margin-bottom: 15px; text-align: center; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 0.85rem; }
+        .btn-remove { background: none; border: none; color: #ff3b30; font-size: 18px; font-weight: bold; cursor: pointer; padding: 0 6px; }
+
+        .form-group { margin-top: 12px; }
+        .form-group label { display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; color: #475569; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.85rem; }
+
+        .btn-wa { display: block; width: 100%; padding: 12px; background: var(--verde-wa); color: white; border-radius: 25px; text-align: center; font-weight: 700; cursor: pointer; border: none; margin-top: 15px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
 <header>
     <img src="logo.png" alt="Logo" class="logo-img">
-    <div class="info-banner">⚠️ <b>Seña del 20%</b> necesaria para confirmar.</div>
+    
+    <div class="info-banner">
+        ⚠️ <b>Seña del 20% necesaria</b> para confirmar tu pedido. <br>
+        Envíos con recargo según zona. ¡Consultanos!
+    </div>
+
     <div class="contact-pills">
-        <a href="https://wa.me/5492974219406" class="wa-link">💬 WhatsApp</a>
-        <a href="#" class="ig-btn">📸 Instagram</a>
+        <a href="https://wa.me/5492974219406" class="wa-link">💬 WhatsApp Sol</a>
+        <a href="https://instagram.com/TU_USUARIO" class="ig-btn">📸 Instagram</a>
     </div>
 </header>
 
 <div class="tabs">
-    <button class="tab-btn active" onclick="show('tartas', event)">Tartas</button>
-    <button class="tab-btn" onclick="show('combos', event)">Combos</button>
+    <button class="tab-btn active" onclick="show('tartas', event)">🥧 Tartas</button>
+    <button class="tab-btn" onclick="show('combos', event)">🎁 Combos</button>
+    <button class="tab-btn" onclick="show('indiv', event)">🍩 Otros</button>
 </div>
 
+<!-- SECCIÓN TARTAS -->
 <div id="tartas" class="section active">
-    <div class="card"><div><h3>Tarta Toffi</h3><span class="price">$27.000</span></div><button class="btn-add" onclick="add('Tarta Toffi', 27000)">+</button></div>
+    <div class="card"><div class="card-info"><h3>Tarta Toffi</h3><span class="price">$27.000</span></div><button class="btn-add" onclick="add('Tarta Toffi', 27000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Lemon Pie</h3><span class="price">$25.000</span></div><button class="btn-add" onclick="add('Lemon Pie', 25000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Tarta de Frutillas</h3><span class="price">$28.000</span></div><button class="btn-add" onclick="add('Tarta de Frutillas', 28000)">+ Agregar</button></div>
 </div>
 
+<!-- SECCIÓN COMBOS -->
 <div id="combos" class="section">
-    <div class="card"><div><h3>Combo 1</h3><span class="price">$58.000</span></div><button class="btn-add" onclick="add('Combo 1', 58000)">+</button></div>
+    <div class="card"><div class="card-info"><h3>Combo Salado 1</h3><span class="price">$58.000</span></div><button class="btn-add" onclick="add('Combo Salado 1', 58000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Combo Dulce Merienda</h3><span class="price">$45.000</span></div><button class="btn-add" onclick="add('Combo Dulce Merienda', 45000)">+ Agregar</button></div>
 </div>
 
+<!-- SECCIÓN OTROS -->
+<div id="indiv" class="section">
+    <div class="card"><div class="card-info"><h3>Cookies (Docena)</h3><span class="price">$25.000</span></div><button class="btn-add" onclick="add('Cookies (Docena)', 25000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Alfajores de Maicena (x12)</h3><span class="price">$22.000</span></div><button class="btn-add" onclick="add('Alfajores de Maicena (x12)', 22000)">+ Agregar</button></div>
+</div>
+
+<!-- BARRA INFERIOR -->
 <div class="cart-bar">
-    <div>Total: $<span id="total">0</span></div>
-    <button class="btn-open-modal" onclick="abrirModal()">Ver Pedido</button>
+    <div class="cart-bar-info">
+        Ítems: <span id="cant">0</span> | Total: $<span id="total">0</span>
+    </div>
+    <button class="btn-open-modal" onclick="abrirModal()">🛒 Ver Pedido</button>
 </div>
 
-<!-- MODAL -->
+<!-- VENTANA FLOTANTE SUPERPUESTA (MODAL) -->
 <div class="modal-overlay" id="modal-carrito">
     <div class="modal-content">
-        <h2 style="text-align:center; margin-bottom:15px;">Tu Pedido</h2>
-        <div id="cart-items-list" style="margin-bottom:15px; max-height:200px; overflow-y:auto;"></div>
-        <div class="form-group"><input type="date" id="fecha"></div>
-        <div class="form-group"><select id="modalidad"><option>Retiro</option><option>Envío</option></select></div>
-        <button class="btn-wa" onclick="enviarWhatsApp()">Enviar Pedido</button>
+        <span class="close-modal" onclick="cerrarModal()">&times;</span>
+        <h2 class="modal-title">Resumen de tu Pedido</h2>
+
+        <!-- Lista de productos elegidos -->
+        <div id="cart-items-list"></div>
+
+        <!-- Formulario de Pedido -->
+        <div class="form-group">
+            <label for="fecha">Fecha de Entrega/Retiro:</label>
+            <input type="date" id="fecha">
+        </div>
+
+        <div class="form-group">
+            <label for="modalidad">Modalidad de Entrega:</label>
+            <select id="modalidad" onchange="toggleDireccion()">
+                <option value="Retiro por taller / lugar de trabajo">Retiro por taller / lugar de trabajo</option>
+                <option value="Envío a domicilio - Zona Norte">Envío a domicilio - Zona Norte</option>
+                <option value="Envío a domicilio - Zona Sur">Envío a domicilio - Zona Sur</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="group-direccion" style="display: none;">
+            <label for="direccion">Dirección y Barrio:</label>
+            <input type="text" id="direccion" placeholder="Ej: Av. Chile 1234, B° Pueyrredón">
+        </div>
+
+        <div class="form-group">
+            <label for="pago">Método de Pago:</label>
+            <select id="pago">
+                <option value="Transferencia bancaria / Mercado Pago">Transferencia / Mercado Pago</option>
+                <option value="Efectivo">Efectivo</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="notas">Notas especiales (Opcional):</label>
+            <textarea id="notas" rows="2" placeholder="Ej: Para regalo, nota, etc."></textarea>
+        </div>
+
+        <button class="btn-wa" onclick="enviarWhatsApp()">📲 Confirmar y Enviar a WhatsApp</button>
     </div>
 </div>
 
 <script>
     let cart = [];
-    function show(id, e) {
+
+    function show(id, event) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        e.currentTarget.classList.add('active');
+        event.currentTarget.classList.add('active');
     }
-    function add(n, p) { cart.push({n, p}); document.getElementById('total').innerText = cart.reduce((a,b)=>a+b.p, 0).toLocaleString(); }
-    function abrirModal() { document.getElementById('modal-carrito').style.display = 'flex'; }
+
+    function add(nombre, precio) {
+        cart.push({nombre, precio});
+        actualizar();
+    }
+
+    function eliminarItem(index) {
+        cart.splice(index, 1);
+        actualizar();
+        renderCartList();
+    }
+
+    function actualizar() {
+        let total = 0;
+        cart.forEach(i => total += i.precio);
+        document.getElementById('cant').innerText = cart.length;
+        document.getElementById('total').innerText = total.toLocaleString('es-AR');
+    }
+
+    function abrirModal() {
+        document.getElementById('modal-carrito').style.display = 'flex';
+        renderCartList();
+    }
+
+    function cerrarModal() {
+        document.getElementById('modal-carrito').style.display = 'none';
+    }
+
+    function renderCartList() {
+        const container = document.getElementById('cart-items-list');
+        if(cart.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#888; font-size:0.85rem; padding:10px;">El carrito está vacío</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+        cart.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <span>• ${item.nombre} - $${item.precio.toLocaleString('es-AR')}</span>
+                <button class="btn-remove" onclick="eliminarItem(${index})">✖</button>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function toggleDireccion() {
+        const modalidad = document.getElementById('modalidad').value;
+        const groupDireccion = document.getElementById('group-direccion');
+        if (modalidad.includes('Envío')) {
+            groupDireccion.style.display = 'block';
+        } else {
+            groupDireccion.style.display = 'none';
+        }
+    }
+
     function enviarWhatsApp() {
-        let msg = "Pedido: " + cart.map(i => i.n).join(", ");
-        window.open("https://wa.me/5492974219406?text=" + encodeURIComponent(msg));
+        if(cart.length === 0) return alert("El carrito está vacío");
+
+        const fecha = document.getElementById('fecha').value;
+        if(!fecha) return alert("Por favor, seleccioná la fecha de entrega.");
+
+        const modalidad = document.getElementById('modalidad').value;
+        const direccion = document.getElementById('direccion').value;
+        const pago = document.getElementById('pago').value;
+        const notas = document.getElementById('notas').value;
+
+        let total = 0;
+        cart.forEach(i => total += i.precio);
+
+        let lista = cart.map(i => "• " + i.nombre + " ($" + i.precio.toLocaleString('es-AR') + ")").join('\n');
+
+        let msg = "🛒 *NUEVO PEDIDO - Delicias Australes*\n\n";
+        msg += "📅 *Fecha:* " + fecha + "\n";
+        msg += "🚚 *Modalidad:* " + modalidad + "\n";
+        if(modalidad.includes('Envío') && direccion) {
+            msg += "📍 *Dirección:* " + direccion + "\n";
+        }
+        msg += "💳 *Método de Pago:* " + pago + "\n";
+        if(notas) {
+            msg += "📝 *Notas:* " + notas + "\n";
+        }
+        msg += "\n📦 *Detalle del Pedido:*\n" + lista + "\n\n";
+        msg += "*Total:* $" + total.toLocaleString('es-AR');
+
+        window.open("https://wa.me/5492974219406?text=" + encodeURIComponent(msg), '_blank');
+
+        cart = [];
+        actualizar();
+        document.getElementById('notas').value = '';
+        cerrarModal();
     }
 </script>
 </body>

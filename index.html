@@ -5,328 +5,203 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delicias Australes - Menú Digital</title>
     <style>
-        :root { 
-            --rosa-oscuro: #db2777; 
-            --celeste: #0284c7; 
-            --verde-wa: #25d366; 
-        }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        
-        body { 
-            background: linear-gradient(135deg, #ffffff 0%, #fce7f3 50%, #e0f2fe 100%); 
-            background-attachment: fixed; 
-            padding-bottom: 110px; 
-            color: #334155; 
-        }
-        
-        header { 
-            text-align: center; 
-            padding: 15px 10px; 
-            background: transparent;
-        }
-        
-        .logo-img { 
-            max-width: 140px; 
-            height: auto; 
-            margin-bottom: 10px;
-            filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.12)); 
+        :root {
+            --rosa-oscuro: #db2777;
+            --rosa-pastel: #fce7f3;
+            --celeste: #0284c7;
+            --celeste-pastel: #e0f2fe;
+            --verde-wa: #25d366;
+            --texto: #334155;
         }
 
-        .info-banner { 
-            background: rgba(254, 243, 199, 0.9); 
-            color: #92400e; 
-            padding: 10px; 
-            font-size: 0.75rem; 
-            border-radius: 8px; 
-            margin: 10px auto; 
-            max-width: 500px; 
-            border: 1px solid #fde68a; 
-            text-align: center; 
-            backdrop-filter: blur(4px);
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: linear-gradient(135deg, #ffffff 0%, var(--rosa-pastel) 50%, var(--celeste-pastel) 100%); padding-bottom: 120px; color: var(--texto); min-height: 100vh; }
 
-        .contact-pills { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
-        .wa-link { background: var(--verde-wa); color: white; padding: 6px 15px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .ig-btn { background: #fce7f3; color: var(--rosa-oscuro); padding: 6px 15px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.8rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        
-        .tabs { 
-            display: flex; 
-            overflow-x: auto; 
-            gap: 6px; 
-            padding: 10px; 
-            background: transparent; 
-            position: sticky; 
-            top: 0; 
-            z-index: 10; 
-        }
-        .tab-btn { 
-            padding: 8px 14px; 
-            border-radius: 20px; 
-            border: 1px solid #bae6fd; 
-            background: rgba(255, 255, 255, 0.85); 
-            color: var(--celeste); 
-            font-weight: 700; 
-            font-size: 0.75rem; 
-            white-space: nowrap; 
-            cursor: pointer; 
-            backdrop-filter: blur(4px);
-        }
-        .tab-btn.active { background: var(--rosa-oscuro); color: white; border-color: var(--rosa-oscuro); }
-        
-        .section { display: none; padding: 10px; max-width: 500px; margin: 0 auto; }
+        header { text-align: center; padding: 20px 15px 10px; }
+        .logo-img { max-width: 120px; height: auto; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .info-banner { background: #fef3c7; color: #92400e; padding: 10px 15px; font-size: 0.8rem; border-radius: 20px; margin: 12px auto; max-width: 450px; text-align: center; border: 1px solid #fde68a; font-weight: 600; }
+
+        /* Categorías deslizables */
+        .tabs { display: flex; overflow-x: auto; gap: 8px; padding: 10px 15px; position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(5px); border-bottom: 1px solid #f1f5f9; }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tab-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid #bae6fd; background: white; color: var(--celeste); font-weight: 700; font-size: 0.8rem; white-space: nowrap; cursor: pointer; transition: all 0.2s; }
+        .tab-btn.active { background: var(--rosa-oscuro); color: white; border-color: var(--rosa-oscuro); box-shadow: 0 2px 8px rgba(219, 39, 119, 0.3); }
+
+        .section { display: none; padding: 15px; max-width: 500px; margin: 0 auto; }
         .section.active { display: block; }
-        
-        .card { background: rgba(255, 255, 255, 0.9); padding: 12px; margin-bottom: 8px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--celeste); backdrop-filter: blur(4px); gap: 8px; }
+
+        /* Tarjetas de producto standard */
+        .card { background: rgba(255, 255, 255, 0.95); padding: 14px; margin-bottom: 12px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--rosa-oscuro); box-shadow: 0 4px 12px rgba(0,0,0,0.03); gap: 10px; }
         .card-info { flex: 1; }
-        .card-info h3 { font-size: 0.85rem; }
-        .card-info p { font-size: 0.7rem; color: #64748b; margin-top: 2px; }
-        .price { font-weight: 700; color: var(--rosa-oscuro); display: block; font-size: 0.85rem; }
+        .card-info h3 { font-size: 0.95rem; color: #1e293b; margin-bottom: 4px; }
+        .price { font-weight: bold; color: var(--rosa-oscuro); font-size: 0.9rem; }
         
-        .item-select { font-size: 0.75rem; padding: 4px; border-radius: 6px; border: 1px solid #cbd5e1; margin-top: 4px; background: white; }
-        .btn-add { background: var(--celeste); color: white; border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.75rem; white-space: nowrap; }
-        
-        .cart-bar { position: fixed; bottom: 0; width: 100%; background: rgba(255, 255, 255, 0.95); padding: 12px 15px; box-shadow: 0 -3px 10px rgba(0,0,0,0.1); border-top: 2px solid #bae6fd; z-index: 90; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(6px); }
-        .cart-bar-info { font-size: 0.85rem; font-weight: 700; }
-        .btn-open-modal { background: var(--rosa-oscuro); color: white; border: none; padding: 10px 18px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
+        /* Estilo para Flyer del Día del Niño */
+        .flyer-card { background: white; border-radius: 20px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.06); border: 2px solid #fbcfe8; }
+        .flyer-img { width: 100%; height: auto; display: block; object-fit: cover; }
+        .flyer-body { padding: 15px; }
+        .flyer-body h3 { font-size: 1.05rem; color: var(--rosa-oscuro); margin-bottom: 5px; }
+        .flyer-body p { font-size: 0.82rem; color: #64748b; margin-bottom: 12px; line-height: 1.4; }
+        .flyer-footer { display: flex; justify-content: space-between; align-items: center; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: white; width: 90%; max-width: 450px; max-height: 90vh; overflow-y: auto; border-radius: 16px; padding: 20px; position: relative; }
-        .close-modal { position: absolute; top: 12px; right: 16px; font-size: 24px; font-weight: bold; color: #888; cursor: pointer; }
+        .item-select { width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.8rem; background: white; margin-top: 4px; color: var(--texto); }
+        .btn-add { background: var(--celeste); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: bold; white-space: nowrap; transition: transform 0.1s; }
+        .btn-add:active { transform: scale(0.95); }
 
-        .modal-title { font-size: 1.1rem; color: var(--rosa-oscuro); margin-bottom: 15px; text-align: center; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 0.85rem; }
-        .btn-remove { background: none; border: none; color: #ff3b30; font-size: 18px; font-weight: bold; cursor: pointer; padding: 0 6px; }
+        /* Barra de carrito fija */
+        .cart-bar { position: fixed; bottom: 0; width: 100%; background: white; padding: 12px 20px; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; z-index: 90; border-top-left-radius: 20px; border-top-right-radius: 20px; }
+        .cart-info { font-size: 0.85rem; }
+        .cart-info strong { color: var(--rosa-oscuro); font-size: 1.05rem; }
+        .btn-open-modal { background: var(--rosa-oscuro); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85rem; box-shadow: 0 3px 10px rgba(219, 39, 119, 0.3); }
+
+        /* Modal Checkout */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: flex-end; z-index: 1000; backdrop-filter: blur(2px); }
+        .modal-content { background: white; width: 100%; max-width: 500px; border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 20px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 15px; }
+        .modal-header h2 { font-size: 1.1rem; color: var(--rosa-oscuro); }
+        .btn-close { background: #f1f5f9; border: none; font-size: 1.2rem; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; color: #64748b; }
+
+        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e2e8f0; font-size: 0.85rem; }
+        .btn-remove { background: #fee2e2; color: #ef4444; border: none; width: 22px; height: 22px; border-radius: 50%; cursor: pointer; font-weight: bold; margin-left: 8px; }
 
         .form-group { margin-top: 12px; }
-        .form-group label { display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; color: #475569; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.85rem; }
+        .form-group label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 4px; color: #475569; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.85rem; outline: none; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--rosa-oscuro); }
 
-        .btn-wa { display: block; width: 100%; padding: 12px; background: var(--verde-wa); color: white; border-radius: 25px; text-align: center; font-weight: 700; cursor: pointer; border: none; margin-top: 15px; font-size: 0.9rem; }
+        .btn-wa { display: block; width: 100%; padding: 14px; background: var(--verde-wa); color: white; border-radius: 25px; text-align: center; font-weight: bold; border: none; margin-top: 20px; cursor: pointer; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="logo.png" alt="Logo" class="logo-img">
-    
-    <div class="info-banner">
-        ⚠️ <b>Seña del 20% necesaria</b> para confirmar tu pedido. <br>
-        Envíos en Zona Sur y Norte (con recargo). ¡Consultanos!
-    </div>
-
-    <div class="contact-pills">
-        <a href="https://wa.me/5492974219406" class="wa-link">💬 WhatsApp Sol</a>
-        <a href="https://instagram.com/TU_USUARIO" class="ig-btn">📸 Instagram</a>
-    </div>
+    <img src="logo.png" alt="Delicias Australes" class="logo-img" onerror="this.style.display='none'">
+    <h1 style="font-size: 1.2rem; color: var(--rosa-oscuro); margin-top: 5px;">Delicias Australes</h1>
+    <div class="info-banner">⚠️ <b>Seña del 20% necesaria</b> para congelar y confirmar el pedido.</div>
 </header>
 
-<div class="tabs">
-    <button class="tab-btn active" onclick="show('tartas', event)">🥧 Tartas</button>
+<nav class="tabs">
+    <button class="tab-btn active" onclick="show('dia-del-nino', event)">🎈 Día del Niño</button>
+    <button class="tab-btn" onclick="show('tartas', event)">🥧 Tartas</button>
     <button class="tab-btn" onclick="show('combos', event)">🎁 Combos</button>
     <button class="tab-btn" onclick="show('desayunos', event)">☕ Desayunos</button>
-    <button class="tab-btn" onclick="show('indiv', event)">🍩 Repostería</button>
-    <button class="tab-btn" onclick="show('tortas', event)">🎂 Tortas / Varios</button>
+</nav>
+
+<!-- SECCIÓN DÍA DEL NIÑO (UN SOLO FLYER) -->
+<div id="dia-del-nino" class="section active">
+    <div class="flyer-card">
+        <img src="flyer-nino-1.jpg" alt="Especial Día del Niño" class="flyer-img" onerror="this.src='https://placehold.co/500x350/fce7f3/db2777?text=Flyer+Dia+del+Nino'">
+        <div class="flyer-body">
+            <h3>Box Especial Día del Niño</h3>
+            <p>Opción temática especial con tazón de regalo, donitas, alfajores y golosinas.</p>
+            <div class="flyer-footer">
+                <span class="price">$28.000</span>
+                <button type="button" class="btn-add" onclick="add('Box Especial Día del Niño', 28000)">+ Agregar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- TARTAS -->
-<div id="tartas" class="section active">
+<!-- SECCIÓN TARTAS -->
+<div id="tartas" class="section">
     <div class="card">
         <div class="card-info">
-            <h3>Gelatina sin Frutas</h3>
-            <select id="tarta-gelatina" class="item-select">
-                <option value="24000">22 cm - $24.000</option>
-                <option value="29000">28 cm - $29.000</option>
+            <h3>Tarta Toffi</h3>
+            <select id="t-toffi" class="item-select">
+                <option value="27000">22 cm - $27.000</option>
+                <option value="32000">28 cm - $32.000</option>
             </select>
         </div>
-        <button type="button" class="btn-add" onclick="addSel('Gelatina sin Frutas', 'tarta-gelatina')">+ Agregar</button>
+        <button type="button" class="btn-add" onclick="addSel('Tarta Toffi', 't-toffi')">+ Agregar</button>
     </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Yogurt con Frutilla</h3>
-            <select id="tarta-yogurt" class="item-select">
-                <option value="24000">22 cm - $24.000</option>
-                <option value="29000">28 cm - $29.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Yogurt con Frutilla', 'tarta-yogurt')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Chocolate y Crema</h3>
-            <select id="tarta-choco" class="item-select">
-                <option value="24000">22 cm - $24.000</option>
-                <option value="29000">28 cm - $29.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Chocolate y Crema', 'tarta-choco')">+ Agregar</button>
-    </div>
-
-    <div class="card"><div class="card-info"><h3>Toffi</h3><select id="t-toffi" class="item-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Tarta Toffi', 't-toffi')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Lemon Pie / Orange Pie</h3><select id="t-lemon" class="item-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Lemon Pie / Orange Pie', 't-lemon')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Crumble de Manzana</h3><select id="t-crumble" class="item-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Crumble de Manzana', 't-crumble')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Coco y Dulce de Leche</h3><select id="t-coco" class="item-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Coco y DDL', 't-coco')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Pasta Frola</h3><select id="t-frola" class="item-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Pasta Frola', 't-frola')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Ricota</h3><select id="t-ricota" class="item-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Ricota', 't-ricota')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Ricota con Dulce de Leche</h3><select id="t-ricota-ddl" class="item-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Ricota c/ DDL', 't-ricota-ddl')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Ricota con Frambuesas</h3><select id="t-ricota-framb" class="item-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Ricota c/ Frambuesas', 't-ricota-framb')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Ricota con Pasas y Oporto</h3><select id="t-ricota-pasas" class="item-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Ricota c/ Pasas y Oporto', 't-ricota-pasas')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Crema Tipo Galesa</h3><select id="t-galesa" class="item-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Crema Tipo Galesa', 't-galesa')">+ Agregar</button></div>
 </div>
 
-<!-- COMBOS -->
+<!-- SECCIÓN COMBOS -->
 <div id="combos" class="section">
-    <h4 style="margin: 8px 0; color: var(--rosa-oscuro);">Combos Salados</h4>
     <div class="card">
         <div class="card-info">
             <h3>Combo Salado 1</h3>
-            <p>1 doc. Chips J&Q + 1 doc. Empanadas + 1 doc. Árabes de Pollo</p>
             <span class="price">$58.000</span>
         </div>
         <button type="button" class="btn-add" onclick="add('Combo Salado 1', 58000)">+ Agregar</button>
     </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Salado 2</h3>
-            <p>1 doc. Chips J&Q + 1 doc. Pizzetas + 1 doc. Empanadas</p>
-            <span class="price">$53.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Salado 2', 53000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Salado 3</h3>
-            <p>2 doc. Chips J&Q + 1 doc. Chips Salame&Q + 1 doc. Árabes Pollo + 2 doc. Pizzetas</p>
-            <span class="price">$112.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Salado 3', 112000)">+ Agregar</button>
-    </div>
-
-    <h4 style="margin: 15px 0 8px 0; color: var(--rosa-oscuro);">Combos Dulces</h4>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 1</h3>
-            <p>Torta 2kg + 1 doc. Cupcakes + 2 doc. Donitas</p>
-            <span class="price">$89.100</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Dulce 1', 89100)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 2</h3>
-            <p>Torta 2kg + 1 Tarta elección (24cm) + 1 doc. Alfajores Maicena</p>
-            <span class="price">$92.700</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Dulce 2', 92700)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 3</h3>
-            <p>1 doc. Cupcakes + 1 doc. Cookies + 1 doc. Cakepops (o 2 doc. Donitas)</p>
-            <span class="price">$66.600</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Dulce 3', 66600)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 4</h3>
-            <p>2 Tartas elección (24cm) + 1 doc. Cookies + 1 doc. Oreos Bañadas</p>
-            <span class="price">$91.800</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Dulce 4', 91800)">+ Agregar</button>
-    </div>
 </div>
 
-<!-- DESAYUNOS -->
+<!-- SECCIÓN DESAYUNOS -->
 <div id="desayunos" class="section">
-    <div class="card"><div class="card-info"><h3>Desayuno Infantil</h3><p>Mini Brownie, Donitas, Frola, Maicena, Cupcake, Postre, Pebete J&Q, Jugo, Chocolatada, Golosinas e Infusiones.</p><span class="price">$32.000</span></div><button type="button" class="btn-add" onclick="add('Desayuno Infantil', 32000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Desayuno Standard</h3><p>Mini Brownie, Mini Lemon/Manzana, Maicena, Cupcake, Pan casero, Pebete, Jugo, Yogurt, Bon o Bon e Infusiones.</p><span class="price">$32.000</span></div><button type="button" class="btn-add" onclick="add('Desayuno Standard', 32000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Desayuno Medium</h3><p>Mini Torta/Brownie, Mini Lemon/Manzana, Cupcake, Maicena, Cookies Limón, Scons, Pebete, Panes, Jugo, Yogurt, Snacks e Infusiones.</p><span class="price">$44.000</span></div><button type="button" class="btn-add" onclick="add('Desayuno Medium', 44000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Día de la Niñez (Con Torta)</h3><p>1 Torta Mini Temática, Brownie, Maicenas, Conitos, Chips J&Q, Chocolatada.</p><span class="price">$32.000</span></div><button type="button" class="btn-add" onclick="add('Niñez c/ Torta', 32000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Día de la Niñez (Sin Torta)</h3><p>Muffin, Brownie, Frola, Maicenas, Conitos, Chips, Mini Merengadas, Pochoclos, Chocolatada/Yogurt.</p><span class="price">$28.000</span></div><button type="button" class="btn-add" onclick="add('Niñez s/ Torta', 28000)">+ Agregar</button></div>
-</div>
-
-<!-- REPOSTERÍA -->
-<div id="indiv" class="section">
-    <div class="card"><div class="card-info"><h3>Alfajores de Maicena</h3><select id="alf-maicena" class="item-select"><option value="1800">Unidad - $1.800</option><option value="20000">Docena - $20.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Alfajores Maicena', 'alf-maicena')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Alfajores Marplatenses</h3><select id="alf-marp" class="item-select"><option value="2500">Unidad - $2.500</option><option value="25000">Docena - $25.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Alfajores Marplatenses', 'alf-marp')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Budines</h3><select id="budines" class="item-select"><option value="6000">300/400gr - $6.000</option><option value="15000">1 kg - $15.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Budín', 'budines')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Donitas (Docena)</h3><span class="price">$8.000</span></div><button type="button" class="btn-add" onclick="add('Donitas (Docena)', 8000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Oreos Bañadas (Docena)</h3><span class="price">$21.000</span></div><button type="button" class="btn-add" onclick="add('Oreos Bañadas (Docena)', 21000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Cake Pops (Docena)</h3><span class="price">$22.000</span></div><button type="button" class="btn-add" onclick="add('Cake Pops (Docena)', 22000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Cookies (Docena)</h3><span class="price">$25.000</span></div><button type="button" class="btn-add" onclick="add('Cookies (Docena)', 25000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Ice Pops (Docena)</h3><span class="price">$26.000</span></div><button type="button" class="btn-add" onclick="add('Ice Pops (Docena)', 26000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Cupcakes (Docena)</h3><span class="price">$27.000</span></div><button type="button" class="btn-add" onclick="add('Cupcakes (Docena)', 27000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Mini Tartas (Docena)</h3><span class="price">$20.500</span></div><button type="button" class="btn-add" onclick="add('Mini Tartas (Docena)', 20500)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Shot de Postres (Docena)</h3><span class="price">$38.000</span></div><button type="button" class="btn-add" onclick="add('Shot de Postres (Docena)', 38000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Petit Fours (Docena)</h3><span class="price">$42.000</span></div><button type="button" class="btn-add" onclick="add('Petit Fours (Docena)', 42000)">+ Agregar</button></div>
-</div>
-
-<!-- TORTAS -->
-<div id="tortas" class="section">
-    <div class="card"><div class="card-info"><h3>Tortas por Kilo (Fondant / Buttercream)</h3><span class="price">$28.000 / kg</span></div><button type="button" class="btn-add" onclick="add('Torta x Kilo', 28000)">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Cheesecake</h3><select id="cheesecake" class="item-select"><option value="28000">20 cm - $28.000</option><option value="34000">24 cm - $34.000</option><option value="44000">28 cm - $44.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Cheesecake', 'cheesecake')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Brownie DDL y Crema</h3><select id="b-1" class="item-select"><option value="40000">20 cm - $40.000</option><option value="48000">26 cm - $48.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Brownie DDL y Crema', 'b-1')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Brownie DDL, Crema y Frutos Rojos</h3><select id="b-2" class="item-select"><option value="46000">20 cm - $46.000</option><option value="52000">26 cm - $52.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Brownie DDL, Crema y Frutos Rojos', 'b-2')">+ Agregar</button></div>
-    <div class="card"><div class="card-info"><h3>Brownie Crema, Frutilla/Framb. y Merengue</h3><select id="b-3" class="item-select"><option value="38000">20 cm - $38.000</option><option value="44000">26 cm - $44.000</option></select></div><button type="button" class="btn-add" onclick="addSel('Brownie Crema, Frutilla/Framb. y Merengue', 'b-3')">+ Agregar</button></div>
+    <div class="card">
+        <div class="card-info">
+            <h3>Desayuno Especial</h3>
+            <span class="price">$35.000</span>
+        </div>
+        <button type="button" class="btn-add" onclick="add('Desayuno Especial', 35000)">+ Agregar</button>
+    </div>
 </div>
 
 <!-- BARRA INFERIOR -->
 <div class="cart-bar">
-    <div class="cart-bar-info">
-        Ítems: <span id="cant">0</span> | Total: $<span id="total">0</span>
+    <div class="cart-info">
+        Ítems: <span id="cant">0</span><br>
+        Total: <strong>$<span id="total">0</span></strong>
     </div>
     <button type="button" class="btn-open-modal" onclick="abrirModal()">🛒 Ver Pedido</button>
 </div>
 
-<!-- MODAL DE CHECKOUT -->
+<!-- MODAL CHECKOUT -->
 <div class="modal-overlay" id="modal-carrito">
     <div class="modal-content">
-        <span class="close-modal" onclick="cerrarModal()">&times;</span>
-        <h2 class="modal-title">Resumen de tu Pedido</h2>
-
+        <div class="modal-header">
+            <h2>Resumen de Tu Pedido</h2>
+            <button class="btn-close" onclick="cerrarModal()">&times;</button>
+        </div>
+        
         <div id="cart-items-list"></div>
+        <div id="cart-total-modal" style="text-align: right; font-weight: bold; margin-top: 10px; color: var(--rosa-oscuro);"></div>
 
-        <div class="form-group">
-            <label for="fecha"><b>Fecha de Entrega/Retiro (OBLIGATORIA):</b></label>
-            <input type="date" id="fecha" required>
-        </div>
+        <form id="order-form" onsubmit="enviarWhatsApp(event)">
+            <div class="form-group">
+                <label for="nombre">Nombre y Apellido *</label>
+                <input type="text" id="nombre" required placeholder="Ej: María González">
+            </div>
 
-        <div class="form-group">
-            <label for="modalidad">Modalidad de Entrega:</label>
-            <select id="modalidad" onchange="toggleDireccion()">
-                <option value="Retiro por taller / lugar de trabajo">Retiro por taller / lugar de trabajo</option>
-                <option value="Envío a domicilio - Zona Norte">Envío a domicilio - Zona Norte</option>
-                <option value="Envío a domicilio - Zona Sur">Envío a domicilio - Zona Sur</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="fecha">Fecha de entrega/retiro *</label>
+                <input type="date" id="fecha" required>
+            </div>
 
-        <div class="form-group" id="group-direccion" style="display: none;">
-            <label for="direccion">Dirección y Barrio:</label>
-            <input type="text" id="direccion" placeholder="Ej: Av. Chile 1234, B° Pueyrredón">
-        </div>
+            <div class="form-group">
+                <label for="entrega">Modalidad de Entrega *</label>
+                <select id="entrega" required>
+                    <option value="Retiro por el taller">Retiro por el taller</option>
+                    <option value="Envío Domicilio (Zona Norte)">Envío a Domicilio (Zona Norte)</option>
+                    <option value="Envío Domicilio (Zona Sur)">Envío a Domicilio (Zona Sur)</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="pago">Método de Pago:</label>
-            <select id="pago">
-                <option value="Transferencia bancaria / Mercado Pago">Transferencia / Mercado Pago</option>
-                <option value="Efectivo">Efectivo</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="pago">Método de Pago *</label>
+                <select id="pago" required>
+                    <option value="Transferencia / Mercado Pago">Transferencia / Mercado Pago</option>
+                    <option value="Efectivo">Efectivo</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="notas">Aclaraciones o sabores a elección (Opcional):</label>
-            <textarea id="notas" rows="2" placeholder="Ej: Empanadas de pollo, tarta de lemon pie para el combo, etc."></textarea>
-        </div>
+            <div class="form-group">
+                <label for="notas">Aclaraciones / Sabores / Dedicatorias</label>
+                <textarea id="notas" rows="3" placeholder="Ej: Dedicatoria: ¡Feliz Día! / Preferencia de horario"></textarea>
+            </div>
 
-        <button type="button" class="btn-wa" onclick="enviarWhatsApp()">📲 Confirmar y Enviar a WhatsApp</button>
+            <button type="submit" class="btn-wa">📲 Confirmar y Enviar a WhatsApp</button>
+        </form>
     </div>
 </div>
 
 <script>
-    let cart = [];
+    let cart = {};
+
+    document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
 
     function show(id, event) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -336,125 +211,121 @@
     }
 
     function add(nombre, precio) {
-        cart.push({nombre, precio});
+        if (cart[nombre]) {
+            cart[nombre].cant += 1;
+        } else {
+            cart[nombre] = { precio, cant: 1 };
+        }
         actualizar();
     }
 
     function addSel(nombreBase, selectId) {
         const select = document.getElementById(selectId);
+        const itemNombre = `${nombreBase} (${select.options[select.selectedIndex].text})`;
         const precio = parseInt(select.value);
-        const opcionTexto = select.options[select.selectedIndex].text.split('-')[0].trim();
-        const nombreCompleto = `${nombreBase} (${opcionTexto})`;
-        cart.push({nombre: nombreCompleto, precio});
-        actualizar();
+        add(itemNombre, precio);
     }
 
-    function eliminarItem(index) {
-        cart.splice(index, 1);
+    function removeItem(nombre) {
+        if (cart[nombre]) {
+            cart[nombre].cant -= 1;
+            if (cart[nombre].cant <= 0) delete cart[nombre];
+        }
         actualizar();
         renderCartList();
     }
 
     function actualizar() {
         let total = 0;
-        cart.forEach(i => total += i.precio);
-        document.getElementById('cant').innerText = cart.length;
+        let cantTotal = 0;
+        for (let key in cart) {
+            total += cart[key].precio * cart[key].cant;
+            cantTotal += cart[key].cant;
+        }
+        document.getElementById('cant').innerText = cantTotal;
         document.getElementById('total').innerText = total.toLocaleString('es-AR');
     }
 
+    function renderCartList() {
+        const container = document.getElementById('cart-items-list');
+        const keys = Object.keys(cart);
+        
+        if (keys.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#94a3b8; padding: 15px;">El carrito está vacío</p>';
+            document.getElementById('cart-total-modal').innerText = '';
+            return;
+        }
+
+        let html = '';
+        let total = 0;
+        keys.forEach(nombre => {
+            const item = cart[nombre];
+            const subtotal = item.precio * item.cant;
+            total += subtotal;
+            html += `
+                <div class="cart-item-row">
+                    <div>
+                        <strong>${item.cant}x</strong> ${nombre}
+                        <br><span style="color:#64748b; font-size:0.75rem;">$${item.precio.toLocaleString('es-AR')} c/u</span>
+                    </div>
+                    <div>
+                        <span>$${subtotal.toLocaleString('es-AR')}</span>
+                        <button type="button" class="btn-remove" onclick="removeItem('${nombre}')">&times;</button>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        document.getElementById('cart-total-modal').innerText = `Total: $${total.toLocaleString('es-AR')}`;
+    }
+
     function abrirModal() {
-        document.getElementById('modal-carrito').style.display = 'flex';
         renderCartList();
+        document.getElementById('modal-carrito').style.display = 'flex';
     }
 
     function cerrarModal() {
         document.getElementById('modal-carrito').style.display = 'none';
     }
 
-    function renderCartList() {
-        const container = document.getElementById('cart-items-list');
-        if(cart.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#888; font-size:0.85rem; padding:10px;">El carrito está vacío</p>';
+    function enviarWhatsApp(e) {
+        e.preventDefault();
+
+        if (Object.keys(cart).length === 0) {
+            alert("Tu carrito está vacío. Agregá al menos un producto.");
             return;
         }
 
-        container.innerHTML = '';
-        cart.forEach((item, index) => {
-            const div = document.createElement('div');
-            div.className = 'cart-item';
-            div.innerHTML = `
-                <span>• ${item.nombre} - $${item.precio.toLocaleString('es-AR')}</span>
-                <button type="button" class="btn-remove" onclick="eliminarItem(${index})">✖</button>
-            `;
-            container.appendChild(div);
-        });
-    }
+        const nombre = document.getElementById('nombre').value.trim();
+        const fecha = document.getElementById('fecha').value;
+        const entrega = document.getElementById('entrega').value;
+        const pago = document.getElementById('pago').value;
+        const notas = document.getElementById('notas').value.trim();
 
-    function toggleDireccion() {
-        const modalidad = document.getElementById('modalidad').value;
-        const groupDireccion = document.getElementById('group-direccion');
-        if (modalidad.includes('Envío')) {
-            groupDireccion.style.display = 'block';
-        } else {
-            groupDireccion.style.display = 'none';
-        }
-    }
-
-    function enviarWhatsApp() {
-        // 1. Validar que el carrito tenga cosas
-        if (cart.length === 0) {
-            alert("El carrito está vacío. Agregá algún producto primero.");
-            return;
-        }
-
-        // 2. Obtener fecha y validar OBLIGATORIEDAD
-        const inputFecha = document.getElementById('fecha');
-        const fecha = inputFecha ? inputFecha.value : "";
-
-        if (!fecha) {
-            alert("¡Por favor, seleccioná la fecha de entrega o retiro antes de enviar!");
-            if (inputFecha) inputFecha.focus();
-            return;
-        }
-
-        // 3. Obtener el resto de campos
-        const modalidad = document.getElementById('modalidad') ? document.getElementById('modalidad').value : "Retiro";
-        const direccion = document.getElementById('direccion') ? document.getElementById('direccion').value : "";
-        const pago = document.getElementById('pago') ? document.getElementById('pago').value : "Efectivo";
-        const notas = document.getElementById('notas') ? document.getElementById('notas').value : "";
-
-        // 4. Calcular total
+        let listaText = "";
         let total = 0;
-        cart.forEach(i => total += i.precio);
-        let lista = cart.map(i => "• " + i.nombre + " ($" + i.precio.toLocaleString('es-AR') + ")").join('\n');
-
-        // 5. Armar mensaje de texto para WhatsApp
-        let msg = "🛒 *NUEVO PEDIDO - Delicias Australes*\n\n";
-        msg += "📅 *Fecha de entrega:* " + fecha + "\n";
-        msg += "🚚 *Modalidad:* " + modalidad + "\n";
-        
-        if (modalidad.includes('Envío') && direccion) {
-            msg += "📍 *Dirección:* " + direccion + "\n";
+        for (let itemKey in cart) {
+            const subtotal = cart[itemKey].precio * cart[itemKey].cant;
+            total += subtotal;
+            listaText += `• ${cart[itemKey].cant}x ${itemKey} - $${subtotal.toLocaleString('es-AR')}\n`;
         }
+
+        let msg = `🛒 *NUEVO PEDIDO - DELICIAS AUSTRALES*\n`;
+        msg += `👤 *Cliente:* ${nombre}\n`;
+        msg += `📅 *Fecha:* ${fecha}\n`;
+        msg += `🛵 *Modalidad:* ${entrega}\n`;
+        msg += `💳 *Pago:* ${pago}\n\n`;
+        msg += `📦 *Detalle del Pedido:*\n${listaText}\n`;
+        msg += `💰 *TOTAL:* $${total.toLocaleString('es-AR')}\n`;
         
-        msg += "💳 *Método de Pago:* " + pago + "\n";
-        
-        if (notas) {
-            msg += "📝 *Notas/Aclaraciones:* " + notas + "\n";
+        if (notas !== "") {
+            msg += `\n📝 *ACLARACIONES / NOTAS DEL CLIENTE:*\n"${notas}"`;
+        } else {
+            msg += `\n📝 *ACLARACIONES:* Sin especificaciones`;
         }
-        
-        msg += "\n📦 *Detalle del Pedido:*\n" + lista + "\n\n";
-        msg += "*Total:* $" + total.toLocaleString('es-AR');
 
-        // 6. Enviar a WhatsApp
-        const url = "https://api.whatsapp.com/send?phone=5492974219406&text=" + encodeURIComponent(msg);
-        window.open(url, '_blank');
-
-        // 7. Resetear carrito y cerrar modal
-        cart = [];
-        actualizar();
-        if (document.getElementById('notas')) document.getElementById('notas').value = '';
-        cerrarModal();
+        const telefono = "5492974219406";
+        window.open(`https://api.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(msg)}`, '_blank');
     }
 </script>
 </body>

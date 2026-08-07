@@ -18,8 +18,8 @@
         header h1 { font-size: 1.3rem; color: #1e293b; }
         .ig-btn { display: inline-block; margin-top: 5px; font-size: 0.8rem; color: var(--rosa-oscuro); text-decoration: none; font-weight: bold; border: 1px solid var(--rosa-oscuro); padding: 3px 10px; border-radius: 12px; }
         
-        /* Pestañas / Burbujitas */
-        .tabs { display: flex; overflow-x: auto; gap: 6px; padding: 10px; background: white; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scrollbar-width: none; }
+        /* Pestañas */
+        .tabs { display: flex; overflow-x: auto; gap: 6px; padding: 10px; background: white; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .tab-btn { padding: 8px 12px; border-radius: 20px; border: 1px solid #bae6fd; background: white; color: var(--celeste); font-weight: bold; font-size: 0.75rem; white-space: nowrap; cursor: pointer; }
         .tab-btn.active { background: var(--rosa-oscuro); color: white; border-color: var(--rosa-oscuro); }
         
@@ -50,23 +50,109 @@
 <header>
     <h1>Delicias Australes</h1>
     <p style="font-size: 0.75rem; font-weight: bold; margin-top: 2px;">PEDIDOS: 2974219406 (SOL)</p>
-    <!-- REEMPLAZÁ 'TU_USUARIO' POR TU INSTAGRAM REAL -->
     <a href="https://instagram.com/TU_USUARIO" class="ig-btn" target="_blank">Instagram 📸</a>
 </header>
 
 <div class="tabs">
-    <button class="tab-btn active" onclick="show('combos-dulces', event)">🍰 Combos Dulces</button>
+    <button class="tab-btn active" onclick="show('tartas', event)">🥧 Tartas</button>
+    <button class="tab-btn" onclick="show('combos-dulces', event)">🍰 Combos Dulces</button>
     <button class="tab-btn" onclick="show('combos-salados', event)">🥐 Combos Salados</button>
-    <button class="tab-btn" onclick="show('tartas', event)">🥧 Tartas</button>
     <button class="tab-btn" onclick="show('desayunos', event)">☀️ Desayunos</button>
     <button class="tab-btn" onclick="show('brownies', event)">🍫 Brownies / Cheesecakes</button>
-
     <button class="tab-btn" onclick="show('indiv', event)">🍩 Docenas e Indiv.</button>
     <button class="tab-btn" onclick="show('info', event)">🚚 Envíos / Info</button>
 </div>
 
+<!-- TARTAS DULCES (CADA UNA SINGULAR) -->
+<div id="tartas" class="section active">
+    <div class="card">
+        <div class="card-info"><h3>Gelatina sin Frutas</h3>
+            <select id="t-gelatina" class="size-select"><option value="24000">22 cm - $24.000</option><option value="29000">28 cm - $29.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Tarta Gelatina sin Frutas', 't-gelatina')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Yogurt con Frutilla</h3>
+            <select id="t-yogurt" class="size-select"><option value="24000">22 cm - $24.000</option><option value="29000">28 cm - $29.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Tarta Yogurt c/ Frutilla', 't-yogurt')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Chocolate y Crema</h3>
+            <select id="t-choco" class="size-select"><option value="24000">22 cm - $24.000</option><option value="29000">28 cm - $29.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Tarta Chocolate y Crema', 't-choco')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Tarta Toffi</h3>
+            <select id="t-toffi" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Tarta Toffi', 't-toffi')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Lemon Pie</h3>
+            <select id="t-lemon" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Lemon Pie', 't-lemon')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Orange Pie</h3>
+            <select id="t-orange" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Orange Pie', 't-orange')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Crumble de Manzana</h3>
+            <select id="t-crumble" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Crumble de Manzana', 't-crumble')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Coco y Dulce de Leche</h3>
+            <select id="t-coco" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Tarta Coco y DDL', 't-coco')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Pasta Frola</h3>
+            <select id="t-frola" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Pasta Frola', 't-frola')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Tarta de Ricota</h3>
+            <select id="t-ricota" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Tarta de Ricota', 't-ricota')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Ricota con Dulce de Leche</h3>
+            <select id="t-ricotaddl" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Ricota c/ DDL', 't-ricotaddl')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Ricota con Frambuesas</h3>
+            <select id="t-ricota-framb" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Ricota c/ Frambuesas', 't-ricota-framb')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Ricota con Pasas y Oporto</h3>
+            <select id="t-ricota-pasas" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Ricota c/ Pasas y Oporto', 't-ricota-pasas')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Crema tipo Galesa</h3>
+            <select id="t-galesa" class="size-select"><option value="27000">22 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Crema tipo Galesa', 't-galesa')">+ Agregar</button>
+    </div>
+</div>
+
 <!-- COMBOS DULCES -->
-<div id="combos-dulces" class="section active">
+<div id="combos-dulces" class="section">
     <div class="card"><div class="card-info"><h3>Combo 1</h3><p>Torta 2kg + 1 doc. Cupcakes + 2 doc. Donitas</p><span class="price">$89.100</span></div><button class="btn-add" onclick="add('Combo Dulce 1', 89100)">+ Agregar</button></div>
     <div class="card"><div class="card-info"><h3>Combo 2</h3><p>Torta 2kg + 1 Tarta a elección (24cm) + 1 doc. Alfajores Maicena</p><span class="price">$92.700</span></div><button class="btn-add" onclick="add('Combo Dulce 2', 92700)">+ Agregar</button></div>
     <div class="card"><div class="card-info"><h3>Combo 3</h3><p>1 doc. Cupcakes + 1 doc. Cookies + 1 doc. Cakepops / 2 doc. Donitas</p><span class="price">$66.600</span></div><button class="btn-add" onclick="add('Combo Dulce 3', 66600)">+ Agregar</button></div>
@@ -78,34 +164,6 @@
     <div class="card"><div class="card-info"><h3>Combo 1</h3><p>1 doc. Chips J&Q + 1 doc. Empanadas + 1 doc. Panes Árabes Pollo</p><span class="price">$58.000</span></div><button class="btn-add" onclick="add('Combo Salado 1', 58000)">+ Agregar</button></div>
     <div class="card"><div class="card-info"><h3>Combo 2</h3><p>1 doc. Chips J&Q + 1 doc. Pizzetas + 1 doc. Empanadas</p><span class="price">$53.000</span></div><button class="btn-add" onclick="add('Combo Salado 2', 53000)">+ Agregar</button></div>
     <div class="card"><div class="card-info"><h3>Combo 3</h3><p>2 doc. Chips J&Q + 1 doc. Chips Salame/Queso + 1 doc. Árabes Pollo + 2 doc. Pizzetas</p><span class="price">$112.000</span></div><button class="btn-add" onclick="add('Combo Salado 3', 112000)">+ Agregar</button></div>
-</div>
-
-<!-- TARTAS DULCES -->
-<div id="tartas" class="section">
-    <div class="card">
-        <div class="card-info"><h3>Gelatina sin frutas</h3>
-            <select id="t-gelatina" class="size-select"><option value="24000">22 cm - $24.000</option><option value="29000">28 cm - $29.000</option></select>
-        </div>
-        <button class="btn-add" onclick="addTarta('Gelatina sin frutas', 't-gelatina')">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Yogurt con Frutilla</h3>
-            <select id="t-yogurt" class="size-select"><option value="24000">22 cm - $24.000</option><option value="29000">28 cm - $29.000</option></select>
-        </div>
-        <button class="btn-add" onclick="addTarta('Yogurt con Frutilla', 't-yogurt')">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Chocolate y Crema</h3>
-            <select id="t-choco" class="size-select"><option value="24000">22 cm - $24.000</option><option value="29000">28 cm - $29.000</option></select>
-        </div>
-        <button class="btn-add" onclick="addTarta('Chocolate y Crema', 't-choco')">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Otras Tartas (Toffi / Lemon Pie / Crumble / Coco / Ricota / Pasta Frola)</h3>
-            <select id="t-varias" class="size-select"><option value="27000">22/24 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
-        </div>
-        <button class="btn-add" onclick="addTarta('Tarta Especial', 't-varias')">+ Agregar</button>
-    </div>
 </div>
 
 <!-- DESAYUNOS -->

@@ -12,12 +12,7 @@
             --verde-wa: #25d366; 
             --texto: #4a4a4a; 
         }
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-            font-family: 'Segoe UI', sans-serif; 
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { 
             background-color: #fffafb; 
             background-image: radial-gradient(circle at 10% 20%, var(--rosa-pastel) 0%, transparent 40%), radial-gradient(circle at 90% 80%, var(--celeste-pastel) 0%, transparent 40%); 
@@ -36,18 +31,17 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
         }
         .logo-img { 
-            width: 80px; 
-            height: 80px; 
+            width: 85px; 
+            height: 85px; 
             border-radius: 50%; 
             border: 3px solid var(--rosa-oscuro); 
             object-fit: cover; 
             margin-bottom: 8px; 
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .container { 
-            max-width: 500px; 
-            margin: 20px auto; 
-            padding: 0 15px; 
-        }
+        .container { max-width: 500px; margin: 20px auto; padding: 0 15px; }
         .tabs { 
             display: flex; 
             overflow-x: auto; 
@@ -67,17 +61,9 @@
             font-size: 0.8rem; 
             color: var(--texto);
         }
-        .tab-btn.active { 
-            background: var(--rosa-oscuro); 
-            color: white; 
-            border-color: var(--rosa-oscuro); 
-        }
-        .section { 
-            display: none; 
-        }
-        .section.active { 
-            display: block; 
-        }
+        .tab-btn.active { background: var(--rosa-oscuro); color: white; border-color: var(--rosa-oscuro); }
+        .section { display: none; }
+        .section.active { display: block; }
         .card { 
             background: white; 
             padding: 12px; 
@@ -88,19 +74,9 @@
             justify-content: space-between; 
             align-items: center; 
         }
-        .card h3 { 
-            font-size: 0.9rem; 
-        }
-        .card p { 
-            font-size: 0.75rem; 
-            color: #777; 
-        }
-        .price { 
-            font-weight: bold; 
-            color: var(--rosa-oscuro); 
-            display: block; 
-            margin-top: 3px; 
-        }
+        .card h3 { font-size: 0.9rem; }
+        .card p { font-size: 0.75rem; color: #777; }
+        .price { font-weight: bold; color: var(--rosa-oscuro); display: block; margin-top: 3px; }
         .btn-add { 
             background: var(--celeste-pastel); 
             border: none; 
@@ -123,28 +99,9 @@
             border-top-right-radius: 20px; 
             z-index: 100; 
         }
-        .cart-list { 
-            max-height: 100px; 
-            overflow-y: auto; 
-            margin-bottom: 8px; 
-            font-size: 0.8rem; 
-        }
-        .cart-item { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-bottom: 3px; 
-            border-bottom: 1px solid #eee; 
-            padding-bottom: 2px;
-        }
-        .total-area { 
-            display: flex; 
-            justify-content: space-between; 
-            font-weight: bold; 
-            margin-bottom: 10px; 
-            border-top: 2px solid #eee; 
-            padding-top: 6px; 
-            font-size: 0.95rem; 
-        }
+        .cart-list { max-height: 100px; overflow-y: auto; margin-bottom: 8px; font-size: 0.8rem; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 3px; border-bottom: 1px solid #eee; padding-bottom: 2px; }
+        .total-area { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px; border-top: 2px solid #eee; padding-top: 6px; font-size: 0.95rem; }
         .btn-wa-link { 
             display: block; 
             width: 100%; 
@@ -163,7 +120,8 @@
 <body>
 
 <header>
-    <img src="logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+    <!-- Muestra el logo.png si existe en GitHub -->
+    <img src="logo.png" alt="Delicias Australes Logo" class="logo-img" onerror="this.style.display='none'">
     <h1>Delicias Australes</h1>
 </header>
 
@@ -180,43 +138,63 @@
     <!-- Docenas -->
     <div id="docenas" class="section active">
         <div class="card">
-            <div><h3>Donitas Decoradas</h3><p>x12 unidades</p><span class="price">$12.000</span></div>
-            <button class="btn-add" onclick="add('Donitas x12', 12000)">+ Agregar</button>
+            <div><h3>Donitas Decoradas</h3><p>x12 unidades decoradas</p><span class="price">$12.000</span></div>
+            <button class="btn-add" onclick="add('Donitas Decoradas x12', 12000)">+ Agregar</button>
         </div>
         <div class="card">
-            <div><h3>Cupcakes Temáticos</h3><p>Cobertura Buttercream</p><span class="price">$15.000</span></div>
+            <div><h3>Cupcakes Temáticos</h3><p>x12 con buttercream</p><span class="price">$15.000</span></div>
             <button class="btn-add" onclick="add('Cupcakes x12', 15000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Alfajorcitos de Maicena</h3><p>x12 unidades</p><span class="price">$8.500</span></div>
+            <button class="btn-add" onclick="add('Alfajores Maicena x12', 8500)">+ Agregar</button>
         </div>
     </div>
     
     <!-- Desayunos -->
     <div id="desayunos" class="section">
         <div class="card">
-            <div><h3>Desayuno Standard</h3><p>Taza, infusiones, 1 mini tarta</p><span class="price">$22.000</span></div>
+            <div><h3>Desayuno Standard</h3><p>Taza, infusiones, 1 mini tarta y masas</p><span class="price">$22.000</span></div>
             <button class="btn-add" onclick="add('Desayuno Standard', 22000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Desayuno Premium</h3><p>Taza, jugos, tarta chica, sándwiches y donas</p><span class="price">$28.000</span></div>
+            <button class="btn-add" onclick="add('Desayuno Premium', 28000)">+ Agregar</button>
         </div>
     </div>
 
     <!-- Tartas -->
     <div id="tartas" class="section">
         <div class="card">
-            <div><h3>Lemon Pie</h3><p>22cm</p><span class="price">$14.000</span></div>
-            <button class="btn-add" onclick="add('Lemon Pie', 14000)">+ Agregar</button>
+            <div><h3>Lemon Pie</h3><p>Molde 22cm artesanal</p><span class="price">$14.000</span></div>
+            <button class="btn-add" onclick="add('Lemon Pie 22cm', 14000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Tarta Cabsha</h3><p>Dulce de leche y chocolate negro</p><span class="price">$15.500</span></div>
+            <button class="btn-add" onclick="add('Tarta Cabsha', 15500)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Tarta Toffi</h3><p>Base sablée, DDL y cobertura ganache</p><span class="price">$14.500</span></div>
+            <button class="btn-add" onclick="add('Tarta Toffi', 14500)">+ Agregar</button>
         </div>
     </div>
 
-    <!-- Brownies -->
+    <!-- Brownies & Cheesecakes -->
     <div id="brownies" class="section">
         <div class="card">
-            <div><h3>Cheesecake</h3><p>Frutos rojos</p><span class="price">$18.000</span></div>
+            <div><h3>Cheesecake Frutos Rojos</h3><p>Molde 20cm</p><span class="price">$18.000</span></div>
             <button class="btn-add" onclick="add('Cheesecake Frutos Rojos', 18000)">+ Agregar</button>
+        </div>
+        <div class="card">
+            <div><h3>Brownie con DDL y Merengue</h3><p>Clásico bomba artesanal</p><span class="price">$16.000</span></div>
+            <button class="btn-add" onclick="add('Brownie Especial', 16000)">+ Agregar</button>
         </div>
     </div>
 
     <!-- Combos Dulces -->
     <div id="combos-dulces" class="section">
         <div class="card">
-            <div><h3>Combo Cumple Dulce</h3><p>Tarta + 12 Cupcakes + 12 Cookies</p><span class="price">$35.000</span></div>
+            <div><h3>Combo Cumple Dulce</h3><p>1 Tarta + 12 Cupcakes + 12 Cookies</p><span class="price">$35.000</span></div>
             <button class="btn-add" onclick="add('Combo Cumple Dulce', 35000)">+ Agregar</button>
         </div>
     </div>
@@ -236,7 +214,6 @@
         <span>Total: $<span id="total">0</span></span>
         <span style="color:var(--rosa-oscuro)">Seña (20%): $<span id="seña">0</span></span>
     </div>
-    <!-- Botón como ENLACE REAL para evitar bloqueos del navegador -->
     <a id="waBtn" href="#" class="btn-wa-link" onclick="prepareAndSend(event)">Confirmar Pedido WhatsApp</a>
 </div>
 
@@ -264,20 +241,20 @@
         } else {
             list.innerHTML = cart.map((i, idx) => 
                 `<div class="cart-item">
-                    <span>${i.name} - $${i.price.toLocaleString()}</span>
+                    <span>${i.name} - $${i.price.toLocaleString('es-AR')}</span>
                     <span style="color:red; cursor:pointer; font-weight:bold" onclick="cart.splice(${idx},1); update()">✕</span>
                 </div>`
             ).join('');
         }
 
         cart.forEach(i => total += i.price);
-        document.getElementById('total').innerText = total.toLocaleString();
-        document.getElementById('seña').innerText = (total * 0.2).toLocaleString();
+        document.getElementById('total').innerText = total.toLocaleString('es-AR');
+        document.getElementById('seña').innerText = (total * 0.2).toLocaleString('es-AR');
     }
 
     function prepareAndSend(e) {
         if (cart.length === 0) {
-            e.preventDefault(); // Evita abrir el link si no hay productos
+            e.preventDefault();
             alert("Agregá productos al carrito primero");
             return;
         }
@@ -287,15 +264,16 @@
         let seña = total * 0.2;
 
         let msg = "¡Hola! Quiero realizar este pedido:\n" + 
-                  cart.map(i => "- " + i.name + ": $" + i.price.toLocaleString()).join('\n') + 
-                  "\n\nTotal: $" + total.toLocaleString() + 
-                  "\nSeña (20%): $" + seña.toLocaleString();
+                  cart.map(i => "- " + i.name + ": $" + i.price.toLocaleString('es-AR')).join('\n') + 
+                  "\n\nTotal: $" + total.toLocaleString('es-AR') + 
+                  "\nSeña (20%): $" + seña.toLocaleString('es-AR');
 
-        // Asignamos la URL al atributo href del botón en el instante exacto del clic
-        let waUrl = 'https://wa.me/5491112345678?text=' + encodeURIComponent(msg);
+        // REEMPLAZA ESTE NÚMERO POR EL TUYO:
+        let miNumero = "5491112345678"; 
+
+        let waUrl = 'https://wa.me/' + miNumero + '?text=' + encodeURIComponent(msg);
         document.getElementById('waBtn').href = waUrl;
 
-        // Vaciamos el carrito medio segundo después para permitir abrir WhatsApp de forma transparente
         setTimeout(() => {
             cart = [];
             update();

@@ -30,7 +30,7 @@
         .section { display: none; padding: 15px; max-width: 500px; margin: 0 auto; }
         .section.active { display: block; }
 
-        /* Tarjetas de producto standard */
+        /* Tarjetas de producto */
         .card { background: rgba(255, 255, 255, 0.95); padding: 14px; margin-bottom: 12px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--rosa-oscuro); box-shadow: 0 4px 12px rgba(0,0,0,0.03); gap: 10px; }
         .card-info { flex: 1; }
         .card-info h3 { font-size: 0.95rem; color: #1e293b; margin-bottom: 4px; }
@@ -71,7 +71,8 @@
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.85rem; outline: none; }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--rosa-oscuro); }
 
-        .btn-wa { display: block; width: 100%; padding: 14px; background: var(--verde-wa); color: white; border-radius: 25px; text-align: center; font-weight: bold; border: none; margin-top: 20px; cursor: pointer; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); }
+        .btn-wa { display: block; width: 100%; padding: 14px; background: var(--verde-wa); color: white; border-radius: 25px; text-align: center; font-weight: bold; border: none; margin-top: 12px; cursor: pointer; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); }
+        .btn-copy { display: block; width: 100%; padding: 10px; background: var(--celeste-pastel); color: var(--celeste); border: 1px solid #bae6fd; border-radius: 20px; font-weight: bold; margin-top: 15px; cursor: pointer; font-size: 0.85rem; text-align: center; }
     </style>
 </head>
 <body>
@@ -600,15 +601,24 @@
                 <textarea id="notas" rows="3" placeholder="Ej: Gustos de tartas del combo, dedicatoria o preferencia horaria"></textarea>
             </div>
 
+            <button type="button" class="btn-copy" onclick="copiarPedido()">📋 Copiar texto del pedido</button>
             <button type="submit" class="btn-wa">📲 Confirmar y Enviar a WhatsApp</button>
         </form>
     </div>
 </div>
 
 <script>
-    let cart = {};
+    let cart = JSON.parse(localStorage.getItem('delicias_cart')) || {};
 
     document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        actualizar();
+    });
+
+    function guardarEnStorage() {
+        localStorage.setItem('delicias_cart', JSON.stringify(cart));
+    }
 
     function show(id, event) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -623,6 +633,7 @@
         } else {
             cart[nombre] = { precio, cant: 1 };
         }
+        guardarEnStorage();
         actualizar();
     }
 
@@ -638,8 +649,18 @@
             cart[nombre].cant -= 1;
             if (cart[nombre].cant <= 0) delete cart[nombre];
         }
+        guardarEnStorage();
         actualizar();
         renderCartList();
+    }
+
+    function vaciarCarrito() {
+        if (confirm("¿Querés vaciar todos los productos del carrito?")) {
+            cart = {};
+            localStorage.removeItem('delicias_cart');
+            actualizar();
+            renderCartList();
+        }
     }
 
     function actualizar() {
@@ -653,6 +674,38 @@
         document.getElementById('total').innerText = total.toLocaleString('es-AR');
     }
 
+    function armarTextoPedido() {
+        const nombre = document.getElementById('nombre').value.trim();
+        const fecha = document.getElementById('fecha').value;
+        const entrega = document.getElementById('entrega').value;
+        const pago = document.getElementById('pago').value;
+        const notas = document.getElementById('notas').value.trim();
+
+        let listaText = "";
+        let total = 0;
+        for (let itemKey in cart) {
+            const subtotal = cart[itemKey].precio * cart[itemKey].cant;
+            total += subtotal;
+            const subtotalTxt = cart[itemKey].precio > 0 ? `$${subtotal.toLocaleString('es-AR')}` : 'A consultar';
+            listaText += `• ${cart[itemKey].cant}x ${itemKey} - ${subtotalTxt}\n`;
+        }
+
+        let msg = `🛒 *NUEVO PEDIDO - DELICIAS AUSTRALES*\n`;
+        msg += `👤 *Cliente:* ${nombre || 'No especificado'}\n`;
+        msg += `📅 *Fecha:* ${fecha || 'No especificada'}\n`;
+        msg += `🛵 *Modalidad:* ${entrega}\n`;
+        msg += `💳 *Pago:* ${pago}\n\n`;
+        msg += `📦 *Detalle del Pedido:*\n${listaText}\n`;
+        msg += `💰 *TOTAL APROX.:* $${total.toLocaleString('es-AR')}\n`;
+        
+        if (notas !== "") {
+            msg += `\n📝 *ACLARACIONES / NOTAS DEL CLIENTE:*\n"${notas}"`;
+        } else {
+            msg += `\n📝 *ACLARACIONES:* Sin especificaciones`;
+        }
+        return msg;
+    }
+
     function renderCartList() {
         const container = document.getElementById('cart-items-list');
         const keys = Object.keys(cart);
@@ -663,7 +716,7 @@
             return;
         }
 
-        let html = '';
+        let html = '<div style="text-align:right; margin-bottom:8px;"><button type="button" onclick="vaciarCarrito()" style="background:none; border:none; color:#ef4444; font-size:0.75rem; text-decoration:underline; cursor:pointer;">🗑️ Vaciar todo</button></div>';
         let total = 0;
         keys.forEach(nombre => {
             const item = cart[nombre];
@@ -697,6 +750,17 @@
         document.getElementById('modal-carrito').style.display = 'none';
     }
 
+    function copiarPedido() {
+        if (Object.keys(cart).length === 0) {
+            alert("Tu carrito está vacío.");
+            return;
+        }
+        const texto = armarTextoPedido();
+        navigator.clipboard.writeText(texto).then(() => {
+            alert("📋 ¡Pedido copiado al portapapeles! Si WhatsApp se abre vacío por la huella, mantené apretado en el chat y dale a 'Pegar'.");
+        });
+    }
+
     function enviarWhatsApp(e) {
         e.preventDefault();
 
@@ -705,35 +769,7 @@
             return;
         }
 
-        const nombre = document.getElementById('nombre').value.trim();
-        const fecha = document.getElementById('fecha').value;
-        const entrega = document.getElementById('entrega').value;
-        const pago = document.getElementById('pago').value;
-        const notas = document.getElementById('notas').value.trim();
-
-        let listaText = "";
-        let total = 0;
-        for (let itemKey in cart) {
-            const subtotal = cart[itemKey].precio * cart[itemKey].cant;
-            total += subtotal;
-            const subtotalTxt = cart[itemKey].precio > 0 ? `$${subtotal.toLocaleString('es-AR')}` : 'A consultar';
-            listaText += `• ${cart[itemKey].cant}x ${itemKey} - ${subtotalTxt}\n`;
-        }
-
-        let msg = `🛒 *NUEVO PEDIDO - DELICIAS AUSTRALES*\n`;
-        msg += `👤 *Cliente:* ${nombre}\n`;
-        msg += `📅 *Fecha:* ${fecha}\n`;
-        msg += `🛵 *Modalidad:* ${entrega}\n`;
-        msg += `💳 *Pago:* ${pago}\n\n`;
-        msg += `📦 *Detalle del Pedido:*\n${listaText}\n`;
-        msg += `💰 *TOTAL APROX.:* $${total.toLocaleString('es-AR')}\n`;
-        
-        if (notas !== "") {
-            msg += `\n📝 *ACLARACIONES / NOTAS DEL CLIENTE:*\n"${notas}"`;
-        } else {
-            msg += `\n📝 *ACLARACIONES:* Sin especificaciones`;
-        }
-
+        const msg = armarTextoPedido();
         const telefono = "5492974219406";
         window.open(`https://api.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(msg)}`, '_blank');
     }

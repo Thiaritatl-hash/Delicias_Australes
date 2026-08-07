@@ -9,343 +9,188 @@
             --rosa-oscuro: #db2777; 
             --celeste: #0284c7; 
             --verde-wa: #25d366; 
+            --fondo: #fce7f3; 
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--fondo); padding-bottom: 150px; color: #334155; }
         
-        body { 
-            background: linear-gradient(135deg, #fce7f3 0%, #e0f2fe 100%);
-            background-attachment: fixed;
-            padding-bottom: 120px;
-            color: #334155; 
-        }
-        
-        header { 
-            text-align: center; 
-            padding: 12px; 
-            background: rgba(255, 255, 255, 0.95); 
-            border-bottom: 3px solid #bae6fd; 
-        }
-        
+        header { text-align: center; padding: 12px; background: white; border-bottom: 2px solid #bae6fd; }
         header h1 { font-size: 1.3rem; color: #1e293b; }
-        header p { font-size: 0.75rem; color: var(--rosa-oscuro); font-weight: bold; }
-
-        .container { max-width: 500px; margin: 0 auto; padding: 10px; }
+        .ig-btn { display: inline-block; margin-top: 5px; font-size: 0.8rem; color: var(--rosa-oscuro); text-decoration: none; font-weight: bold; border: 1px solid var(--rosa-oscuro); padding: 3px 10px; border-radius: 12px; }
         
-        .cat-title { 
-            color: var(--rosa-oscuro); 
-            margin: 15px 0 8px 0; 
-            font-size: 1rem; 
-            border-bottom: 2px solid var(--rosa-oscuro);
-            padding-bottom: 2px;
-            font-weight: bold;
-        }
-
-        .card { 
-            background: white; 
-            padding: 10px 12px; 
-            margin-bottom: 8px; 
-            border-radius: 8px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-left: 4px solid var(--celeste);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
+        /* Pestañas / Burbujitas */
+        .tabs { display: flex; overflow-x: auto; gap: 6px; padding: 10px; background: white; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scrollbar-width: none; }
+        .tab-btn { padding: 8px 12px; border-radius: 20px; border: 1px solid #bae6fd; background: white; color: var(--celeste); font-weight: bold; font-size: 0.75rem; white-space: nowrap; cursor: pointer; }
+        .tab-btn.active { background: var(--rosa-oscuro); color: white; border-color: var(--rosa-oscuro); }
+        
+        .section { display: none; padding: 10px; max-width: 500px; margin: 0 auto; }
+        .section.active { display: block; }
+        
+        .card { background: white; padding: 10px; margin-bottom: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--celeste); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .card-info { flex: 1; padding-right: 8px; }
-        .card h3 { font-size: 0.85rem; margin-bottom: 2px; }
-        .card p { font-size: 0.7rem; color: #64748b; }
+        .card-info h3 { font-size: 0.85rem; margin-bottom: 2px; }
+        .card-info p { font-size: 0.7rem; color: #64748b; }
         .price { font-weight: bold; color: var(--rosa-oscuro); font-size: 0.85rem; display: block; margin-top: 2px; }
+        
+        .btn-add { background: #bae6fd; border: none; padding: 6px 10px; border-radius: 5px; color: var(--celeste); font-weight: bold; font-size: 0.75rem; cursor: pointer; white-space: nowrap; }
+        .size-select { font-size: 0.75rem; padding: 2px 4px; margin-top: 4px; border: 1px solid #bae6fd; border-radius: 4px; background: #f8fafc; }
+        
+        /* Info envíos */
+        .info-box { background: white; padding: 15px; border-radius: 8px; margin-top: 5px; font-size: 0.85rem; line-height: 1.6; border: 1px solid #fbcfe8; }
+        .info-box h3 { color: var(--rosa-oscuro); margin-bottom: 8px; }
 
-        .btn-add { 
-            background: #bae6fd; 
-            border: none; 
-            padding: 6px 10px; 
-            border-radius: 5px; 
-            color: var(--celeste); 
-            font-weight: bold; 
-            font-size: 0.75rem;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        select.size-select {
-            margin-top: 4px;
-            padding: 2px 4px;
-            font-size: 0.75rem;
-            border-radius: 4px;
-            border: 1px solid #bae6fd;
-            background: #f8fafc;
-        }
-
-        .cart-bar { 
-            position: fixed; 
-            bottom: 0; 
-            left: 0;
-            width: 100%; 
-            background: white; 
-            padding: 10px 15px; 
-            box-shadow: 0 -3px 10px rgba(0,0,0,0.1); 
-            border-top: 2px solid #bae6fd;
-            z-index: 999;
-        }
-
-        .cart-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-
-        .btn-wa { 
-            display: block; 
-            width: 100%; 
-            padding: 10px; 
-            background: var(--verde-wa); 
-            color: white; 
-            text-align: center; 
-            font-weight: bold; 
-            border-radius: 6px; 
-            text-decoration: none; 
-            border: none; 
-            font-size: 0.85rem; 
-            cursor: pointer;
-        }
+        /* Carrito fijo */
+        .cart-bar { position: fixed; bottom: 0; width: 100%; background: white; padding: 10px 15px; box-shadow: 0 -3px 10px rgba(0,0,0,0.1); border-top: 2px solid #bae6fd; z-index: 100; }
+        .cart-info { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; }
+        .btn-wa { display: block; width: 100%; padding: 10px; background: var(--verde-wa); color: white; text-align: center; font-weight: bold; border-radius: 6px; text-decoration: none; border: none; font-size: 0.85rem; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Delicias Australes</h1>
-    <p>PEDIDOS: 2974219406 (SOL)</p>
+    <p style="font-size: 0.75rem; font-weight: bold; margin-top: 2px;">PEDIDOS: 2974219406 (SOL)</p>
+    <!-- REEMPLAZÁ 'TU_USUARIO' POR TU INSTAGRAM REAL -->
+    <a href="https://instagram.com/TU_USUARIO" class="ig-btn" target="_blank">Instagram 📸</a>
 </header>
 
-<div class="container">
+<div class="tabs">
+    <button class="tab-btn active" onclick="show('combos-dulces', event)">🍰 Combos Dulces</button>
+    <button class="tab-btn" onclick="show('combos-salados', event)">🥐 Combos Salados</button>
+    <button class="tab-btn" onclick="show('tartas', event)">🥧 Tartas</button>
+    <button class="tab-btn" onclick="show('desayunos', event)">☀️ Desayunos</button>
+    <button class="tab-btn" onclick="show('brownies', event)">🍫 Brownies / Cheesecakes</button>
 
-    <!-- COMBOS DULCES -->
-    <div class="cat-title">🍰 Combos Dulces</div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 1</h3>
-            <p>Torta 2kg + 1 doc. Cupcakes + 2 doc. Donitas</p>
-            <span class="price">$89.100</span>
-        </div>
-        <button class="btn-add" onclick="add('Combo Dulce 1', 89100)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 2</h3>
-            <p>Torta 2kg + 1 Tarta (24cm) + 1 doc. Alfajores Maicena</p>
-            <span class="price">$92.700</span>
-        </div>
-        <button class="btn-add" onclick="add('Combo Dulce 2', 92700)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 3</h3>
-            <p>1 doc. Cupcakes + 1 doc. Cookies + 1 doc. Cakepops / 2 doc. Donitas</p>
-            <span class="price">$66.600</span>
-        </div>
-        <button class="btn-add" onclick="add('Combo Dulce 3', 66600)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 4</h3>
-            <p>2 Tartas (24cm) + 1 doc. Cookies + 1 doc. Oreos Bañadas</p>
-            <span class="price">$91.800</span>
-        </div>
-        <button class="btn-add" onclick="add('Combo Dulce 4', 91800)">+ Agregar</button>
-    </div>
+    <button class="tab-btn" onclick="show('indiv', event)">🍩 Docenas e Indiv.</button>
+    <button class="tab-btn" onclick="show('info', event)">🚚 Envíos / Info</button>
+</div>
 
-    <!-- COMBOS SALADOS -->
-    <div class="cat-title">🥐 Combos Salados</div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Salado 1</h3>
-            <p>1 doc. Chips J&Q + 1 doc. Empanadas + 1 doc. Panes Árabes Pollo</p>
-            <span class="price">$58.000</span>
-        </div>
-        <button class="btn-add" onclick="add('Combo Salado 1', 58000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Salado 2</h3>
-            <p>1 doc. Chips J&Q + 1 doc. Pizzetas + 1 doc. Empanadas</p>
-            <span class="price">$53.000</span>
-        </div>
-        <button class="btn-add" onclick="add('Combo Salado 2', 53000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Salado 3</h3>
-            <p>2 doc. Chips J&Q + 1 doc. Chips Salame/Queso + 1 doc. Árabes Pollo + 2 doc. Pizzetas</p>
-            <span class="price">$112.000</span>
-        </div>
-        <button class="btn-add" onclick="add('Combo Salado 3', 112000)">+ Agregar</button>
-    </div>
+<!-- COMBOS DULCES -->
+<div id="combos-dulces" class="section active">
+    <div class="card"><div class="card-info"><h3>Combo 1</h3><p>Torta 2kg + 1 doc. Cupcakes + 2 doc. Donitas</p><span class="price">$89.100</span></div><button class="btn-add" onclick="add('Combo Dulce 1', 89100)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Combo 2</h3><p>Torta 2kg + 1 Tarta a elección (24cm) + 1 doc. Alfajores Maicena</p><span class="price">$92.700</span></div><button class="btn-add" onclick="add('Combo Dulce 2', 92700)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Combo 3</h3><p>1 doc. Cupcakes + 1 doc. Cookies + 1 doc. Cakepops / 2 doc. Donitas</p><span class="price">$66.600</span></div><button class="btn-add" onclick="add('Combo Dulce 3', 66600)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Combo 4</h3><p>2 Tartas a elección (24cm) + 1 doc. Cookies + 1 doc. Oreos Bañadas</p><span class="price">$91.800</span></div><button class="btn-add" onclick="add('Combo Dulce 4', 91800)">+ Agregar</button></div>
+</div>
 
-    <!-- DESAYUNOS Y ESPECIALES -->
-    <div class="cat-title">☀️ Desayunos y Especiales</div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Desayuno Infantil</h3>
-            <p>Mini brownie, donitas, frola, alfajores, cupcake, postre, pebete, jugo, chocolatada y golosinas</p>
-            <span class="price">$32.000</span>
-        </div>
-        <button class="btn-add" onclick="add('Desayuno Infantil', 32000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Desayuno Standard</h3>
-            <p>Mini brownie, mini tarta, alfajores, cupcake, pan casero, pebete, jugo, yogurt, golosinas e infusiones</p>
-            <span class="price">$32.000</span>
-        </div>
-        <button class="btn-add" onclick="add('Desayuno Standard', 32000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info">
-            <h3>Desayuno Medium</h3>
-            <p>Mini brownie/torta, mini tarta, cupcake, alfajores, cookies, postre, pebete, scons, pan, jugo, yogurt e infusiones</p>
-            <span class="price">$44.000</span>
-        </div>
-        <button class="btn-add" onclick="add('Desayuno Medium', 44000)">+ Agregar</button>
-    </div>
+<!-- COMBOS SALADOS -->
+<div id="combos-salados" class="section">
+    <div class="card"><div class="card-info"><h3>Combo 1</h3><p>1 doc. Chips J&Q + 1 doc. Empanadas + 1 doc. Panes Árabes Pollo</p><span class="price">$58.000</span></div><button class="btn-add" onclick="add('Combo Salado 1', 58000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Combo 2</h3><p>1 doc. Chips J&Q + 1 doc. Pizzetas + 1 doc. Empanadas</p><span class="price">$53.000</span></div><button class="btn-add" onclick="add('Combo Salado 2', 53000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Combo 3</h3><p>2 doc. Chips J&Q + 1 doc. Chips Salame/Queso + 1 doc. Árabes Pollo + 2 doc. Pizzetas</p><span class="price">$112.000</span></div><button class="btn-add" onclick="add('Combo Salado 3', 112000)">+ Agregar</button></div>
+</div>
 
-    <!-- TARTAS DULCES -->
-    <div class="cat-title">🥧 Tartas</div>
-    
+<!-- TARTAS DULCES -->
+<div id="tartas" class="section">
     <div class="card">
-        <div class="card-info">
-            <h3>Gelatina sin frutas</h3>
-            <select id="tarta-gelatina" class="size-select">
-                <option value="24000">22 cm - $24.000</option>
-                <option value="29000">28 cm - $29.000</option>
-            </select>
+        <div class="card-info"><h3>Gelatina sin frutas</h3>
+            <select id="t-gelatina" class="size-select"><option value="24000">22 cm - $24.000</option><option value="29000">28 cm - $29.000</option></select>
         </div>
-        <button class="btn-add" onclick="addTarta('Gelatina sin frutas', 'tarta-gelatina')">+ Agregar</button>
+        <button class="btn-add" onclick="addTarta('Gelatina sin frutas', 't-gelatina')">+ Agregar</button>
     </div>
-
     <div class="card">
-        <div class="card-info">
-            <h3>Yogurt con Frutilla</h3>
-            <select id="tarta-yogurt" class="size-select">
-                <option value="24000">22 cm - $24.000</option>
-                <option value="29000">28 cm - $29.000</option>
-            </select>
+        <div class="card-info"><h3>Yogurt con Frutilla</h3>
+            <select id="t-yogurt" class="size-select"><option value="24000">22 cm - $24.000</option><option value="29000">28 cm - $29.000</option></select>
         </div>
-        <button class="btn-add" onclick="addTarta('Yogurt con Frutilla', 'tarta-yogurt')">+ Agregar</button>
+        <button class="btn-add" onclick="addTarta('Yogurt con Frutilla', 't-yogurt')">+ Agregar</button>
     </div>
-
     <div class="card">
-        <div class="card-info">
-            <h3>Chocolate y Crema</h3>
-            <select id="tarta-choco" class="size-select">
-                <option value="24000">22 cm - $24.000</option>
-                <option value="29000">28 cm - $29.000</option>
-            </select>
+        <div class="card-info"><h3>Chocolate y Crema</h3>
+            <select id="t-choco" class="size-select"><option value="24000">22 cm - $24.000</option><option value="29000">28 cm - $29.000</option></select>
         </div>
-        <button class="btn-add" onclick="addTarta('Chocolate y Crema', 'tarta-choco')">+ Agregar</button>
+        <button class="btn-add" onclick="addTarta('Chocolate y Crema', 't-choco')">+ Agregar</button>
     </div>
-
     <div class="card">
-        <div class="card-info">
-            <h3>Toffi / Lemon Pie / Orange Pie / Crumble / Coco & DDL / Pasta Frola / Ricota</h3>
-            <p>Tarta a elección</p>
-            <select id="tarta-varias" class="size-select">
-                <option value="27000">22/24 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
+        <div class="card-info"><h3>Otras Tartas (Toffi / Lemon Pie / Crumble / Coco / Ricota / Pasta Frola)</h3>
+            <select id="t-varias" class="size-select"><option value="27000">22/24 cm - $27.000</option><option value="32000">28 cm - $32.000</option></select>
         </div>
-        <button class="btn-add" onclick="addTarta('Tarta Especial', 'tarta-varias')">+ Agregar</button>
+        <button class="btn-add" onclick="addTarta('Tarta Especial', 't-varias')">+ Agregar</button>
     </div>
+</div>
 
-    <!-- BROWNIES Y CHEESECAKES -->
-    <div class="cat-title">🍫 Brownies y Cheesecakes</div>
+<!-- DESAYUNOS -->
+<div id="desayunos" class="section">
+    <div class="card"><div class="card-info"><h3>Desayuno Infantil</h3><p>Mini brownie, donitas, frola, alfajores, cupcake, postre, pebete, jugo, chocolatada y golosinas</p><span class="price">$32.000</span></div><button class="btn-add" onclick="add('Desayuno Infantil', 32000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Desayuno Standard</h3><p>Mini brownie, mini tarta, alfajores, cupcake, pan casero, pebete, jugo, yogurt, golosinas e infusiones</p><span class="price">$32.000</span></div><button class="btn-add" onclick="add('Desayuno Standard', 32000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Desayuno Medium</h3><p>Mini brownie/torta, mini tarta, cupcake, alfajores, cookies, postre, pebete, scons, pan, jugo, yogurt e infusiones</p><span class="price">$44.000</span></div><button class="btn-add" onclick="add('Desayuno Medium', 44000)">+ Agregar</button></div>
+</div>
+
+<!-- BROWNIES Y CHEESECAKES -->
+<div id="brownies" class="section">
     <div class="card">
-        <div class="card-info">
-            <h3>Brownie DDL y Crema</h3>
-            <select id="b-ddl" class="size-select">
-                <option value="40000">20 cm - $40.000</option>
-                <option value="48000">26 cm - $48.000</option>
-            </select>
+        <div class="card-info"><h3>Brownie DDL y Crema</h3>
+            <select id="b-ddl" class="size-select"><option value="40000">20 cm - $40.000</option><option value="48000">26 cm - $48.000</option></select>
         </div>
         <button class="btn-add" onclick="addTarta('Brownie DDL y Crema', 'b-ddl')">+ Agregar</button>
     </div>
     <div class="card">
-        <div class="card-info">
-            <h3>Brownie DDL, Crema y Frutos Rojos</h3>
-            <select id="b-frutos" class="size-select">
-                <option value="46000">20 cm - $46.000</option>
-                <option value="52000">26 cm - $52.000</option>
-            </select>
+        <div class="card-info"><h3>Brownie DDL, Crema y Frutos Rojos</h3>
+            <select id="b-frutos" class="size-select"><option value="46000">20 cm - $46.000</option><option value="52000">26 cm - $52.000</option></select>
         </div>
         <button class="btn-add" onclick="addTarta('Brownie DDL, Crema y Frutos Rojos', 'b-frutos')">+ Agregar</button>
     </div>
     <div class="card">
-        <div class="card-info">
-            <h3>Cheesecake</h3>
-            <select id="cheese" class="size-select">
-                <option value="28000">20 cm - $28.000</option>
-                <option value="34000">24 cm - $34.000</option>
-                <option value="44000">28 cm - $44.000</option>
-            </select>
+        <div class="card-info"><h3>Brownie Crema, Frutilla/Frambuesa y Merengue</h3>
+            <select id="b-merengue" class="size-select"><option value="38000">20 cm - $38.000</option><option value="44000">26 cm - $44.000</option></select>
+        </div>
+        <button class="btn-add" onclick="addTarta('Brownie Merengue', 'b-merengue')">+ Agregar</button>
+    </div>
+    <div class="card">
+        <div class="card-info"><h3>Cheesecake</h3>
+            <select id="cheese" class="size-select"><option value="28000">20 cm - $28.000</option><option value="34000">24 cm - $34.000</option><option value="44000">28 cm - $44.000</option></select>
         </div>
         <button class="btn-add" onclick="addTarta('Cheesecake', 'cheese')">+ Agregar</button>
     </div>
-
-    <!-- PRODUCTOS POR DOCENA Y UNIDAD -->
-    <div class="cat-title">🍩 Por Docena e Individuales</div>
-    <div class="card">
-        <div class="card-info"><h3>Donitas (Docena)</h3><span class="price">$8.000</span></div>
-        <button class="btn-add" onclick="add('Donitas (Docena)', 8000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Cupcakes (Docena)</h3><span class="price">$27.000</span></div>
-        <button class="btn-add" onclick="add('Cupcakes (Docena)', 27000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Cookies (Docena)</h3><span class="price">$25.000</span></div>
-        <button class="btn-add" onclick="add('Cookies (Docena)', 25000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Alfajores de Maicena (Docena)</h3><span class="price">$20.000</span></div>
-        <button class="btn-add" onclick="add('Alfajores Maicena (Docena)', 20000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Alfajores Marplatenses (Docena)</h3><span class="price">$25.000</span></div>
-        <button class="btn-add" onclick="add('Alfajores Marplatenses (Docena)', 25000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Oreos Bañadas (Docena)</h3><span class="price">$21.000</span></div>
-        <button class="btn-add" onclick="add('Oreos Bañadas (Docena)', 21000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Shot de Postres (Docena)</h3><span class="price">$38.000</span></div>
-        <button class="btn-add" onclick="add('Shot de Postres (Docena)', 38000)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Mini Tartas (Docena)</h3><span class="price">$20.500</span></div>
-        <button class="btn-add" onclick="add('Mini Tartas (Docena)', 20500)">+ Agregar</button>
-    </div>
-    <div class="card">
-        <div class="card-info"><h3>Tortas por Kilo (Fondant/Buttercream)</h3><span class="price">$28.000 / kg</span></div>
-        <button class="btn-add" onclick="add('Torta por Kilo', 28000)">+ Agregar</button>
-    </div>
-
 </div>
 
+<!-- INDIVIDUALES Y DOCENAS -->
+<div id="indiv" class="section">
+    <div class="card"><div class="card-info"><h3>Donitas (Docena)</h3><span class="price">$8.000</span></div><button class="btn-add" onclick="add('Donitas (Docena)', 8000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Cupcakes (Docena)</h3><span class="price">$27.000</span></div><button class="btn-add" onclick="add('Cupcakes (Docena)', 27000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Cookies (Docena)</h3><span class="price">$25.000</span></div><button class="btn-add" onclick="add('Cookies (Docena)', 25000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Alfajores de Maicena (Docena)</h3><span class="price">$20.000</span></div><button class="btn-add" onclick="add('Alfajores Maicena (Docena)', 20000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Alfajores Marplatenses (Docena)</h3><span class="price">$25.000</span></div><button class="btn-add" onclick="add('Alfajores Marplatenses (Docena)', 25000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Oreos Bañadas (Docena)</h3><span class="price">$21.000</span></div><button class="btn-add" onclick="add('Oreos Bañadas (Docena)', 21000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Cake Pops (Docena)</h3><span class="price">$22.000</span></div><button class="btn-add" onclick="add('Cake Pops (Docena)', 22000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Ice Pops (Docena)</h3><span class="price">$26.000</span></div><button class="btn-add" onclick="add('Ice Pops (Docena)', 26000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Shot de Postres (Docena)</h3><span class="price">$38.000</span></div><button class="btn-add" onclick="add('Shot de Postres (Docena)', 38000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Mini Tartas (Docena)</h3><span class="price">$20.500</span></div><button class="btn-add" onclick="add('Mini Tartas (Docena)', 20500)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Petit Fours (Docena)</h3><span class="price">$42.000</span></div><button class="btn-add" onclick="add('Petit Fours (Docena)', 42000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Budín 300/400gr</h3><span class="price">$6.000</span></div><button class="btn-add" onclick="add('Budín Chico', 6000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Budín 1kg</h3><span class="price">$15.000</span></div><button class="btn-add" onclick="add('Budín 1kg', 15000)">+ Agregar</button></div>
+    <div class="card"><div class="card-info"><h3>Torta por Kilo (Fondant / Buttercream)</h3><span class="price">$28.000 / kg</span></div><button class="btn-add" onclick="add('Torta por Kilo', 28000)">+ Agregar</button></div>
+</div>
+
+<!-- INFORMACION Y ENVIOS -->
+<div id="info" class="section">
+    <div class="info-box">
+        <h3>🚚 Envíos Zona Sur y Norte</h3>
+        <p>• Los envíos se realizan <b>con recargo</b> según la zona.</p>
+        <p>• <b>Anticipación:</b> Realizá tu pedido con tiempo.</p>
+        <p>• <b>Seña:</b> Los pedidos se señan con el <b>20%</b> para confirmar la reserva.</p>
+        <p>• <b>Contacto directo:</b> 2974219406 (Sol)</p>
+    </div>
+</div>
+
+<!-- BARRA DE CARRITO -->
 <div class="cart-bar">
     <div class="cart-info">
         <span>Ítems: <strong id="cant">0</strong></span>
         <span>Total: $<strong id="total">0</strong></span>
-        <span style="color:var(--rosa-oscuro)">Seña: $<strong id="sena">0</strong></span>
+        <span style="color:var(--rosa-oscuro)">Seña (20%): $<strong id="sena">0</strong></span>
     </div>
     <button class="btn-wa" onclick="enviarWhatsApp()">Confirmar Pedido WhatsApp</button>
 </div>
 
 <script>
     let cart = [];
+
+    function show(id, event) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
 
     function add(nombre, precio) { 
         cart.push({nombre, precio}); 
@@ -360,7 +205,7 @@
         cart.push({nombre: nombreCompleto, precio});
         actualizar();
     }
-    
+
     function actualizar() {
         let total = 0;
         cart.forEach(i => total += i.precio);
@@ -386,7 +231,6 @@
                   "\n\n*Total:* $" + total.toLocaleString('es-AR') + 
                   "\n*Seña (20%):* $" + sena.toLocaleString('es-AR');
 
-        // Número de Sol configurado directo
         let numero = "5492974219406"; 
 
         window.location.href = "https://wa.me/" + numero + "?text=" + encodeURIComponent(msg);

@@ -1,778 +1,254 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delicias Australes - Menú Digital</title>
-    <style>
-        :root {
-            --rosa-oscuro: #db2777;
-            --rosa-pastel: #fce7f3;
-            --celeste: #0284c7;
-            --celeste-pastel: #e0f2fe;
-            --verde-wa: #25d366;
-            --texto: #334155;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background: linear-gradient(135deg, #ffffff 0%, var(--rosa-pastel) 50%, var(--celeste-pastel) 100%); padding-bottom: 120px; color: var(--texto); min-height: 100vh; }
-
-        header { text-align: center; padding: 20px 15px 10px; }
-        .logo-img { max-width: 120px; height: auto; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .info-banner { background: #fef3c7; color: #92400e; padding: 10px 15px; font-size: 0.8rem; border-radius: 20px; margin: 12px auto; max-width: 450px; text-align: center; border: 1px solid #fde68a; font-weight: 600; }
-
-        /* Categorías deslizables */
-        .tabs { display: flex; overflow-x: auto; gap: 8px; padding: 10px 15px; position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border-bottom: 1px solid #f1f5f9; }
-        .tabs::-webkit-scrollbar { display: none; }
-        .tab-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid #bae6fd; background: white; color: var(--celeste); font-weight: 700; font-size: 0.8rem; white-space: nowrap; cursor: pointer; transition: all 0.2s; }
-        .tab-btn.active { background: var(--rosa-oscuro); color: white; border-color: var(--rosa-oscuro); box-shadow: 0 2px 8px rgba(219, 39, 119, 0.3); }
-
-        .section { display: none; padding: 15px; max-width: 500px; margin: 0 auto; }
-        .section.active { display: block; }
-
-        /* Tarjetas de producto */
-        .card { background: rgba(255, 255, 255, 0.95); padding: 14px; margin-bottom: 12px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--rosa-oscuro); box-shadow: 0 4px 12px rgba(0,0,0,0.03); gap: 10px; }
-        .card-info { flex: 1; }
-        .card-info h3 { font-size: 0.95rem; color: #1e293b; margin-bottom: 4px; }
-        .card-info p { font-size: 0.78rem; color: #64748b; line-height: 1.3; margin-bottom: 4px; }
-        .price { font-weight: bold; color: var(--rosa-oscuro); font-size: 0.9rem; }
-        
-        /* Estilo para Flyer del Día del Niño */
-        .flyer-card { background: white; border-radius: 20px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.06); border: 2px solid #fbcfe8; }
-        .flyer-img { width: 100%; height: auto; display: block; object-fit: cover; }
-        .flyer-body { padding: 15px; }
-        .flyer-body h3 { font-size: 1.05rem; color: var(--rosa-oscuro); margin-bottom: 5px; }
-        .flyer-body p { font-size: 0.82rem; color: #64748b; margin-bottom: 12px; line-height: 1.4; }
-
-        .item-select { width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.8rem; background: white; margin-top: 4px; color: var(--texto); }
-        .btn-add { background: var(--celeste); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: bold; white-space: nowrap; transition: transform 0.1s; }
-        .btn-add:active { transform: scale(0.95); }
-
-        /* Barra de carrito fija */
-        .cart-bar { position: fixed; bottom: 0; width: 100%; background: white; padding: 12px 20px; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; z-index: 90; border-top-left-radius: 20px; border-top-right-radius: 20px; }
-        .cart-info { font-size: 0.85rem; }
-        .cart-info strong { color: var(--rosa-oscuro); font-size: 1.05rem; }
-        .btn-open-modal { background: var(--rosa-oscuro); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85rem; box-shadow: 0 3px 10px rgba(219, 39, 119, 0.3); }
-
-        /* Modal Checkout */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: flex-end; z-index: 1000; backdrop-filter: blur(2px); }
-        .modal-content { background: white; width: 100%; max-width: 500px; border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 20px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s ease-out; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 15px; }
-        .modal-header h2 { font-size: 1.1rem; color: var(--rosa-oscuro); }
-        .btn-close { background: #f1f5f9; border: none; font-size: 1.2rem; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; color: #64748b; }
-
-        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e2e8f0; font-size: 0.85rem; }
-        .btn-remove { background: #fee2e2; color: #ef4444; border: none; width: 22px; height: 22px; border-radius: 50%; cursor: pointer; font-weight: bold; margin-left: 8px; }
-
-        .form-group { margin-top: 12px; }
-        .form-group label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 4px; color: #475569; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.85rem; outline: none; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--rosa-oscuro); }
-
-        .btn-wa { display: block; width: 100%; padding: 14px; background: var(--verde-wa); color: white; border-radius: 25px; text-align: center; font-weight: bold; border: none; margin-top: 12px; cursor: pointer; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); }
-        .btn-copy { display: block; width: 100%; padding: 10px; background: var(--celeste-pastel); color: var(--celeste); border: 1px solid #bae6fd; border-radius: 20px; font-weight: bold; margin-top: 15px; cursor: pointer; font-size: 0.85rem; text-align: center; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delicias Australes - Menú Digital</title>
+<style>
+:root{--rosa:#e0306a;--rosa-d:#c01f55;--teal:#0b8f95;--teal-pastel:#d9f4f4;--wa:#25d366;--ink:#2b2530;--mute:#6b6470;--texto:#334155}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+/* Fondo: degradado con los colores del logo (rosa, crema dorado, turquesa) */
+body{background:linear-gradient(160deg,#ffd0df 0%,#fff5ea 42%,#bdeff0 100%);background-attachment:fixed;color:var(--ink);padding-bottom:104px;min-height:100vh}
+.wrap{max-width:560px;margin:0 auto;padding:0 14px}
+.top{display:flex;align-items:center;gap:10px;max-width:560px;margin:0 auto;padding:12px 14px 6px}
+.top img{width:56px;height:56px;border-radius:50%;background:#fff;padding:4px;object-fit:contain;box-shadow:0 3px 10px rgba(43,37,48,.12)}
+.top .nm{font-family:Georgia,'Times New Roman',serif;font-size:1.3rem;font-weight:700;color:var(--rosa-d);flex:1;line-height:1.05}
+.top .wa{min-height:42px;display:inline-flex;align-items:center;padding:0 16px;border-radius:21px;background:var(--wa);color:#fff;font-weight:800;font-size:.85rem;text-decoration:none}
+.facts{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 12px}
+.facts span{background:rgba(255,255,255,.75);border-radius:14px;padding:6px 11px;font-size:.76rem;font-weight:700;color:#5b4a52}
+.hero{position:relative;overflow:hidden;border-radius:28px;color:var(--ink);background:#f0ede8;box-shadow:0 14px 30px rgba(43,37,48,.16)}
+.hero .fl{display:block;width:100%;height:auto;pointer-events:none}
+.hero-in{padding:0 14px}
+.hero-c{text-align:center}
+.eyebrow{display:inline-block;font-size:.72rem;letter-spacing:.14em;font-weight:800;text-transform:uppercase;background:#f6dfe4;color:#a23d62;padding:5px 12px;border-radius:14px}
+.ttl{display:block;width:94%;max-width:440px;height:auto;margin:6px auto 0}
+.hero .sub{font-size:.95rem;text-align:center;color:var(--mute)}
+.when{background:rgba(255,255,255,.72);border-radius:16px;padding:10px 12px;margin:14px 0 12px;font-size:.84rem;line-height:1.5}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pc{background:#fff;border:1px solid #eadfd5;color:var(--ink);border-radius:20px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.pc h3{font-family:Georgia,'Times New Roman',serif;font-size:1rem;line-height:1.15}
+.pp{font-size:1.35rem;font-weight:800;color:var(--rosa-d)}
+.pc details{font-size:.78rem;color:var(--mute);line-height:1.4}
+.pc summary{cursor:pointer;color:var(--teal);font-weight:700;font-size:.82rem;padding:4px 0}
+.pc .btn-add{margin-top:auto;width:100%}
+.tabs{position:sticky;top:0;z-index:10;margin:18px -14px 0;background:rgba(255,248,244,.93);backdrop-filter:blur(8px);border-bottom:1px solid rgba(43,37,48,.08)}
+.tabs .in{display:flex;overflow-x:auto;gap:2px;padding:0 8px;max-width:560px;margin:0 auto}
+.tabs ::-webkit-scrollbar{display:none}
+.tab-btn{flex:none;background:none;border:0;padding:14px 12px;font-size:.92rem;font-weight:700;color:var(--mute);border-bottom:3px solid transparent;cursor:pointer}
+.tab-btn.active{color:var(--rosa-d);border-bottom-color:var(--rosa)}
+.sec{display:none;padding-top:16px}
+.sec.active{display:block}
+.st{font-family:Georgia,'Times New Roman',serif;font-size:1.7rem;line-height:1.05}
+.note{font-size:.85rem;color:var(--mute);margin-top:4px}
+.panel{background:#fff;border-radius:22px;margin-top:12px;padding:2px 14px;box-shadow:0 8px 24px rgba(43,37,48,.06)}
+.it{padding:14px 0;border-bottom:1px solid #f0e8e4}
+.it:last-child{border-bottom:0}
+.it h3{font-size:1rem;line-height:1.25}
+.it p{font-size:.84rem;color:var(--mute);margin-top:3px;line-height:1.4}
+.buy{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap}
+.pr{font-size:1.2rem;font-weight:800;color:var(--rosa-d)}
+.opts{display:flex;gap:6px;flex-wrap:wrap}
+.opt{min-height:46px;padding:4px 12px;border-radius:12px;border:1.5px solid #e6dfd6;background:#fff;color:var(--ink);text-align:left;line-height:1.15;cursor:pointer}
+.opt span{display:block;font-size:.76rem;color:var(--mute)}
+.opt b{font-size:.98rem}
+.opt.on{border-color:var(--rosa);background:#fff0f4}
+.opt.on b{color:var(--rosa-d)}
+.btn-add{min-height:44px;padding:0 20px;border-radius:24px;border:0;background:var(--teal);color:#fff;font-weight:800;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;margin-left:auto;white-space:nowrap}
+.btn-add:active{transform:scale(.96)}
+.btn-add.ok{background:#16a34a}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tile{background:#fff;border:1px solid #eadfd5;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(43,37,48,.06)}
+.band{height:30px;flex:none}
+.c0 .band{background:#ffe3ea}
+.c1 .band{background:#d9f4f4}
+.tb{padding:10px 11px 11px;display:flex;flex-direction:column;flex:1;gap:6px}
+.tb h3{font-family:Georgia,'Times New Roman',serif;font-size:.98rem;line-height:1.18}
+.tb p{font-size:.78rem;color:var(--mute);line-height:1.35}
+.tb details{font-size:.76rem;color:var(--mute);line-height:1.4}
+.tb summary{cursor:pointer;color:var(--teal);font-weight:700;font-size:.8rem;padding:2px 0}
+.sz{display:flex;gap:5px;flex-wrap:wrap}
+.szb{min-height:36px;padding:0 10px;border-radius:18px;border:1.5px solid #e6dfd6;background:#fff;color:var(--ink);font-size:.76rem;font-weight:700;cursor:pointer}
+.szb.on{border-color:var(--rosa);background:#fff0f4;color:var(--rosa-d)}
+.tf{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;padding-top:4px}
+.tp{font-size:1.1rem;font-weight:800;color:var(--rosa-d)}
+.plus{width:44px;height:44px;border-radius:50%;border:0;background:var(--teal);color:#fff;font-size:1.5rem;line-height:1;cursor:pointer;flex:none}
+.plus:active{transform:scale(.92)}
+.plus.ok{background:#16a34a;font-size:1.2rem}
+.pill-ask{width:100%;min-height:44px;border-radius:22px;background:var(--teal);color:#fff;font-weight:800;font-size:.85rem;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+.ct{border:0;border-radius:18px;min-height:112px;padding:12px 4px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:var(--ink);box-shadow:0 5px 14px rgba(43,37,48,.07)}
+.ct:active{transform:scale(.96)}
+.ct span{font-family:Georgia,'Times New Roman',serif;font-size:.88rem;line-height:1.15;font-weight:700}
+.ct.p{background:#ffe3ea}
+.ct.c{background:#d9f4f4}
+.sh{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:10px;margin:0 -14px;padding:10px 14px;background:rgba(255,248,244,.94);backdrop-filter:blur(8px);border-bottom:1px solid rgba(43,37,48,.08)}
+.sh .st{font-size:1.5rem}
+.back{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:1.7rem;line-height:1;color:var(--mute);cursor:pointer;box-shadow:0 2px 8px rgba(43,37,48,.1)}
+.incat .facts,.incat .hero,.incat #home{display:none}
+.cartbar{position:fixed;left:0;right:0;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:90;padding:0 14px}
+.pillbar{display:flex;align-items:center;gap:12px;width:100%;max-width:560px;margin:0 auto;min-height:56px;padding:0 20px 0 10px;border:0;border-radius:30px;background:var(--ink);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 10px 26px rgba(43,37,48,.35)}
+.pillbar .cnt{min-width:38px;height:38px;border-radius:19px;background:var(--rosa);display:flex;align-items:center;justify-content:center;font-weight:800}
+.pillbar .lbl{flex:1;text-align:left}
+.pillbar strong{font-size:1.1rem}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;justify-content:center;align-items:flex-end;z-index:1000;backdrop-filter:blur(2px)}
+.modal-content{background:#fff;width:100%;max-width:500px;border-radius:24px 24px 0 0;padding:20px;max-height:88vh;overflow-y:auto;animation:slideUp .3s ease-out}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f1f5f9;padding-bottom:10px;margin-bottom:12px}
+.modal-header h2{font-size:1.1rem;color:var(--rosa)}
+.btn-close{background:#f1f5f9;border:none;font-size:1.2rem;width:34px;height:34px;border-radius:50%;cursor:pointer;color:#64748b}
+.cart-item-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed #e2e8f0;font-size:.85rem}
+.qb{background:#fee2e2;color:#ef4444;border:none;width:26px;height:26px;border-radius:50%;cursor:pointer;font-weight:700;margin-left:6px}
+.qb.p{background:#dcfce7;color:#16a34a}
+.empty{text-align:center;color:#64748b;font-size:.85rem;padding:10px 0}
+.form-group{margin-top:12px}
+.form-group label{display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#475569}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:10px;font-size:.85rem;outline:none;background:#fff}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--rosa)}
+.form-group input.bad{border-color:#c0392b}
+.hint{font-size:.75rem;color:#64748b;margin-top:5px;line-height:1.35}
+.err{color:#c0392b;font-weight:700;font-size:.82rem;margin-top:5px;min-height:1.1em}
+.quick{display:flex;gap:8px;margin-top:8px}
+.quick button{padding:7px 14px;border-radius:18px;border:1px solid #9bdcdd;background:#fff;color:var(--teal);font-weight:700;font-size:.78rem;cursor:pointer}
+.sum{margin-top:14px;background:#f8fafc;border-radius:12px;padding:10px 12px;font-size:.85rem}
+.sum div{display:flex;justify-content:space-between;padding:2px 0}
+.sum .t{font-size:1.05rem;font-weight:700;border-top:1px solid #e2e8f0;margin-top:5px;padding-top:6px}
+.btn-wa{display:block;width:100%;padding:14px;background:var(--wa);color:#fff;border-radius:25px;text-align:center;font-weight:700;border:none;margin-top:12px;cursor:pointer;font-size:.95rem;box-shadow:0 4px 12px rgba(37,211,102,.3)}
+.btn-copy{display:block;width:100%;padding:10px;background:var(--teal-pastel);color:var(--teal);border:1px solid #9bdcdd;border-radius:20px;font-weight:700;margin-top:10px;cursor:pointer;font-size:.85rem;text-align:center}
+</style>
 </head>
 <body>
+<noscript><p style="padding:24px;text-align:center">Para ver el menú activá JavaScript, o escribinos por WhatsApp: <a href="https://wa.me/5492974219406">Escribir a Sol</a></p></noscript>
 
-<header>
-    <img src="logo.png" alt="Delicias Australes" class="logo-img" onerror="this.style.display='none'">
-    <h1 style="font-size: 1.2rem; color: var(--rosa-oscuro); margin-top: 5px;">Delicias Australes</h1>
-    <div class="info-banner">⚠️ <b>Seña del 20% necesaria</b> para congelar y confirmar el pedido.</div>
-</header>
-
-<nav class="tabs">
-    <button class="tab-btn active" onclick="show('dia-del-nino', event)">🎈 Día del Niño</button>
-    <button class="tab-btn" onclick="show('tartas', event)">🥧 Tartas</button>
-    <button class="tab-btn" onclick="show('combos-salados', event)">🥐 Combos Salados</button>
-    <button class="tab-btn" onclick="show('combos-dulces', event)">🎂 Combos Dulces</button>
-    <button class="tab-btn" onclick="show('desayunos', event)">☕ Desayunos</button>
-    <button class="tab-btn" onclick="show('reposteria', event)">🍩 Repostería</button>
-    <button class="tab-btn" onclick="show('tortas', event)">🍰 Tortas Especiales</button>
-</nav>
-
-<!-- DÍA DEL NIÑO -->
-<div id="dia-del-nino" class="section active">
-    <div class="flyer-card">
-        <img src="flyer-nino-1.jpg" alt="Día de la Niñez" class="flyer-img" onerror="this.src='https://placehold.co/500x350/fce7f3/db2777?text=Flyer+Dia+de+la+Ninez'">
-        <div class="flyer-body">
-            <h3>Flyer Especial Día de la Niñez</h3>
-            <p>Elegí una de las opciones preparadas especialmente para este día tan lindo.</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Propuesta: Desayuno con Torta</h3>
-            <p>1 Torta Mini Temática, 2 Cuadritos Brownie c/ DDL, 2 Alfajores maicena, 2 Conitos choco, 2 Chips J&Q, 1 Chocolatada.</p>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Desayuno Día del Niño (Con Torta)', 0)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Propuesta: Desayuno sin Torta</h3>
-            <p>1 Muffin choco, 1 Cuadrito Brownie c/ Oreos, 1 Cuadrito Pasta Frola, 2 Alf. Maicena, 2 Conitos, 2 Chips, 6 Mini Merengadas, Pochoclos, Chocolatada y Yogurt.</p>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Desayuno Día del Niño (Sin Torta)', 0)">+ Agregar</button>
-    </div>
+<div class="top">
+    <img src="logo.png" alt="" onerror="this.style.display='none'">
+    <div class="nm">Delicias Australes</div>
+    <a class="wa" href="https://wa.me/5492974219406">WhatsApp</a>
 </div>
 
-<!-- TARTAS -->
-<div id="tartas" class="section">
-    <div class="card">
-        <div class="card-info">
-            <h3>Gelatina sin Frutas</h3>
-            <select id="t-gelatina" class="item-select">
-                <option value="24000">22 cm - $24.000</option>
-                <option value="29000">28 cm - $29.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Tarta Gelatina sin Frutas', 't-gelatina')">+ Agregar</button>
-    </div>
+<main class="wrap">
+    <div class="facts"><span>Seña del 20% para confirmar</span><span>Pedidos con 48 hs de anticipación</span></div>
 
-    <div class="card">
-        <div class="card-info">
-            <h3>Yogurt con Frutilla</h3>
-            <select id="t-yogurt" class="item-select">
-                <option value="24000">22 cm - $24.000</option>
-                <option value="29000">28 cm - $29.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Tarta Yogurt con Frutilla', 't-yogurt')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Chocolate y Crema</h3>
-            <select id="t-choco" class="item-select">
-                <option value="24000">22 cm - $24.000</option>
-                <option value="29000">28 cm - $29.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Tarta Chocolate y Crema', 't-choco')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Tarta Toffi</h3>
-            <select id="t-toffi" class="item-select">
-                <option value="27000">22 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Tarta Toffi', 't-toffi')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Lemon Pie / Orange Pie</h3>
-            <select id="t-lemon" class="item-select">
-                <option value="27000">22 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Lemon / Orange Pie', 't-lemon')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Crumble de Manzana</h3>
-            <select id="t-crumble" class="item-select">
-                <option value="27000">22 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Crumble de Manzana', 't-crumble')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Coco y Dulce de Leche</h3>
-            <select id="t-coco" class="item-select">
-                <option value="27000">22 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Tarta Coco y Dulce de Leche', 't-coco')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Pasta Frola</h3>
-            <select id="t-frola" class="item-select">
-                <option value="27000">22 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Pasta Frola', 't-frola')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Tarta de Ricota Clásica</h3>
-            <select id="t-ricota" class="item-select">
-                <option value="27000">22 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Tarta de Ricota Clásica', 't-ricota')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Ricota con Dulce de Leche</h3>
-            <select id="t-ricota-ddl" class="item-select">
-                <option value="27000">22 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Ricota con Dulce de Leche', 't-ricota-ddl')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Ricota con Frambuesas</h3>
-            <select id="t-ricota-framb" class="item-select">
-                <option value="27000">22 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Ricota con Frambuesas', 't-ricota-framb')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Ricota con Pasas y Oporto</h3>
-            <select id="t-ricota-pasas" class="item-select">
-                <option value="27000">22 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Ricota con Pasas y Oporto', 't-ricota-pasas')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Crema Tipo Galesa</h3>
-            <select id="t-galesa" class="item-select">
-                <option value="27000">22 cm - $27.000</option>
-                <option value="32000">28 cm - $32.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Crema Tipo Galesa', 't-galesa')">+ Agregar</button>
-    </div>
-</div>
-
-<!-- COMBOS SALADOS -->
-<div id="combos-salados" class="section">
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Salado 1</h3>
-            <p>1 doc. Chips J&Q + 1 doc. Empanadas (carne/pollo) + 1 doc. Panes Árabes de Pollo.</p>
-            <span class="price">$58.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Salado 1', 58000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Salado 2</h3>
-            <p>1 doc. Chips J&Q + 1 doc. Pizzetas + 1 doc. Empanadas (carne/pollo).</p>
-            <span class="price">$53.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Salado 2', 53000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Salado 3</h3>
-            <p>2 doc. Chips J&Q + 1 doc. Chips Salame y Queso + 1 doc. Panes Árabes Pollo + 2 doc. Pizzetas.</p>
-            <span class="price">$112.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Salado 3', 112000)">+ Agregar</button>
-    </div>
-</div>
-
-<!-- COMBOS DULCES -->
-<div id="combos-dulces" class="section">
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 1</h3>
-            <p>Torta 2kg + 1 docena Cupcakes + 2 docenas Donitas.</p>
-            <span class="price">$89.100</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Dulce 1', 89100)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 2</h3>
-            <p>Torta 2kg + 1 Tarta a elección (24cm) + 1 docena Alfajores de Maicena.</p>
-            <span class="price">$92.700</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Dulce 2', 92700)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 3</h3>
-            <p>1 docena Cupcakes + 1 docena Cookies + 1 docena Cakepops / 2 docenas Donitas.</p>
-            <span class="price">$66.600</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Dulce 3', 66600)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Combo Dulce 4</h3>
-            <p>2 Tartas a elección (24cm) + 1 docena Cookies + 1 docena Oreos Bañadas.</p>
-            <span class="price">$91.800</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Combo Dulce 4', 91800)">+ Agregar</button>
-    </div>
-</div>
-
-<!-- DESAYUNOS -->
-<div id="desayunos" class="section">
-    <div class="card">
-        <div class="card-info">
-            <h3>Desayuno Infantil</h3>
-            <p>1 Mini Torta Brownie, 6 Donitas, 1 Porción Frola, 2 Alf. Maicena, 1 Cupcake, 1 Postre, 1 Pebete J&Q, Jugo, Chocolatada, Gomitas + Tita, Infusiones.</p>
-            <span class="price">$32.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Desayuno Infantil', 32000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Desayuno Standard</h3>
-            <p>1 Mini Torta Brownie, 1 Mini Tarta, 3 Alf. Maicena, 1 Cupcake, 4 Panes Caseros, 1 Pebete J&Q, Jugo, Yogurt, Bon o Bon, Infusiones.</p>
-            <span class="price">$32.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Desayuno Standard', 32000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Desayuno Medium</h3>
-            <p>1 Mini Torta, 1 Mini Tarta, 1 Cupcake, 4 Alf. Maicena, 3 Cookies Limón, 1 Postre, 1 Pebete J&Q, 4 Scons Queso, 4 Panes Caseros, Jugo, Yogurt, Golosinas, Infusiones.</p>
-            <span class="price">$44.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Desayuno Medium', 44000)">+ Agregar</button>
-    </div>
-</div>
-
-<!-- REPOSTERÍA E INDIVIDUALES -->
-<div id="reposteria" class="section">
-    <div class="card">
-        <div class="card-info">
-            <h3>Alfajores de Maicena (Medianos)</h3>
-            <select id="alf-maicena" class="item-select">
-                <option value="1800">Unidad - $1.800</option>
-                <option value="20000">Docena - $20.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Alfajores de Maicena', 'alf-maicena')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Alfajores Marplatenses (Blanco/Negro)</h3>
-            <select id="alf-marplatense" class="item-select">
-                <option value="2500">Unidad - $2.500</option>
-                <option value="25000">Docena - $25.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Alfajores Marplatenses', 'alf-marplatense')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Budines Artesanales</h3>
-            <select id="budines" class="item-select">
-                <option value="6000">300 gr / 400 gr - $6.000</option>
-                <option value="15000">1 kg - $15.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Budín Artesanal', 'budines')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Donitas</h3>
-            <p>Precio por docena</p>
-            <span class="price">$8.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Docena de Donitas', 8000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Cupcakes</h3>
-            <p>Precio por docena</p>
-            <span class="price">$27.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Docena de Cupcakes', 27000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Cookies</h3>
-            <p>Precio por docena</p>
-            <span class="price">$25.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Docena de Cookies', 25000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Cake Pops</h3>
-            <p>Precio por docena</p>
-            <span class="price">$22.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Docena de Cake Pops', 22000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Ice Pops</h3>
-            <p>Precio por docena</p>
-            <span class="price">$26.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Docena de Ice Pops', 26000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Oreos Bañadas</h3>
-            <p>Precio por docena</p>
-            <span class="price">$21.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Docena de Oreos Bañadas', 21000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Shot de Postres</h3>
-            <p>Precio por docena</p>
-            <span class="price">$38.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Docena Shot de Postres', 38000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Mini Tartas</h3>
-            <p>Precio por docena</p>
-            <span class="price">$20.500</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Docena Mini Tartas', 20500)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Petit Fours</h3>
-            <p>Precio por docena</p>
-            <span class="price">$42.000</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Docena Petit Fours', 42000)">+ Agregar</button>
-    </div>
-</div>
-
-<!-- TORTAS ESPECIALES -->
-<div id="tortas" class="section">
-    <div class="card">
-        <div class="card-info">
-            <h3>Brownie Dulce de Leche y Crema</h3>
-            <select id="br-ddl-crema" class="item-select">
-                <option value="40000">20 cm - $40.000</option>
-                <option value="48000">26 cm - $48.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Brownie DDL y Crema', 'br-ddl-crema')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Brownie DDL, Crema y Frutos Rojos</h3>
-            <select id="br-frutos" class="item-select">
-                <option value="46000">20 cm - $46.000</option>
-                <option value="52000">26 cm - $52.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Brownie DDL, Crema y Frutos Rojos', 'br-frutos')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Brownie Crema, Frutilla/Frambuesa y Merengue</h3>
-            <select id="br-merengue" class="item-select">
-                <option value="38000">20 cm - $38.000</option>
-                <option value="44000">26 cm - $44.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Brownie Crema, Frutilla y Merengue', 'br-merengue')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Cheesecake</h3>
-            <select id="cheesecake" class="item-select">
-                <option value="28000">20 cm - $28.000</option>
-                <option value="34000">24 cm - $34.000</option>
-                <option value="44000">28 cm - $44.000</option>
-            </select>
-        </div>
-        <button type="button" class="btn-add" onclick="addSel('Cheesecake', 'cheesecake')">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Tortas por Kilo</h3>
-            <p>Fondant o Buttercream (Precio por Kilo)</p>
-            <span class="price">$28.000 /kg</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Torta por Kilo (Fondant/Buttercream)', 28000)">+ Agregar</button>
-    </div>
-
-    <div class="card">
-        <div class="card-info">
-            <h3>Chocotorta</h3>
-            <p>Consultar tamaños disponibles</p>
-            <span class="price">A consultar</span>
-        </div>
-        <button type="button" class="btn-add" onclick="add('Chocotorta (A consultar)', 0)">+ Agregar</button>
-    </div>
-</div>
-
-<!-- BARRA INFERIOR -->
-<div class="cart-bar">
-    <div class="cart-info">
-        Ítems: <span id="cant">0</span><br>
-        Total: <strong>$<span id="total">0</span></strong>
-    </div>
-    <button type="button" class="btn-open-modal" onclick="abrirModal()">🛒 Ver Pedido</button>
-</div>
-
-<!-- MODAL CHECKOUT -->
-<div class="modal-overlay" id="modal-carrito">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Resumen de Tu Pedido</h2>
-            <button class="btn-close" onclick="cerrarModal()">&times;</button>
-        </div>
-        
-        <div id="cart-items-list"></div>
-        <div id="cart-total-modal" style="text-align: right; font-weight: bold; margin-top: 10px; color: var(--rosa-oscuro);"></div>
-
-        <form id="order-form" onsubmit="enviarWhatsApp(event)">
-            <div class="form-group">
-                <label for="nombre">Nombre y Apellido *</label>
-                <input type="text" id="nombre" required placeholder="Ej: María González">
+    <section class="hero" aria-labelledby="promo-t">
+        <img class="fl" src="flores-arriba.webp" alt="" onerror="this.remove()">
+        <div class="hero-in">
+            <div class="hero-c"><span class="eyebrow">Promo del mes</span></div>
+            <h2 class="sr" id="promo-t">Día de la Madre</h2>
+            <img class="ttl" src="titulo-mama.webp" alt="Feliz día mamá" onerror="this.outerHTML='<p style=&quot;text-align:center;font-family:Georgia,serif;font-size:2.2rem;font-weight:700;color:#c01f55;margin:10px 0&quot;>Feliz día Mamá</p>'">
+            <p class="sub">Boxes y mini tortas para sorprender a mamá.</p>
+            <div class="when">
+                <b>Entregas:</b> sábado 17/10 (tarde/noche) y domingo 18/10 (mañana o tarde), horario a convenir.<br>
+                <b>Envíos:</b> Zona Sur $2.000 · Zona Norte $4.000.<br>
+                <b>Pedí hasta</b> el jueves 15/10 para el sábado y hasta el viernes 16/10 para el domingo.
             </div>
+            <div class="pgrid" id="promo-grid"></div>
+        </div>
+        <img class="fl" src="flores-abajo.webp" alt="" style="margin-top:4px" onerror="this.remove()">
+    </section>
 
-            <div class="form-group">
-                <label for="fecha">Fecha de entrega/retiro *</label>
-                <input type="date" id="fecha" required>
+    <div id="home"><h2 class="st" style="margin:20px 0 10px">¿Qué se te antoja?</h2><div class="cats" id="cats"></div></div>
+    <div id="lists"></div>
+</main>
+
+<div class="cartbar">
+    <button type="button" class="pillbar" onclick="openM()" aria-label="Ver mi pedido"><span class="cnt" id="n">0</span><span class="lbl">Ver mi pedido</span><strong id="tot">$0</strong></button>
+</div>
+
+<div class="modal-overlay" id="ov" onclick="if(event.target===this)closeM()">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="mt">
+        <div class="modal-header"><h2 id="mt">Tu pedido</h2><button type="button" class="btn-close" onclick="closeM()" aria-label="Cerrar">&times;</button></div>
+        <div id="lines"></div>
+
+        <div class="form-group">
+            <label for="fecha">Fecha de entrega/retiro *</label>
+            <input type="date" id="fecha" required onchange="renderM()">
+            <div class="quick">
+                <button type="button" data-d="2026-10-17" onclick="setF('2026-10-17')">Sáb 17/10</button>
+                <button type="button" data-d="2026-10-18" onclick="setF('2026-10-18')">Dom 18/10</button>
             </div>
+            <p class="hint" id="minnote"></p>
+            <p class="err" id="err" role="alert"></p>
+        </div>
+        <div class="form-group">
+            <label for="modalidad">Modalidad</label>
+            <select id="modalidad" onchange="renderM()">
+                <option value="retiro">Retiro</option>
+                <option value="sur">Envío Zona Sur</option>
+                <option value="norte">Envío Zona Norte</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="pago">Método de pago</label>
+            <select id="pago"><option>Transferencia</option><option>Efectivo</option></select>
+        </div>
+        <div class="form-group">
+            <label for="notas">Notas (opcional)</label>
+            <textarea id="notas" rows="2" placeholder="Sabores, dedicatoria, dirección, horario..."></textarea>
+        </div>
 
-            <div class="form-group">
-                <label for="entrega">Modalidad de Entrega *</label>
-                <select id="entrega" required>
-                    <option value="Retiro por el taller">Retiro por el taller</option>
-                    <option value="Envío Domicilio (Zona Norte)">Envío a Domicilio (Zona Norte)</option>
-                    <option value="Envío Domicilio (Zona Sur)">Envío a Domicilio (Zona Sur)</option>
-                </select>
-            </div>
+        <div class="sum">
+            <div><span>Productos</span><span id="sub">$0</span></div>
+            <div><span>Envío</span><span id="env">Sin costo</span></div>
+            <div class="t"><span>Total</span><span id="tt">$0</span></div>
+        </div>
+        <p class="hint" id="envnote"></p>
 
-            <div class="form-group">
-                <label for="pago">Método de Pago *</label>
-                <select id="pago" required>
-                    <option value="Transferencia / Mercado Pago">Transferencia / Mercado Pago</option>
-                    <option value="Efectivo">Efectivo</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="notas">Aclaraciones / Sabores / Dedicatorias</label>
-                <textarea id="notas" rows="3" placeholder="Ej: Gustos de tartas del combo, dedicatoria o preferencia horaria"></textarea>
-            </div>
-
-            <button type="button" class="btn-copy" onclick="copiarPedido()">📋 Copiar texto del pedido</button>
-            <button type="submit" class="btn-wa">📲 Confirmar y Enviar a WhatsApp</button>
-        </form>
+        <button type="button" class="btn-wa" onclick="enviarWhatsApp()">Enviar pedido por WhatsApp</button>
+        <button type="button" class="btn-copy" onclick="copiarPedido()">📋 Copiar pedido</button>
     </div>
 </div>
 
 <script>
-    let cart = JSON.parse(localStorage.getItem('delicias_cart')) || {};
+const WA = '5492974219406';
+const T = (n, a, b) => ({ n, o: [['22 cm', a], ['28 cm', b]] });
+const P = (n, p, d) => ({ n, d, o: [['', p]] });
 
-    document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
+const S = [
+ { id:'madre', t:'Especial Día de la Madre', promo:true, items:[
+  P('Box Desayuno/Merienda 01', 25000, '1 mini cake (frutillas con crema o Matilda), 3 cookies NY (pistacho, Marroc y red velvet), 1 sándwich de jamón y queso, 6 bombones rellenos surtidos.'),
+  P('Box Degustación de Cookies', 18000, '1 de cada sabor: pistacho, Marroc, red velvet y chocomenta.'),
+  P('Box Desayuno/Merienda 02', 32000, '1 mini brownie (con ddl, crema y frutillas), 2 cookies NY (Marroc y red velvet), 1 focaccia rellena de jamón y queso, 3 scones de queso, 2 alfajores de maicena.'),
+  P('Mini Torta Individual', 15000, 'Torta Matilda o clásica con frutilla y crema. Decoración alusiva.') ]},
+ { id:'desayunos', t:'Desayunos', items:[
+  P('Desayuno Infantil', 32000, '1 mini torta brownie, 6 donitas, 1 porción de pasta frola, 2 alfajores de maicena, 1 cupcake, 1 postre a elección, 1 pebete de jamón y queso, 1 jugo, 1 chocolatada, gomitas + tita, infusiones.'),
+  P('Desayuno Standard', 32000, '1 mini torta brownie, 1 mini tarta (lemon pie o manzana), 3 alfajores de maicena, 1 cupcake, 4 panes caseros, 1 pebete de jamón y queso, 1 jugo, 1 yogur, Bon o Bon, infusiones.'),
+  P('Desayuno Medium', 44000, '1 mini torta brownie o mini torta, 1 mini tarta (lemon pie o manzana), 1 cupcake, 4 alfajores de maicena, 3 cookies de limón, 1 postre a elección, 1 pebete de jamón y queso, 4 scones de queso, 4 pancitos caseros, 1 jugo, 1 yogur, turrón + barra de cereal + Bon o Bon, infusiones.') ]},
+ { id:'tartas', t:'Tartas', note:'Elegí el tamaño de cada tarta.', items:[
+  T('Gelatina sin frutas',24000,29000), T('Yogurt con frutilla',24000,29000), T('Chocolate y crema',24000,29000),
+  T('Toffi',27000,32000), T('Lemon Pie / Orange Pie',27000,32000), T('Crumble de manzana',27000,32000),
+  T('Coco y dulce de leche',27000,32000), T('Pasta frola',27000,32000), T('Ricota',27000,32000),
+  T('Ricota con dulce de leche',27000,32000), T('Ricota con frambuesas',27000,32000),
+  T('Ricota con pasas y oporto',27000,32000), T('Crema tipo galesa',27000,32000) ]},
+ { id:'salados', t:'Combos salados', items:[
+  P('Combo Salado 1', 58000, '1 doc. chips de jamón y queso, 1 doc. empanadas de carne o pollo (horno o fritas), 1 doc. panes árabes de pollo.'),
+  P('Combo Salado 2', 53000, '1 doc. chips de jamón y queso, 1 doc. pizzetas, 1 doc. empanadas de carne o pollo (horno o fritas).'),
+  P('Combo Salado 3', 112000, '2 doc. chips de jamón y queso, 1 doc. chips de salame y queso, 1 doc. panes árabes de pollo, 2 doc. pizzetas.') ]},
+ { id:'dulces', t:'Combos dulces', items:[
+  P('Combo Dulce 1', 89100, 'Torta 2 kg, 1 docena de cupcakes, 2 docenas de donitas.'),
+  P('Combo Dulce 2', 92700, 'Torta 2 kg, 1 tarta a elección (24 cm), 1 docena de alfajores de maicena.'),
+  P('Combo Dulce 3', 66600, '1 docena de cupcakes, 1 docena de cookies, 1 docena de cake pops o 2 docenas de donitas.'),
+  P('Combo Dulce 4', 91800, '2 tartas a elección (24 cm), 1 docena de cookies, 1 docena de Oreos bañadas.') ]},
+ { id:'reposteria', t:'Repostería', items:[
+  { n:'Alfajores de maicena', d:'Medianos.', o:[['Unidad',1800],['Docena',20000]] },
+  { n:'Alfajores marplatenses', d:'Blanco o negro.', o:[['Unidad',2500],['Docena',25000]] },
+  { n:'Budines', o:[['300/400 g',6000],['1 kg',15000]] },
+  { n:'Chocotorta', d:'Consultar tamaños.', ask:true },
+  P('Donitas (docena)',8000), P('Oreos bañadas (docena)',21000), P('Cake pops (docena)',22000),
+  P('Cookies (docena)',25000), P('Ice pops (docena)',26000), P('Cupcakes (docena)',27000),
+  P('Mini tartas (docena)',20500), P('Shot de postres (docena)',38000), P('Petit fours (docena)',42000) ]},
+ { id:'tortas', t:'Tortas y varios', items:[
+  P('Torta por kilo', 28000, 'Fondant o buttercream. Precio por kilo.'),
+  { n:'Cheesecake', o:[['20 cm',28000],['24 cm',34000],['28 cm',44000]] },
+  { n:'Brownie DDL y crema', o:[['20 cm',40000],['26 cm',48000]] },
+  { n:'Brownie DDL, crema y frutos rojos', o:[['20 cm',46000],['26 cm',52000]] },
+  { n:'Brownie crema, frutilla o frambuesa y merengue italiano', o:[['20 cm',38000],['26 cm',44000]] } ]}
+];
 
-    document.addEventListener('DOMContentLoaded', () => {
-        actualizar();
-    });
+const ORDER = ['tartas', 'salados', 'dulces', 'desayunos', 'reposteria', 'tortas'];
+const TAB = { tartas:'Tartas', salados:'Combos salados', dulces:'Combos dulces', desayunos:'Desayunos', reposteria:'Repostería', tortas:'Tortas y varios' };
+const sel = {};
+const MADRE = ['2026-10-17', '2026-10-18'], SHIP = { sur: 2000, norte: 4000 };
 
-    function guardarEnStorage() {
-        localStorage.setItem('delicias_cart', JSON.stringify(cart));
-    }
-
-    function show(id, event) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        event.currentTarget.classList.add('active');
-    }
-
-    function add(nombre, precio) {
-        if (cart[nombre]) {
-            cart[nombre].cant += 1;
-        } else {
-            cart[nombre] = { precio, cant: 1 };
-        }
-        guardarEnStorage();
-        actualizar();
-    }
-
-    function addSel(nombreBase, selectId) {
-        const select = document.getElementById(selectId);
-        const itemNombre = `${nombreBase} (${select.options[select.selectedIndex].text})`;
-        const precio = parseInt(select.value);
-        add(itemNombre, precio);
-    }
-
-    function removeItem(nombre) {
-        if (cart[nombre]) {
-            cart[nombre].cant -= 1;
-            if (cart[nombre].cant <= 0) delete cart[nombre];
-        }
-        guardarEnStorage();
-        actualizar();
-        renderCartList();
-    }
-
-    function vaciarCarrito() {
-        if (confirm("¿Querés vaciar todos los productos del carrito?")) {
-            cart = {};
-            localStorage.removeItem('delicias_cart');
-            actualizar();
-            renderCartList();
-        }
-    }
-
-    function actualizar() {
-        let total = 0;
-        let cantTotal = 0;
-        for (let key in cart) {
-            total += cart[key].precio * cart[key].cant;
-            cantTotal += cart[key].cant;
-        }
-        document.getElementById('cant').innerText = cantTotal;
-        document.getElementById('total').innerText = total.toLocaleString('es-AR');
-    }
-
-    function armarTextoPedido() {
-        const nombre = document.getElementById('nombre').value.trim();
-        const fecha = document.getElementById('fecha').value;
-        const entrega = document.getElementById('entrega').value;
-        const pago = document.getElementById('pago').value;
-        const notas = document.getElementById('notas').value.trim();
-
-        let listaText = "";
-        let total = 0;
-        for (let itemKey in cart) {
-            const subtotal = cart[itemKey].precio * cart[itemKey].cant;
-            total += subtotal;
-            const subtotalTxt = cart[itemKey].precio > 0 ? `$${subtotal.toLocaleString('es-AR')}` : 'A consultar';
-            listaText += `• ${cart[itemKey].cant}x ${itemKey} - ${subtotalTxt}\n`;
-        }
-
-        let msg = `🛒 *NUEVO PEDIDO - DELICIAS AUSTRALES*\n`;
-        msg += `👤 *Cliente:* ${nombre || 'No especificado'}\n`;
-        msg += `📅 *Fecha:* ${fecha || 'No especificada'}\n`;
-        msg += `🛵 *Modalidad:* ${entrega}\n`;
-        msg += `💳 *Pago:* ${pago}\n\n`;
-        msg += `📦 *Detalle del Pedido:*\n${listaText}\n`;
-        msg += `💰 *TOTAL APROX.:* $${total.toLocaleString('es-AR')}\n`;
-        
-        if (notas !== "") {
-            msg += `\n📝 *ACLARACIONES / NOTAS DEL CLIENTE:*\n"${notas}"`;
-        } else {
-            msg += `\n📝 *ACLARACIONES:* Sin especificaciones`;
-        }
-        return msg;
-    }
-
-    function renderCartList() {
-        const container = document.getElementById('cart-items-list');
-        const keys = Object.keys(cart);
-        
-        if (keys.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#94a3b8; padding: 15px;">El carrito está vacío</p>';
-            document.getElementById('cart-total-modal').innerText = '';
-            return;
-        }
-
-        let html = '<div style="text-align:right; margin-bottom:8px;"><button type="button" onclick="vaciarCarrito()" style="background:none; border:none; color:#ef4444; font-size:0.75rem; text-decoration:underline; cursor:pointer;">🗑️ Vaciar todo</button></div>';
-        let total = 0;
-        keys.forEach(nombre => {
-            const item = cart[nombre];
-            const subtotal = item.precio * item.cant;
-            total += subtotal;
-            const precioTxt = item.precio > 0 ? `$${item.precio.toLocaleString('es-AR')} c/u` : 'A consultar';
-            const subtotalTxt = item.precio > 0 ? `$${subtotal.toLocaleString('es-AR')}` : '-';
-            html += `
-                <div class="cart-item-row">
-                    <div>
-                        <strong>${item.cant}x</strong> ${nombre}
-                        <br><span style="color:#64748b; font-size:0.75rem;">${precioTxt}</span>
-                    </div>
-                    <div>
-                        <span>${subtotalTxt}</span>
-                        <button type="button" class="btn-remove" onclick="removeItem('${nombre}')">&times;</button>
-                    </div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-        document.getElementById('cart-total-modal').innerText = `Total: $${total.toLocaleString('es-AR')}`;
-    }
-
-    function abrirModal() {
-        renderCartList();
-        document.getElementById('modal-carrito').style.display = 'flex';
-    }
-
-    function cerrarModal() {
-        document.getElementById('modal-carrito').style.display = 'none';
-    }
-
-    function copiarPedido() {
-        if (Object.keys(cart).length === 0) {
-            alert("Tu carrito está vacío.");
-            return;
-        }
-        const texto = armarTextoPedido();
-        navigator.clipboard.writeText(texto).then(() => {
-            alert("📋 ¡Pedido copiado al portapapeles! Si WhatsApp se abre vacío por la huella, mantené apretado en el chat y dale a 'Pegar'.");
-        });
-    }
-
-    function enviarWhatsApp(e) {
-        e.preventDefault();
-
-        if (Object.keys(cart).length === 0) {
-            alert("Tu carrito está vacío. Agregá al menos un producto.");
-            return;
-        }
-
-        const msg = armarTextoPedido();
-        const telefono = "5492974219406";
-        window.open(`https://api.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(msg)}`, '_blank');
-    }
-</script>
-</body>
-</html>
+const ICON = {
+  tartas: '<svg viewBox="0 0 64 64" width="58" height="58" aria-hidden="true"><ellipse cx="32" cy="50" rx="25" ry="6" fill="#e6b873" opacity=".5"/><path d="M8 36 L56 36 L52 50 Q32 58 12 50 Z" fill="#f0c987"/><ellipse cx="32" cy="36" rx="24" ry="9" fill="#ff6f96"/><ellipse cx="32" cy="36" rx="24" ry="9" fill="none" stroke="#f0c987" stroke-width="3"/><circle cx="23" cy="35" r="2.3" fill="#fff"/><circle cx="33" cy="38.5" r="2.3" fill="#fff"/><circle cx="42" cy="34" r="2.3" fill="#fff"/></svg>',
+  salados: '<svg viewBox="0 0 64 64" width="58" hei
